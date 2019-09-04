@@ -37,7 +37,8 @@
   },
   "dependencies": {
     "wTools": "",
-    "wpathbasic": ""
+    "wpathbasic": "",
+    "warraysorted": ""
   },
   "devDependencies": {
     "wFiles": "",

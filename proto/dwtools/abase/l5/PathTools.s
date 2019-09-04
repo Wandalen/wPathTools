@@ -2049,8 +2049,18 @@ function group( o )
     for( let v = 0 ; v < vals.length ; v++ )
     {
       let val = vals[ v ];
-      if( _.strBegins( val, key ) )
-      _.arrayAppendOnce( res, val );
+      if( self.begins( val, key ) )
+      _.sorted.addOnce( res, val, ( a, b ) =>
+      {
+        a = a.toLowerCase();
+        b = b.toLowerCase();
+        if( a === b )
+        return 0;
+        if( a < b )
+        return -1;
+        return +1;
+      });
+      // _.arrayAppendOnce( res, val );
     }
 
   }
