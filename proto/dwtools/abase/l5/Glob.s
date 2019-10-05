@@ -115,6 +115,7 @@ function globNormalize( glob )
 let _globSplitToRegexpSource = (function functor()
 {
 
+  let self;
   let _globRegexpSourceCache = Object.create( null )
 
   let _transformation0 =
@@ -153,12 +154,13 @@ let _globSplitToRegexpSource = (function functor()
 
   return function _globSplitToRegexpSource( src )
   {
+    self = this;
 
     _.assert( _.strIs( src ) );
     _.assert( arguments.length === 1, 'Expects single argument' );
     _.assert
     (
-      !_.strHas( src, /(^|\/)\.\.(\/|$)/ ) || src === this._downStr,
+      !_.strHas( src, /(^|\/)\.\.(\/|$)/ ) || src === self._downStr,
       'glob should not has splits with ".." combined with something'
     );
 
@@ -168,6 +170,9 @@ let _globSplitToRegexpSource = (function functor()
 
     if( result )
     return result;
+
+    // if( self.isGlob( src ) )
+    // debugger;
 
     result = transform( src );
 
@@ -248,7 +253,7 @@ let _globSplitToRegexpSource = (function functor()
     _.assert( _.strCount( multiplicator, '@' ) === 0 || multiplicator === '@' );
 
     // inside = inside.map( ( i ) => _.regexpEscape( i ) );
-    inside = inside.map( ( i ) => _globSplitToRegexpSource( i ) );
+    inside = inside.map( ( i ) => self._globSplitToRegexpSource( i ) );
 
     let result = '(?:' + inside.join( '|' ) + ')';
     if( multiplicator === '@' )
