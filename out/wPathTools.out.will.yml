@@ -40,14 +40,20 @@ module:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
-      module.willfiles:
-        criterion:
-          predefined: 1
-        path: wPathTools.out.will.yml
       module.common:
         criterion:
           predefined: 1
         path: wPathTools.out
+      module.willfiles:
+        criterion:
+          predefined: 1
+        path: wPathTools.out.will.yml
+      module.download:
+        criterion:
+          predefined: 1
+      remote:
+        criterion:
+          predefined: 1
       module.original.willfiles:
         criterion:
           predefined: 1
@@ -60,13 +66,6 @@ module:
         path:
           - ../.ex.will.yml
           - ../.im.will.yml
-      local:
-        criterion:
-          predefined: 1
-        path: .
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wPathTools.git'
       bugtracker:
@@ -816,12 +815,16 @@ module:
       npm.name: wpathtools
       npm.scripts: *ref_5
     path:
-      module.willfiles:
+      module.download:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+      remote:
+        criterion:
+          predefined: 1
+      module.common:
+        criterion:
+          predefined: 1
+        path: ./
       module.original.willfiles:
         criterion:
           predefined: 1
@@ -832,17 +835,12 @@ module:
         criterion:
           predefined: 1
         path: out/wPathTools.out.will.yml
-      module.common:
+      module.willfiles:
         criterion:
           predefined: 1
-        path: ./
-      local:
-        criterion:
-          predefined: 1
-        path: ./
-      remote:
-        criterion:
-          predefined: 1
+        path:
+          - .ex.will.yml
+          - .im.will.yml
       repository:
         path: 'git+https:///github.com/Wandalen/wPathTools.git'
       bugtracker:
