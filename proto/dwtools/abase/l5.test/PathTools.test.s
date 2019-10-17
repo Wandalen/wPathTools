@@ -7383,6 +7383,15 @@ function mapExtend( test )
 
   /* extra */
 
+  /* qqq : important case! */
+  test.case = 'no override of empty string by boolean';
+  var expected = { '.' : '', '**/.git/**' : false };
+  var dstMap = { '.' : '' };
+  var srcMap = '**/.git/**';
+  var dstPath = false;
+  var got = path.mapExtend( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
   test.case = 'dst is map, src is null, dstPath is str';
   var expected = { '/src' : '/dst' };
   var dstMap = { '/src' : '/dst' };

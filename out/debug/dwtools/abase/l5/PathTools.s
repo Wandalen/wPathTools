@@ -1223,38 +1223,26 @@ function _mapExtend( o )
     }
     else if( _.mapIs( dstPathMap ) )
     {
-      // if( o.srcPathMap === null || o.srcPathMap === '' || o.dstPath === '' )
       for( let f in dstPathMap )
       {
         let val = dstPathMap[ f ];
-        if( val === null || val === '' )
+        // qqq : boolean should not override null neither ''
+        //       check all cases
+        if( ( val === null || val === '' ) && !_.boolLike( o.dstPath ) )
         {
           dstPathMap[ f ] = o.dstPath;
           used = true;
         }
-        else if( _.boolLike( val ) )
+        else
+        if( _.boolLike( val ) )
         {
           dstPathMap[ f ] = !!val;
         }
       }
-      // else for( let f in dstPathMap )
-      // {
-      //   let val = dstPathMap[ f ];
-      //   if( _.boolLike( val ) )
-      //   dstPathMap[ f ] = !!val;
-      // }
 
     }
 
     /* get dstPath from dstPathMap if it has empty key */
-
-    // if( dstPathMap[ '' ] !== undefined && o.srcPathMap !== '' )
-    // if( o.dstPath === null || o.dstPath === '' )
-    // if( o.dstPath !== dstPathMap[ '' ] )
-    // {
-    //   o.dstPath = dstPathMap[ '' ];
-    //   used = false;
-    // }
 
     if( dstPathMap[ '' ] === '' || dstPathMap[ '' ] === null )
     {
