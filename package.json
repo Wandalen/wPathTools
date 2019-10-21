@@ -23,7 +23,7 @@
   {
     "url" : "https://github.com/Wandalen/wPathTools/issues"
   }, 
-  "dependencies" : { "wTools" : "", "wpathbasic" : "", "warraysorted" : "" }, 
-  "devDependencies" : { "wFiles" : "", "wTesting" : "" }, 
+  "dependencies" : { "wTools" : "beta", "wpathbasic" : "beta", "warraysorted" : "beta" }, 
+  "devDependencies" : { "wFiles" : "beta", "wTesting" : "beta" }, 
   "keywords" : [ "wTools", "wPath", "path", "url", "uri", "path", "file" ]
 }
