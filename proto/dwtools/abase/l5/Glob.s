@@ -85,13 +85,15 @@ function _fromGlob( glob )
     else
     result = glob.substr( 0, i+1 );
 
+    result = self.detrail( result || self._hereStr );
+
   }
   else
   {
     result = glob;
   }
 
-  result = self.detrail( result || self._hereStr );
+  // result = self.detrail( result || self._hereStr );
   // result = self.detrail( result );
 
   _.assert( !self.isGlob( result ) );
