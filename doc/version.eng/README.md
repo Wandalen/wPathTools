@@ -3,7 +3,7 @@
 <details><summary><a href="./concept/Path.md">
       Path
   </a></summary>
-  Path is a value, which defines a pointer of place in a file system.
+  Path is a string or container of strings to describe location or name of where file is located.
 </details>
 
 
