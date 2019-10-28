@@ -20,10 +20,10 @@ let srcPaths = { '/src/a' : '' };
 - `bool-like` - uses in `maps` of paths, indicates possibility of use `src` path;
 
 ```js
-let usedPaths = { '/src/a' : true };
+let usedPaths = { '/src/a' : true, './src/b' : 1 };
 // source path '/src/a' can be used
 
-let unusedPaths = { '/src/a' : 0 };
+let unusedPaths = { '/src/a' : false, './src/b' : 0 };
 // source path '/src/a' can't be used
 ```
 
