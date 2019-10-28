@@ -14235,7 +14235,7 @@ function group( test )
   }
   var expected =
   {
-    '/' : [ '/a', '/b', '/a/b' ],
+    '/' : [ '/a', '/a/b', '/b' ],
     '/a' : [ '/a', '/a/b' ]
   }
   var got = _.path.group( o );
@@ -14249,7 +14249,7 @@ function group( test )
   }
   var expected =
   {
-    '/' : [ '/a', '/b', '/a/b' ],
+    '/' : [ '/a', '/a/b', '/b' ],
     '/a' : [ '/a', '/a/b' ]
   }
   var got = _.path.group( o );
@@ -14263,7 +14263,7 @@ function group( test )
   }
   var expected =
   {
-    '/' : [ '/a', '/b', '/a/b' ],
+    '/' : [ '/a', '/a/b', '/b' ],
     '/a' : [ '/a', '/a/b' ],
     '/b' : [ '/b' ],
     '.' : [ '.', './a' ]
@@ -14279,7 +14279,7 @@ function group( test )
   }
   var expected =
   {
-    '/' : [ '/a', '/b', '/a/b' ],
+    '/' : [ '/a', '/a/b', '/b' ],
   }
   var got = _.path.group( o );
   test.identical( got, expected )
@@ -14296,7 +14296,7 @@ function group( test )
   }
   var expected =
   {
-    '/' : [ '/y', '/a' ],
+    '/' : [ '/a', '/y' ],
   }
   var got = _.path.group( o );
   test.identical( got, expected )
@@ -14309,7 +14309,7 @@ function group( test )
   }
   var expected =
   {
-    '/' : [ '/a', '/b', '/a/b' ],
+    '/' : [ '/a', '/a/b', '/b' ],
   }
   var got = _.path.group( o );
   test.identical( got, expected )
@@ -14322,7 +14322,7 @@ function group( test )
   }
   var expected =
   {
-    '/' : [ '/a', '/b', '/a/b' ],
+    '/' : [ '/a', '/a/b', '/b' ],
     '/a' : [ '/a', '/a/b' ],
     '/b' : [ '/b' ],
     '.' : [ '.', './a' ]
