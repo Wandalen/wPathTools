@@ -1,77 +1,36 @@
 # Path
 
-Path is the complete location or name of where a file or web page is located.
+Path is a value, which defines a pointer of place in a file system.
 
 ### The types of paths
 
 Module allows declaring path as:
 
 - `null` or `empty string` - indicates absence of a path;
+- `string` - a single value, which declares absolute or relative path to file. It is canonical form of paths;
+- `instance of constructor` - a single value or collection of paths in instance;
+- `array` - a collection of paths, each element of array indicates separate path;
+- `map` - a collection of paths, each pair `key-value` defines two paths. The key defines a source path `src`, and value defines destination path `dst`. If `dst` is `null` or `empty string` it indicates absence of path;
 
 ```js
-_.path.simplify( null ); // returns ''
-_.path.simplify( '' );   // returns ''
+let fullPaths = { '/src/a' : './dst/b' };
+let srcPaths = { '/src/a' : '' };
 ```
 
-- `string` - a single value, which declares absolute or relative path to file;
+- `bool-like` - uses in `maps` of paths, indicates possibility of use `src` path;
 
 ```js
-_.path.simplify( '/a/b/c' ); // returns '/a/b/c'
-_.path.simplify( './a/b/c' ); // returns './a/b/c'
+let usedPaths = { '/src/a' : true };
+// source path '/src/a' can be used
+
+let unusedPaths = { '/src/a' : 0 };
+// source path '/src/a' can't be used
 ```
 
-- `instance of constructor` - a single value or collection of paths;
+### The features of collections of paths
 
-```js
-var Constr = function( val )
-{
-  this.value = val;
-  return this;
-}
-_.path.simplify( new Constr( '/dir' ) );
-// returns { value : '/dir' }
-```
+`Array` of paths can contain only `string` and `instance` paths and should exclude `nulls`, `empty strings` and `bool-like` values.
 
-- `array` - a collection of paths, every element of array indicates separate path;
-
-```js
-_.path.simplify( [ '/a/b', '/b/c', './c/d' ] );
-// returns [ '/a/b', '/b/c', './c/d' ]
-```
-
-- `map` - a collection of paths, every pair `key-value` defines two paths. The key defines a source path `src`, and value defines destination path `dst`. If `dst` is `null` or `empty string` it indicates absence of path.
-
-```js
-_.path.simplify( { '/src/a' : './dst/b' } );
-// returns { '/src/a' : './dst/b' }
-```
-
-- `bool-like` - uses in `maps` of paths, indicates possibility of use path;
-
-```js
-_.path.simplify( { '/src/a' : true } );
-// returns { '/src/a' : true }, can use `src` path
-
-_.path.simplify( { '/src/a' : 0 } );
-// returns { '/src/a' : true }, can't use `src` path
-```
-
-### Restrictions in collections of paths
-
-For correct work of module, collections of paths should contain next types
-
-| value        | `array`          | `map`         |
-|--------------|------------------|---------------|
-| null         | -                | +             |
-| empty string | -                | +             |
-| bool-like    | -                | +             |
-| string       | +                | +             |
-| instance     | +                | +             |
-
-### Summary
-
-- Modules `PathBasic` and `PathTools` can use next types of path: `null`, `empty string`, `string`, `instance`, `array`, `map`, `bool-like`.
-- `array` of path can contain `string` and `instance` paths.
-- Every pair `key-value` of `map` of path defines two paths. Key defines a source path, value defines a destination path.
+`Map` of paths has no restriction for types of paths.
 
 [Back to content](../README.md#Concepts)

@@ -3,7 +3,7 @@
 <details><summary><a href="./concept/Path.md">
       Path
   </a></summary>
-  Path is the complete location or name of where a file or web page is located.
+  Path is a value, which defines a pointer of place in a file system.
 </details>
 
 
