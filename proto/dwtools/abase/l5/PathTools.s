@@ -465,6 +465,250 @@ function filterPairsInplace( filePath, onEach )
 
 //
 
+function filterPairs_( dst, filePath, onEach )
+{
+  if( arguments.length === 3 )
+  {
+    if( dst === null )
+    dst = true;
+    else if( dst === filePath )
+    dst = false;
+    else
+    _.assert( _.arrayIs( dst ) || _.mapIs( dst ) );
+  }
+  else if( arguments.length === 2 )
+  {
+    onEach = filePath;
+    filePath = dst;
+    dst = true;
+  }
+  else
+  _.assert( 0 );
+
+  _.routineIs( onEach, '{-onEach-} should be a routine' );
+
+  if( filePath === null )
+  filePath = '';
+
+  let result;
+  if( dst === true )
+  result = Object.create( null );
+  else if( dst === false )
+  result = filePath;
+  else
+  result = dst;
+
+  let hasDst = false;
+  let hasSrc = false;
+  let it = Object.create( null );
+  it.src = '';
+  it.dst = '';
+
+
+  if( _.strIs( filePath ) )
+  {
+    it.src = filePath;
+    let r = onEach( it );
+    elementsWrite( result, it, r );
+    result = normalizeArray ( _.mapKeys( result ) );
+    if( result.length === 0 )
+    return '';
+    if( result. length === 1 )
+    return result[ 0 ];
+    else
+    return result;
+  }
+  else if( _.arrayIs( filePath ) )
+  {
+    for( let p = 0 ; p < filePath.length ; p++ )
+    {
+      if( filePath[ p ] === null )
+      it.src = '';
+      else
+      it.src = filePath[ p ];
+
+      if( !_.boolIs( filePath[ p ] ) )
+      {
+        let r = onEach( it );
+        elementsWrite( result, it, r );
+      }
+    }
+  }
+  else if( _.mapIs( filePath ) )
+  {
+    for( let src in filePath )
+    {
+      let dst1 = filePath[ src ];
+
+      if( dst === false )
+      delete filePath[ src ];
+
+      if( _.arrayIs( dst1 ) )
+      {
+        if( !dst1.length )
+        {
+          it.src = src;
+          it.dst = '';
+          let r = onEach( it );
+          elementsWrite( result, it, r );
+        }
+        else
+        for( let d = 0 ; d < dst1.length ; d++ )
+        {
+          it.src = src;
+          it.dst = dst1[ d ];
+          if( dst1[ d ] === null )
+          it.dst = '';
+          let r = onEach( it );
+          elementsWrite( result, it, r );
+        }
+      }
+      else
+      {
+        it.src = src;
+        it.dst = dst1;
+        if( dst1 === null )
+        it.dst = '';
+        let r = onEach( it );
+        elementsWrite( result, it, r );
+      }
+    }
+  }
+  else
+  _.assert( 0 );
+
+  if( dst === true )
+  {
+    if( !hasSrc )
+    {
+      if( !hasDst )
+      return '';
+      return result;
+    }
+    if( !hasDst )
+    result = _.mapKeys( result );
+
+    if( result.length === 1 )
+    return result[ 0 ];
+    else if( result.length === 0 )
+    return '';
+
+    result = this.simplify( result );
+  }
+  else
+  {
+    if( _.mapIs( result && filePath[ '' ] === '' ) )
+    delete filePath[ '' ];
+    result = this.simplifyInplace( result );
+  }
+
+  return result;
+
+  /* */
+
+  function elementsWrite( filePath, it, elements )
+  {
+
+    if( elements === undefined )
+    return filePath;
+
+    else if( elements === null || elements === '' )
+    return elementWrite( filePath, '', '' );
+
+    else if( _.strIs( elements ) )
+    return elementWrite( filePath, elements, it.dst );
+
+    else if( _.arrayIs( elements ) )
+    {
+      if( elements.length === 0 )
+      return elementWrite( filePath, '', '' );
+
+      for( let i = 0; i < elements.length; i++ )
+      elementsWrite( filePath, it, elements[ i ] );
+      return filePath;
+    }
+
+    else if( _.mapIs( elements ) )
+    {
+      for( let src in elements )
+      elementWrite( filePath, src, elements[ src ] );
+      return filePath;
+    }
+    else
+    _.assert( 0 );
+  }
+
+  /* */
+
+  function elementWrite( filePath, src, dst )
+  {
+    if( _.arrayIs( dst ) )
+    {
+      if( dst.length )
+      dst.forEach( ( dst ) => elementWriteSingle( filePath, src, dst ) );
+      else
+      elementWriteSingle( filePath, src, '' );
+      return filePath;
+    }
+    elementWriteSingle( filePath, src, dst );
+    return filePath;
+  }
+
+  /* */
+
+  function elementWriteSingle( filePath, src, dst )
+  {
+    if( dst === null )
+    dst = '';
+    if( src === null )
+    src = '';
+
+    _.assert( _.strIs( src ) );
+    _.assert( _.strIs( dst ) || _.boolLike( dst ) || _.instanceIs( dst ) );
+
+    if( _.boolLike( dst ) )
+    dst = !!dst;
+
+    if( _.boolLike( filePath[ src ] ) )
+    {
+      if( dst !== '' )
+      filePath[ src ] = dst;
+    }
+    else if( _.arrayIs( filePath[ src ] ) )
+    {
+      if( dst !== '' && !_.boolLike( dst ) )
+      filePath[ src ] =  _.scalarAppendOnce( filePath[ src ], dst );
+    }
+    else if( _.strIs( filePath[ src ] ) || _.instanceIs( filePath[ src ] ) )
+    {
+      if( filePath[ src ] === '' || filePath[ src ] === dst || dst === false )
+      filePath[ src ] = dst;
+      else if( filePath[ src ] !== '' && dst !== '' )
+      {
+        if( dst !== true )
+        filePath[ src ] =  _.scalarAppendOnce( filePath[ src ], dst );
+      }
+    }
+    else
+    filePath[ src ] = dst;
+
+    if( src )
+    hasSrc = true;
+    if( dst !== '' )
+    hasDst = true;
+
+    return filePath;
+  }
+
+  function normalizeArray( src )
+  {
+    return _.arrayRemoveElement( src, '' );
+  }
+
+}
+
+//
+
 function filterInplace( filePath, onEach )
 {
   let it = Object.create( null );
@@ -901,7 +1145,7 @@ function filter_( dst, filePath, onEach )
     else if( dst === filePath )
     dst = false;
     else
-    _.assert( _.arrayIs( dst ) || _.mapIs( dst ) )
+    _.assert( _.arrayIs( dst ) || _.mapIs( dst ) );
   }
   else if( arguments.length === 2 )
   {
@@ -912,10 +1156,10 @@ function filter_( dst, filePath, onEach )
   else
   _.assert( 0 );
 
+  _.routineIs( onEach, '{-onEach-} should be a routine' );
+
   if( filePath === null )
   filePath = '';
-
-  _.routineIs( onEach );
 
   let result;
   let it = Object.create( null );
@@ -2522,6 +2766,7 @@ let Routines =
 
   filterPairs,
   filterPairsInplace,
+  filterPairs_,
   filterInplace,
   filter,
   filter_,
