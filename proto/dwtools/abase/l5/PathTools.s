@@ -912,26 +912,34 @@ function filter_( dst, filePath, onEach )
   else
   _.assert( 0 );
 
+  if( filePath === null )
+  filePath = '';
+
   _.routineIs( onEach );
 
   let result;
   let it = Object.create( null );
 
   if( dst === true )
-  result = filePath === null ? null : new filePath.constructor();
+  result = new filePath.constructor();
   else if( dst === false )
   result = filePath;
   else
   result = dst;
 
-  if( filePath === null )
-  filePath = '';
   if( _.strIs( filePath ) )
   {
     it.value = filePath;
     let r = onEach( it.value, it );
     if( r === undefined || r === null )
     r = '';
+    else if( _.arrayIs( r ) )
+    {
+      if( r.length === 0 )
+      r = '';
+      else if( r.length === 1 )
+      r = r[ 0 ];
+    }
 
     if( _.arrayIs( result ) )
     _.arrayAppendOnce( result, r );
@@ -951,13 +959,22 @@ function filter_( dst, filePath, onEach )
       it.value = filePath[ p ];
 
       let r = onEach( it.value, it );
-      if( r && !_.boolLike( r ) )
+      if( r === undefined || r === null )
+      r = '';
+      else if( _.arrayIs( r ) )
       {
-        if( _.arrayIs( result ) )
-        _.arrayAppendArraysOnce( result, r );
-        else if( _.mapIs( result ) )
-        result[ r ] = '';
+        if( r.length === 0 )
+        r = '';
+        else if( r.length === 1 )
+        r = r[ 0 ];
       }
+
+      if( dst === false )
+      result[ p ] = r;
+      else if( _.arrayIs( result ) )
+      _.arrayAppendArraysOnce( result, r );
+      else if( _.mapIs( result ) )
+      result[ r ] = '';
     }
   }
   else if( _.mapIs( filePath ) )
@@ -1024,7 +1041,11 @@ function filter_( dst, filePath, onEach )
   if( dst === true )
   result = this.simplify( result );
   else if( dst === false )
-  result = this.simplifyInplace( result );
+  {
+    if( _.mapIs( result ) && result[ '' ] === '' )
+    delete result[ '' ];
+    result = this.simplifyInplace( result );
+  }
 
   return result;
 
@@ -1041,8 +1062,6 @@ function filter_( dst, filePath, onEach )
     if( _.boolLike( dst ) )
     dst = !!dst;
 
-    _.assert( src === undefined || _.strIs( src ) || _.arrayIs( src ) );
-
     if( dst !== undefined )
     {
       if( _.arrayIs( src ) )
@@ -1051,22 +1070,10 @@ function filter_( dst, filePath, onEach )
         if( src[ s ] !== undefined )
         pathMap[ src[ s ] ] = append( pathMap[ src[ s ] ], dst );
       }
-      else
-      {
-        if( src !== undefined )
-        pathMap[ src ] = append( pathMap[ src ], dst );
-      }
-      return pathMap;
-    }
-    else if( _.arrayIs( src ) )
-    {
-      let src2 = src.slice();
-      src.splice( 0, src.length );
-      for( let i = 0 ; i < src2.length ; i++ )
-      if( src2[ i ] && !_.boolLike( src2[ i ] ) )
-      _.arrayAppendOnce( src, src2[ i ] );
-
-      return src;
+      else if( _.strIs( src ) )
+      pathMap[ src ] = append( pathMap[ src ], dst );
+      else if( src !== undefined )
+      _.assert( 0 );
     }
 
     function append( dst, src )
