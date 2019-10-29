@@ -891,6 +891,205 @@ function filter( filePath, onEach )
 
 //
 
+function filter_( dst, filePath, onEach )
+{
+
+  if( arguments.length === 3 )
+  {
+    if( dst === null )
+    dst = true;
+    else if( dst === filePath )
+    dst = false;
+    else
+    _.assert( _.arrayIs( dst ) || _.mapIs( dst ) )
+  }
+  else if( arguments.length === 2 )
+  {
+    onEach = filePath;
+    filePath = dst;
+    dst = true;
+  }
+  else
+  _.assert( 0 );
+
+  _.routineIs( onEach );
+
+  let result;
+  let it = Object.create( null );
+
+  if( dst === true )
+  result = filePath === null ? null : new filePath.constructor();
+  else if( dst === false )
+  result = filePath;
+  else
+  result = dst;
+
+  if( filePath === null )
+  filePath = '';
+  if( _.strIs( filePath ) )
+  {
+    it.value = filePath;
+    let r = onEach( it.value, it );
+    if( r === undefined || r === null )
+    r = '';
+
+    if( _.arrayIs( result ) )
+    _.arrayAppendOnce( result, r );
+    else if( _.mapIs( result ) )
+    result[ r ] = '';
+    else
+    result = r;
+  }
+  else if( _.arrayIs( filePath ) )
+  {
+    for( let p = 0; p < filePath.length; p++ )
+    {
+      it.index = p;
+      if( filePath[ p ] === null )
+      it.value = '';
+      else
+      it.value = filePath[ p ];
+
+      let r = onEach( it.value, it );
+      if( r && !_.boolLike( r ) )
+      {
+        if( _.arrayIs( result ) )
+        _.arrayAppendArraysOnce( result, r );
+        else if( _.mapIs( result ) )
+        result[ r ] = '';
+      }
+    }
+  }
+  else if( _.mapIs( filePath ) )
+  {
+    for( let src in filePath )
+    {
+      let dst1 = filePath[ src ];
+
+      if( dst === false )
+      delete filePath[ src ];
+
+      if( _.arrayIs( dst1 ) )
+      {
+        dst1 = dst1.slice();
+        if( dst1.length === 0 )
+        {
+          it.src = src;
+          it.dst = '';
+          it.value = it.src;
+          it.side = 'src';
+          let srcResult = onEach( it.value, it );
+          it.side = 'dst';
+          it.value = it.dst;
+          let dstResult = onEach( it.value, it );
+          write( result, srcResult, dstResult );
+        }
+        else
+        {
+          for( let d = 0 ; d < dst1.length ; d++ )
+          {
+            it.src = src;
+            it.dst = dst1[ d ];
+            if( dst1[ d ] === null )
+            it.dst = '';
+            it.value = it.src;
+            it.side = 'src';
+            let srcResult = onEach( it.value, it );
+            it.value = it.dst;
+            it.side = 'dst';
+            let dstResult = onEach( it.value, it );
+            write( result, srcResult, dstResult );
+          }
+        }
+      }
+      else
+      {
+        it.src = src;
+        it.dst = dst1;
+        if( dst1 === null )
+        it.dst = '';
+        it.value = it.src;
+        it.side = 'src';
+        let srcResult = onEach( it.value, it );
+        it.side = 'dst';
+        it.value = it.dst;
+        let dstResult = onEach( it.value, it );
+        write( result, srcResult, dstResult );
+      }
+
+    }
+  }
+  else _.assert( 0 );
+
+  if( dst === true )
+  result = this.simplify( result );
+  else if( dst === false )
+  result = this.simplifyInplace( result );
+
+  return result;
+
+  /* */
+
+  function write( pathMap, src, dst )
+  {
+    if( src === null || ( _.arrayIs( src ) && src.length === 0 ) )
+    src = '';
+    if( dst === null || ( _.arrayIs( dst ) && dst.length === 0 ) )
+    dst = '';
+    if( _.arrayIs( dst ) && dst.length === 1 )
+    dst = dst[ 0 ];
+    if( _.boolLike( dst ) )
+    dst = !!dst;
+
+    _.assert( src === undefined || _.strIs( src ) || _.arrayIs( src ) );
+
+    if( dst !== undefined )
+    {
+      if( _.arrayIs( src ) )
+      {
+        for( let s = 0 ; s < src.length ; s++ )
+        if( src[ s ] !== undefined )
+        pathMap[ src[ s ] ] = append( pathMap[ src[ s ] ], dst );
+      }
+      else
+      {
+        if( src !== undefined )
+        pathMap[ src ] = append( pathMap[ src ], dst );
+      }
+      return pathMap;
+    }
+    else if( _.arrayIs( src ) )
+    {
+      let src2 = src.slice();
+      src.splice( 0, src.length );
+      for( let i = 0 ; i < src2.length ; i++ )
+      if( src2[ i ] && !_.boolLike( src2[ i ] ) )
+      _.arrayAppendOnce( src, src2[ i ] );
+
+      return src;
+    }
+
+    function append( dst, src )
+    {
+      if( src === '' )
+      dst = src;
+      else if( _.boolLike( src ) )
+      dst = src;
+      else
+      {
+        if( _.strIs( dst ) || _.arrayIs( dst ) )
+        dst = _.scalarAppendOnce( dst, src );
+        else
+        dst = src;
+      }
+      return dst;
+    }
+  }
+
+}
+
+//
+
 function all( filePath, onEach )
 {
 
@@ -2299,6 +2498,7 @@ let Routines =
   filterPairsInplace,
   filterInplace,
   filter,
+  filter_,
   all,
   any,
   none,
