@@ -1040,7 +1040,7 @@ function filter_( dst, filePath, onEach )
 
   if( dst === true )
   result = this.simplify( result );
-  else if( dst === false )
+  else
   {
     if( _.mapIs( result ) && result[ '' ] === '' )
     delete result[ '' ];
@@ -1064,16 +1064,35 @@ function filter_( dst, filePath, onEach )
 
     if( dst !== undefined )
     {
-      if( _.arrayIs( src ) )
+      if( _.mapIs( pathMap ) )
       {
-        for( let s = 0 ; s < src.length ; s++ )
-        if( src[ s ] !== undefined )
-        pathMap[ src[ s ] ] = append( pathMap[ src[ s ] ], dst );
+        if( _.arrayIs( src ) )
+        {
+          for( let s = 0 ; s < src.length ; s++ )
+          if( src[ s ] !== undefined )
+          pathMap[ src[ s ] ] = append( pathMap[ src[ s ] ], dst );
+        }
+        else if( _.strIs( src ) )
+        pathMap[ src ] = append( pathMap[ src ], dst );
+        else if( src !== undefined )
+        _.assert( 0 );
       }
-      else if( _.strIs( src ) )
-      pathMap[ src ] = append( pathMap[ src ], dst );
-      else if( src !== undefined )
-      _.assert( 0 );
+      else
+      {
+        if( _.arrayIs( src ) )
+        {
+          for( let s = 0; s < src.length; s++ )
+          _.arrayAppendArrays( pathMap, [ src[ s ], dst ] );
+        }
+        else
+        {
+          if( src !== undefined )
+          _.arrayAppendOnce( pathMap, src );
+          if( dst !== undefined )
+          _.arrayAppendOnce( pathMap, dst );
+
+        }
+      }
     }
 
     function append( dst, src )
