@@ -704,7 +704,7 @@ function filterPairs_( dst, filePath, onEach )
         return result;
       }
 
-      result = self.simplifyInplace( result );
+      result = self.simplify_( result, result );
     }
     else
     {
@@ -733,7 +733,7 @@ function filterPairs_( dst, filePath, onEach )
 
           result = dst;
         }
-        result = self.simplifyInplace( result );
+        result = self.simplify_( result, result );
       }
       else
       {
@@ -742,7 +742,7 @@ function filterPairs_( dst, filePath, onEach )
         else if( result.length === 0 )
         return '';
 
-        result = self.simplify( result );
+        result = self.simplify_( null, result );
       }
     }
 
@@ -1305,12 +1305,12 @@ function filter_( dst, filePath, onEach )
   else _.assert( 0 );
 
   if( dst === true )
-  result = this.simplify( result );
+  result = this.simplify_( null, result );
   else
   {
     if( _.mapIs( result ) && result[ '' ] === '' )
     delete result[ '' ];
-    result = this.simplifyInplace( result );
+    result = this.simplify_( result, result );
   }
 
   return result;
@@ -2426,6 +2426,7 @@ function simplify_( dst, src )
       }
       else
       result = '';
+
     }
     else
     {
@@ -2435,7 +2436,7 @@ function simplify_( dst, src )
     }
   }
   else
-  return src;
+  result = src;
 
   fillDst();
 
@@ -2453,7 +2454,7 @@ function simplify_( dst, src )
         _.arrayAppendArrayOnce( dst, result );
         else if( _.mapIs( result ) )
         _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
-        else
+        else if( result !== '' )
         _.arrayAppendOnce( dst, result );
       }
       else if( _.mapIs( dst ) )
@@ -2466,7 +2467,7 @@ function simplify_( dst, src )
         else if( _.arrayIs( result ) )
         {
           for( let i in result )
-          dst[ i ] = result[ i ];
+          dst[ result[ i ] ] = '';
         }
         else
         dst[ result ] = '';
@@ -2474,10 +2475,10 @@ function simplify_( dst, src )
       else
       dst = result;
 
-      result = dst
+      result = self.simplify_( dst, dst );
     }
   }
-  
+
 }
 
 //

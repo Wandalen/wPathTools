@@ -14577,7 +14577,7 @@ function filterWithDst_( test )
   var dst = { '/src' : [ 'dst' ] };
   var src = { '' : [ '' ] };
   var got = _.path.filter_( dst, src, srcOnly2 );
-  var expected = { '/src' : [ 'dst' ] };
+  var expected = { '/src' : 'dst' };
   test.identical( got, expected );
   test.is( got === dst );
 
@@ -14585,7 +14585,7 @@ function filterWithDst_( test )
   var dst = { '/src' : [ 'dst' ] }
   var src = { '' : [ 'dst' ] };
   var got = _.path.filter_( dst, src, srcOnly2 );
-  var expected = { '/src' : [ 'dst' ] };
+  var expected = { '/src' : 'dst' };
   test.identical( got, expected );
   test.is( got === dst );
 
@@ -22974,7 +22974,6 @@ function simplify_( test )
     '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
-  debugger;
   var got = _.path.simplify_( src );
   var exp =
   {
@@ -23166,6 +23165,235 @@ function simplifyInplace_( test )
   var got = _.path.simplify_( src, src );
   test.identical( got, src );
   test.is( got === src );
+
+}
+
+//
+
+function simplifyWithDst_( test )
+{
+  /* simple tests, not a string, not an array, not a map */
+
+  test.case = 'number';
+  var dst = null;
+  var src = 2;
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, true );
+  test.is( got !== dst );
+
+  test.case = 'undefined';
+  var dst = [];
+  var src = undefined;
+  debugger;
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, [ undefined ] );
+  test.is( got === dst );
+
+  test.case = 'boolean';
+  var dst = {};
+  var src = true;
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, { 'true' : '' } );
+  test.is( got === dst );
+
+  test.case = 'instance of constructor';
+  var dst = false;
+  var constr = function( val )
+  {
+    this.value = val;
+    return this;
+  }
+  var src = new constr( '/dir' );
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, src );
+  test.is( got === src );
+  test.is( got !== dst );
+
+  /* simple tests with null and strings */
+
+  test.case = 'null';
+  var dst = 'str';
+  var src = null;
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, '' );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'empty string';
+  var dst = [ '/path' ];
+  var src = '';
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, [ '/path' ] );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = {};
+  var src = '/string'
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, { '/string' : '' } );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  /* tests with arrays of paths */
+
+  test.case = 'empty array';
+  var dst = null;
+  var src = [];
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, '' );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'array has one path';
+  var dst = [ '/dir1', '/dir2' ];
+  var src = [ '/dir1' ];
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, [ '/dir1', '/dir2' ] );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'simple array of paths';
+  var dst = [ '/dir1', '/dir2', '/dir3' ];
+  var src = [ '/dir1', '/dir2', '/dir3' ];
+  var got = _.path.simplify_( dst, src );
+  var expected = [ '/dir1', '/dir2', '/dir3' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'array has duplicates';
+  var dst = {};
+  var src = [ '/dir1', '/dir2', '/dir3', '/dir2' ];
+  var got = _.path.simplify_( dst, src );
+  var expected = { '/dir1' : '', '/dir2' : '', '/dir3' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  var dst = [ '/dir1' ];
+  var src = [ '/dir1', '/dir2', '/dir3', '/dir2', '/dir3', '/dir2' ];
+  var got = _.path.simplify_( dst, src );
+  var expected = [ '/dir1', '/dir2', '/dir3' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'array has empty strings and null';
+  var dst = {};
+  var src = [ '/dir1', '', '/dir2', '', '/dir3', null, '', '/path' ];
+  var got = _.path.simplify_( dst, src );
+  var expected = { '/dir1' : '', '/dir2' : '', '/dir3' : '', '/path' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'array has empty strings and nulls, one argument in result';
+  var dst = true;
+  var src = [ '/dir1', '', null, '', null, '' ];
+  var got = _.path.simplify_( dst, src );
+  var expected = '/dir1';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'array with empty strings and nulls';
+  var dst = undefined;
+  var src = [ '', '', null, null, '' ];
+  var got = _.path.simplify_( dst, src );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  /* tests with map of paths */
+
+  test.case = 'empty map';
+  var dst = [];
+  var src = {};
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, [] );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'key is empty string, value is empty string';
+  var dst = '';
+  var src = { '' : '' };
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, '' );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'key is empty string';
+  var dst = [ '/path' ];
+  var src = { '' : '/dir' };
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, [ '/path' ] );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'key, value is empty string';
+  var dst = {};
+  var src = { '/dir1' : '' };
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, { '/dir1' : '' } );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  var dst = [];
+  var src = { '/dir1' : '', '' : '' };
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, [ '/dir1' ] );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'key, value is array';
+  var dst = { 'a' : '/b' };
+  var src = { '/dir1' : [ '/dir1', '/dir2' ], '/dir2' : '/a/b' };
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, { 'a' : '/b', '/dir1' : [ '/dir1', '/dir2' ], '/dir2' : '/a/b' } );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  var dst = [];
+  var src = { '/dir1' : [ '/dir1', null, '', '/dir2', '' ], '/dir2' : '/a/b' };
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, [ '/dir1', '/dir2' ] );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'complex map of paths';
+  var constr = function( val )
+  {
+    this.value = val;
+    return this;
+  }
+  var obj = new constr( '/dir' );
+  var dst = {};
+  var src =
+  {
+    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/null' : null,
+    '/string' : '/dir', '/emptyString' : '', '' : '',
+    '/number' : 10,
+    '/array' : [ '', '/', '/dir' ], '/emptyArray' : [],
+    '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
+    '/instance' : obj,
+  };
+  var got = _.path.simplify_( dst, src );
+  var exp =
+  {
+    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/null' : '',
+    '/string' : '/dir', '/emptyString' : '',
+    '/number' : true,
+    '/array' : [ '/', '/dir' ], '/emptyArray' : '',
+    '/emptyMap' : '', '/map' : { '/str' : '/dir2' },
+    '/instance' : obj,
+  };
+  test.identical( got, exp );
+  test.is( got !== src );
+  test.is( got === dst );
 
 }
 
@@ -23990,6 +24218,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     simplifyInplace,
     simplify_,
     simplifyInplace_,
+    simplifyWithDst_,
     mapDstFromDst,
 
     // etc
