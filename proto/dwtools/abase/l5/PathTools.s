@@ -667,16 +667,7 @@ function filterPairs_( dst, filePath, onEach )
     else if( !hasDst )
     result = _.mapKeys( result );
 
-    if( dst === true )
-    {
-      if( result.length === 1 )
-      return result[ 0 ];
-      else if( result.length === 0 )
-      return '';
-
-      result = self.simplify( result );
-    }
-    else if( dst === false )
+    if( dst === false )
     {
       if( _.arrayIs( filePath ) )
       {
@@ -685,7 +676,7 @@ function filterPairs_( dst, filePath, onEach )
         if( _.arrayIs( result ) )
         result = _.arrayAppendArrayOnce( filePath, result );
         else if( _.mapIs( result ) )
-        result = _.arrayAppendOnce( filePath, _.mapKeys( result ) );
+        result = _.arrayAppendArrayOnce( filePath, _.mapKeys( result ) );
         else
         result = _.arrayAppendOnce( filePath, result );
       }
@@ -714,6 +705,45 @@ function filterPairs_( dst, filePath, onEach )
       }
 
       result = self.simplifyInplace( result );
+    }
+    else
+    {
+      if( dst !== true )
+      {
+        if( _.arrayIs( dst ) )
+        {
+          if( _.arrayIs( result ) )
+          result = _.arrayAppendArrayOnce( dst, result );
+          else if( _.mapIs( result ) )
+          result = _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
+          else
+          result = _.arrayAppendOnce( dst, result );
+        }
+        else if( _.mapIs( dst ) )
+        {
+          if( _.mapIs( result ) )
+          for( let k in result )
+          dst[ k ] = result[ k ];
+
+          else if( _.arrayIs( result ) )
+          for( let e of result )
+          dst[ e ] = '';
+          else
+          dst[ result ] = '';
+
+          result = dst;
+        }
+        result = self.simplifyInplace( result );
+      }
+      else
+      {
+        if( result.length === 1 )
+        return result[ 0 ];
+        else if( result.length === 0 )
+        return '';
+
+        result = self.simplify( result );
+      }
     }
 
     if( _.mapIs( result ) && result[ '' ] === '' )

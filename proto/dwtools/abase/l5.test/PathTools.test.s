@@ -5475,7 +5475,6 @@ function filterPairsInplace_( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  debugger;
   var got = _.path.filterPairs_( src, src, double );
   var expected = [ '/a/b/a/b', '/a/b' ];
   test.identical( got, expected );
@@ -5973,7 +5972,6 @@ function filterPairsInplace_( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  debugger;
   var got = _.path.filterPairs_( src, src, dstOnly );
   var expected = [];
   test.identical( got, expected );
@@ -6921,6 +6919,2125 @@ function filterPairsInplace_( test )
   var expected = { '/dir' : '/dst', '/a' : false, '/b' : false };
   test.identical( got, expected );
   test.is( got === src );
+
+  /* - */
+
+  if( Config.debug )
+  {
+    test.open( 'throwing' );
+
+    test.case = 'without arguments';
+    test.shouldThrowErrorSync( () => _.path.filterPairs_() );
+
+    test.case = 'extra arguments';
+    test.shouldThrowErrorSync( () => _.path.filterPairs_( '/src', double, nothing1 ) );
+
+    test.case = 'onEach is not a routine';
+    test.shouldThrowErrorSync( () => _.path.filterPairs_( '/src', [ double ] ) );
+
+    test.case = 'wrong type of filePath';
+    test.shouldThrowErrorSync( () => _.path.filterPairs_( 1, double ) );
+    test.shouldThrowErrorSync( () => _.path.filterPairs_( { '/path' : {} }, double ) );
+    test.shouldThrowErrorSync( () => _.path.filterPairs_( { '/path' : undefined }, double ) );
+
+    test.case = 'wrong type of onEach';
+    test.shouldThrowErrorSync( () => _.path.filterPairs_( '/path', '/path' ) );
+
+    test.close( 'throwing' );
+  }
+
+  /* - */
+
+  function duplicates2( it )
+  {
+    return [ it.src, it.src, it.src + 1, '', '', null, ];
+  }
+
+  function duplicates( it )
+  {
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+  }
+
+  function bool( it )
+  {
+    return { [ it.src ] : true };
+  }
+
+  function bool2( it )
+  {
+    return { [ it.src ] : false };
+  }
+
+  function uncorrectMap( it )
+  {
+    if( it.dst === true )
+    return { [ it.src ] : [ true, false, '', null, true, false, '', null, '/dst', true ] };
+    if( it.dst === false )
+    return { [ it.src ] : [ true, false, '', null, true, false, '', null, '/dst', false ] };
+    else
+    return { [ it.src ] : [ true, false, '', null, true, false, '', null, '/dst', true, false ] };
+  }
+
+  function double( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    if( it.src === '' )
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    else
+    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+  }
+
+  function srcOnly1( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return { [ it.src ] : '' };
+  }
+
+  function srcOnly2( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return it.src;
+  }
+
+  function srcOnly3( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return [ it.src ];
+  }
+
+  function dstOnly( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return { '' : it.dst };
+  }
+
+  function dstDouble( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return { '' : [ it.dst, it.dst ] };
+  }
+
+  function nothing1( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return {};
+  }
+
+  function nothing2( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return [];
+  }
+
+  function nothing3( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return '';
+  }
+
+  function nothing4( it )
+  {
+    if( it.src === null )
+    _.assert( 0 );
+    return null;
+  }
+}
+
+//
+
+function filterPairsWithDst_( test )
+{
+  test.open( 'instance' );
+
+  var constructor = function ( val )
+  {
+    this.value = val;
+    return this;
+  }
+  var obj = new constructor;
+
+  test.case = 'double';
+  var dst = [];
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [ '/path/path', '/path' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'srcOnly1';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = { '/path' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'srcOnly2';
+  var dst = { 'a' : 'b' };
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = { 'a' : 'b', '/path' : { 'value' : undefined } };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'srcOnly3';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/path' : { 'value' : undefined } };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  var src = { '/path' : [ obj, obj ] };
+  var dst = {};
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/path' : { 'value' : undefined } };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'dstOnly';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = { '' : { 'value' : undefined } };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'dstDouble';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : { 'value' : undefined } };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing1';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing2';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing3';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing4';
+  var dst = {};
+  var src = { '/path' : obj };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'instance' );
+
+  /* - */
+
+  test.open( 'double' );
+
+  test.case = 'null';
+  var dst = {};
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = [];
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = [];
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [ '/a/b/a/b', '/a/b' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty array';
+  var dst = [ '/path' ];
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [ '/path' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element array';
+  var dst = [];
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [ '/a/b/a/b', '/a/b' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = [];
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [ '/a/b/a/b', '/a/b', '/cd/cd', '/cd' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = {};
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '/a/b/a/b' : '', '/a/b' : '', '/c/d/c/d' : '', '/c/d' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = [];
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = {};
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '/src/src' : 'dstdst', '/src' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '/src/src' : '', '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '/src/src' : 'dstdst', '/src' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '/src/src' : [ 'dst1dst1', 'dst2dst2' ], '/src' : [ 'dst1', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '' : [ 'dstdst', 'dst' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '' : [ 'dstdst', 'dst' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = { '' : [ 'dst1dst1', 'dst1', 'dst2dst2', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = [];
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected = [ '/src/src', '/src' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'double' );
+
+  /* - */
+
+  test.open( 'srcOnly1' );
+
+  test.case = 'null';
+  var dst = [];
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = {};
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = null;
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = '/a/b';
+  test.identical( got, expected );
+  test.is( got === src );
+  test.is( got !== dst );
+
+  test.case = 'empty array';
+  var dst = null;
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'single element array';
+  var dst = null;
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = '/a/b';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'several elements array';
+  var dst = {};
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = { '/a/b' : '', '/cd' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = [ '/a/b', '/c/d' ];
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = [ '/a/b', '/c/d' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = {};
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = {};
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = { '' : '/dst' };
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = { '' : '/dst', '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'srcOnly1' );
+
+  /* - */
+
+  test.open( 'srcOnly2' );
+
+  test.case = 'null';
+  var dst = [ '/path', false, '' ];
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = [ '/path', false ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = [ false, 1, undefined, [] ];
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = [ false, 1, undefined, [] ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = [];
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = [ '/a/b' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty array';
+  var dst = {};
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element array';
+  var dst = {};
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = { '/a/b' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = [ 1, 2, 3 ];
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = [ 1, 2, 3, '/a/b', '/cd' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = [];
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = [ '/a/b', '/c/d' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = {};
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = {};
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = { '/src' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = { '/src' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = { '/src' : [ 'dst1', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'srcOnly2' );
+
+  /* - */
+
+  test.open( 'srcOnly3' );
+
+  test.case = 'null';
+  var dst = [ '/a', '/b' ];
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = [ '/a', '/b' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = { 'a' : '/b' };
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { 'a' : '/b' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = { '/a/b' : '/c/d' };
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/a/b' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty array';
+  var dst = [];
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element array';
+  var dst = [];
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = [ '/a/b' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = [];
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = [ '/a/b', '/cd' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = [];
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = [ '/a/b', '/c/d' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = {};
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = {};
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/src' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/src' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/src' : [ 'dst1', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected = { '/src' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'srcOnly3' );
+
+  /* - */
+
+  test.open( 'dstOnly' );
+
+  test.case = 'null';
+  var dst = null;
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'empty';
+  var dst = {};
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = {};
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = {};
+  test.identical( got, expected );
+
+  test.case = 'empty array';
+  var dst = null;
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'single element array';
+  var dst = [ '/cd' ]
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = [ '/cd' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = [];
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = { 'a' : '/b' };
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = { 'a' : '/b' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = [];
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = [];
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = { '' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = { '' : [ 'dst1', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = { '' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = { '' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = { '' : [ 'dst1', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'dstOnly' );
+
+  /* - */
+
+  test.open( 'dstDouble' );
+
+  test.case = 'null';
+  var dst = [];
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = {};
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = {};
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+
+  test.case = 'empty array';
+  var dst = {};
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element array';
+  var dst = { '/c' : '/d' };
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '/c' : '/d' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = {};
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = {};
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = [ '/a/b' ];
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = [ '/a/b' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = {};
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : [ 'dst1', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : 'dst' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : [ 'dst1', 'dst2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'dstDouble' );
+
+  /* - */
+
+  test.open( 'nothing1' );
+
+  test.case = 'null';
+  var dst = {};
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = [];
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = {};
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+
+  test.case = 'empty array';
+  var dst = [];
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element array';
+  var dst = [];
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = {};
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = [];
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = {};
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = {};
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'nothing1' );
+
+  /* - */
+
+  test.open( 'nothing2' );
+
+  test.case = 'null';
+  var dst = [];
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = {};
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = {};
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty array';
+  var dst = [];
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element array';
+  var dst = [];
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = {};
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = [];
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = {};
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = [];
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'nothing2' );
+
+  /* - */
+
+  test.open( 'nothing3' );
+
+  test.case = 'null';
+  var dst = {};
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty';
+  var dst = {};
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = [];
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty array';
+  var dst = [];
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element array';
+  var dst = [ '/c/d' ];
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = [ '/c/d' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'several elements array';
+  var dst = { 'a' : '/b' };
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = { 'a' : '/b' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = [ '/a/b', '/c/d' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = {};
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = [];
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = {};
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'nothing3' );
+
+  /* - */
+
+  test.open( 'nothing4' );
+
+  test.case = 'null';
+  var dst = null;
+  var src = null;
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'empty';
+  var dst = {};
+  var src = '';
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'string';
+  var dst = {};
+  var src = '/a/b';
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty array';
+  var dst = null;
+  var src = [];
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'single element array';
+  var dst = null;
+  var src = [ '/a/b' ];
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'several elements array';
+  var dst = [];
+  var src = [ '/a/b', '/cd' ];
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = [];
+  var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'empty map';
+  var dst = {};
+  var src = {};
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst and src';
+  var dst = {};
+  var src = { '/src' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single empty array and src';
+  var dst = {};
+  var src = { '/src' : [] };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with dst in single element array and src';
+  var dst = null;
+  var src = { '/src' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'single element map with dst in multiple element array and src';
+  var dst = null;
+  var src = { '/src' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = '';
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got !== dst );
+
+  test.case = 'single element map with only dst';
+  var dst = {};
+  var src = { '' : 'dst' };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in empty array';
+  var dst = {};
+  var src = { '' : [ '' ] };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in single element array';
+  var dst = {};
+  var src = { '' : [ 'dst' ] };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only dst in multiple element array';
+  var dst = {};
+  var src = { '' : [ 'dst1', 'dst2' ] };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'single element map with only src';
+  var dst = {};
+  var src = { '/src' : '' };
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'nothing4' );
+
+  /* - */
+
+  test.open( 'complex map' );
+
+  var srcMap =
+  {
+    '/true' : true,
+    '/false' : false,
+    '/string1' : '/dir1',
+    '/string2' : '',
+    '/null' : null,
+    null : '/dir3',
+    '/array' : [ '/dir1', '/dir2' ],
+    '' : [ '/dir1', '/dir2', '', null ],
+    '/emptyArray' : [],
+  };
+
+  test.case = 'double';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, double );
+  var expected =
+  {
+    '/true/true' : true, '/true' : true,
+    '/false/false' : false, '/false' : false,
+    '/string1/string1' : '/dir1/dir1',
+    '/string1' : '/dir1',
+    '/string2/string2' : '',
+    '/string2' : '',
+    '/null/null' : '',
+    '/null' : '',
+    '' : [ '/dir1/dir1', '/dir1', '/dir2/dir2', '/dir2' ],
+    'nullnull' : '/dir3/dir3',
+    'null' : '/dir3',
+    '/array/array' : [ '/dir1/dir1', '/dir2/dir2' ],
+    '/array' : [ '/dir1', '/dir2' ],
+    '/emptyArray/emptyArray' : '',
+    '/emptyArray' : ''
+  };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'srcOnly1';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, srcOnly1 );
+  var expected =
+  {
+    '/true' : '',
+    '/false' : '',
+    '/string1' : '',
+    '/string2' : '',
+    '/null' : '',
+    'null' : '',
+    '/array' : '',
+    '/emptyArray' : ''
+  };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'srcOnly2';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, srcOnly2 );
+  var expected =
+  {
+    '/true' : true,
+    '/false' : false,
+    '/string1' : '/dir1',
+    '/string2' : '',
+    '/null' : '',
+    'null' : '/dir3',
+    '/array' : [ '/dir1', '/dir2' ],
+    '/emptyArray' : ''
+  };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'srcOnly3';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, srcOnly3 );
+  var expected =
+  {
+    '/true' : true,
+    '/false' : false,
+    '/string1' : '/dir1',
+    '/string2' : '',
+    '/null' : '',
+    'null' : '/dir3',
+    '/array' : [ '/dir1', '/dir2' ],
+    '/emptyArray' : ''
+  };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'dstOnly';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, dstOnly );
+  var expected =
+  {
+    '' : [ '/dir1', '/dir3', '/dir2' ]
+  };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'dstDouble';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  delete src[ '' ];
+  var got = _.path.filterPairs_( dst, src, dstDouble );
+  var expected = { '' : [ '/dir1', '/dir3', '/dir2' ] };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing1';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, nothing1 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing2';
+  var dst = {};
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, nothing2 );
+  var expected = {};
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing3';
+  var dst = [];
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, nothing3 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'nothing4';
+  var dst = [];
+  var src = _.mapSupplement( {}, srcMap );
+  var got = _.path.filterPairs_( dst, src, nothing4 );
+  var expected = [];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.close( 'complex map' );
+
+  /* - */
+
+  test.case = 'duplicates';
+  var dst = {};
+  var src = { '' : [ '/b', null, null, '', '', '/b' ] };
+  var got = _.path.filterPairs_( dst, src, duplicates );
+  var expected = { '' : '/b' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates, onEach return array';
+  var dst = {};
+  var src = [ '/b', null, null, '', '', '/b' ];
+  var got = _.path.filterPairs_( dst, src, ( it ) => [ it.src, '/file', '/dst', '', null, '', null, undefined ] );
+  var expected = { '/b' : '', '/file' : '', '/dst' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates, onEach return array';
+  var dst = {};
+  var src = { 'dir' : [ '/b', null, null, '', '', '/b' ] };
+  var got = _.path.filterPairs_( dst, src, ( it ) => [ it.src, '/file', '/dst', '', null, '', null, undefined ] );
+  var expected = { 'dir' : '/b', '/file' : '/b', '/dst' : '/b' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates';
+  var dst = [];
+  var src = { '/dir1' : '/dir2', '/a' : '/b' };
+  var got = _.path.filterPairs_( dst, src, duplicates );
+  var expected = [ '/dir1', '/a' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in map';
+  var dst = {};
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '' : '/file', '/null' : null };
+  var got = _.path.filterPairs_( dst, src, duplicates );
+  var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '' : '/file', '/null' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in map';
+  var dst = {};
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var got = _.path.filterPairs_( dst, src, duplicates );
+  var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'duplicates in array';
+  var dst = {};
+  var src = [ '/dir1', '/a', null, '', '', null ];
+  var got = _.path.filterPairs_( dst, src, duplicates2 );
+  var expected = { '1' : '', '/dir1' : '', '/dir11' : '', '/a' : '', '/a1' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  /* - */
+
+  test.case = 'boolean values';
+  var dst = [];
+  var src = [ '/dir1', true, null, '', '', null ];
+  var got = _.path.filterPairs_( dst, src, duplicates2 );
+  var expected = [ '1', '/dir1', '/dir11' ];
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'boolean values';
+  var dst = {};
+  var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
+  var got = _.path.filterPairs_( dst, src, duplicates );
+  var expected = { '/dir' : true, '/a' : '', '/b' : '' };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'boolean in callback, bool and null values in src';
+  var dst = {};
+  var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
+  var got = _.path.filterPairs_( dst, src, bool );
+  var expected = { '/dir' : true, '/a' : true, '/b' : true, '' : true };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'boolean in callback, str value in src';
+  var dst = {};
+  var src = { '/dir' : false, '/a' : '/dir', '/b' : '', '' : null };
+  var got = _.path.filterPairs_( dst, src, bool );
+  var expected = { '/dir' : true, '/a' : true, '/b' : true, '' : true };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'boolean in callback, bool and null values in src';
+  var dst = {};
+  var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
+  var got = _.path.filterPairs_( dst, src, bool2 );
+  var expected = { '/dir' : false, '/a' : false, '/b' : false, '' : false };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'boolean in callback, str value in src';
+  var dst = {};
+  var src = { '/dir' : false, '/a' : '/dir', '/b' : '', '' : null };
+  var got = _.path.filterPairs_( dst, src, bool2 );
+  var expected = { '/dir' : false, '/a' : false, '/b' : false, '' : false };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
+
+  test.case = 'boolean in callback, str value in src';
+  var dst = {};
+  var src = { '/dir' : true, '/a' : false, '/b' : '' };
+  var got = _.path.filterPairs_( dst, src, uncorrectMap );
+  var expected = { '/dir' : '/dst', '/a' : false, '/b' : false };
+  test.identical( got, expected );
+  test.is( got !== src );
+  test.is( got === dst );
 
   /* - */
 
@@ -21356,6 +23473,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     filterPairsInplace,
     filterPairs_,
     filterPairsInplace_,
+    filterPairsWithDst_,
     filterInplace,
     filterInplaceExtends, /* qqq : ? */
     filter,
