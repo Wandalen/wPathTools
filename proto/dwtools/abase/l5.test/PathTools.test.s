@@ -23184,7 +23184,6 @@ function simplifyWithDst_( test )
   test.case = 'undefined';
   var dst = [];
   var src = undefined;
-  debugger;
   var got = _.path.simplify_( dst, src );
   test.identical( got, [ undefined ] );
   test.is( got === dst );
@@ -23430,54 +23429,78 @@ function mapDstFromDst( test )
 // etc
 // --
 
-function mapGroupByDst( test )
+function traceToRoot( test )
 {
-  let path = _.path;
+  test.case = 'root';
+  var src = '/';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [] );
 
   /* */
 
-  test.case = 'trivial';
-  var exp =
-  {
-    '/dir2/Output.js' :
-    {
-      '/dir/**' : '',
-      '/dir/Exec' : false,
-    },
-  }
-  var src =
-  {
-    '/dir/**' : `/dir2/Output.js`,
-    '/dir/Exec' : 0,
-  }
-  var got = path.mapGroupByDst( src );
-  test.identical( got, exp );
-  test.is( got !== src );
+  test.case = 'one dir';
+  var src = '/tmp';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/tmp' ] );
+
+  test.case = 'one dir, slash';
+  var src = '/tmp/';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/tmp' ] );
+
+  test.case = 'three dirs';
+  var src = '/tmp/tmp/tmp';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/tmp', '/tmp/tmp', '/tmp/tmp/tmp' ] );
+
+  test.case = 'three dirs, slash';
+  var src = '/tmp/tmp/tmp/';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/tmp', '/tmp/tmp', '/tmp/tmp/tmp' ] );
 
   /* */
 
-  test.case = 'parent dir';
-  var exp =
-  {
-    '/dst' :
-    {
-      '/src1/d**' : '',
-      '/src2/d/**' : '',
-      '/**/b' : false
-    },
-  }
-  var src =
-  {
-    '/src1/d**' : '/dst',
-    '/src2/d/**' : '/dst',
-    '/**/b' : false
-  }
-  var got = path.mapGroupByDst( src );
-  test.identical( got, exp );
-  test.is( got !== src );
+  // test.case = 'one dir, dotted';
+  // var src = '/tmp/..';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [] );
+  //
+  // test.case = 'one dir, dotted, slash';
+  // var src = '/tmp/../';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [] );
+  //
+  // test.case = 'six dirs, dotted';
+  // var src = '/tmp/../tmp/../tmp/tmp';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [ '/tmp', '/tmp/tmp' ] );
+  //
+  // test.case = 'six dirs, dotted, slash';
+  // var src = '/tmp/../tmp/../tmp/tmp/';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [ '/tmp', '/tmp/tmp' ] );
 
   /* */
 
+  test.case = 'one dir, dotted';
+  var src = './tmp/..';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ 'tmp/..' ] );
+
+  test.case = 'one dir, dotted, slash';
+  var src = './tmp/../';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ 'tmp/..' ] );
+
+  test.case = 'six dirs, dotted';
+  var src = './tmp/../tmp/../tmp/tmp';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ 'tmp', 'tmp/../tmp/../tmp/tmp' ] );
+
+  test.case = 'six dirs, dotted, slash';
+  var src = './tmp/../tmp/../tmp/tmp/';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ 'tmp', 'tmp/../tmp/../tmp/tmp' ] );
 }
 
 //
@@ -23605,6 +23628,58 @@ function group( test )
   return;
 
   test.shouldThrowErrorSync( () => _.path.group({ vals : '/val', keys : '/' }))
+}
+
+//
+
+function mapGroupByDst( test )
+{
+  let path = _.path;
+
+  /* */
+
+  test.case = 'trivial';
+  var exp =
+  {
+    '/dir2/Output.js' :
+    {
+      '/dir/**' : '',
+      '/dir/Exec' : false,
+    },
+  }
+  var src =
+  {
+    '/dir/**' : `/dir2/Output.js`,
+    '/dir/Exec' : 0,
+  }
+  var got = path.mapGroupByDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  /* */
+
+  test.case = 'parent dir';
+  var exp =
+  {
+    '/dst' :
+    {
+      '/src1/d**' : '',
+      '/src2/d/**' : '',
+      '/**/b' : false
+    },
+  }
+  var src =
+  {
+    '/src1/d**' : '/dst',
+    '/src2/d/**' : '/dst',
+    '/**/b' : false
+  }
+  var got = path.mapGroupByDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  /* */
+
 }
 
 //
@@ -24223,8 +24298,9 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
 
     // etc
 
-    mapGroupByDst,
+    traceToRoot,
     group,
+    mapGroupByDst,
     setOptimize,
     mapOptimize,
 
