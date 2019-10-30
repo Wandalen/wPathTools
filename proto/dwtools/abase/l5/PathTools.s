@@ -2401,73 +2401,83 @@ function simplify_( dst, src )
 
   else if( _.mapIs( src ) )
   {
-    if( dst === false )
-    result = src;
-    else
-    result = Object.create( null );
-
-    for( let k in src )
-    result[ k ] = self.simplify( src[ k ] );
-
-    let keys = _.mapKeys( result );
-    if( keys.length )
+    if( dst !== false )
     {
-      if( keys.length !== 1 && keys.includes( '' ) && result[ '' ] === '' )
-      delete result[ '' ];
+      result = Object.create( null );
 
-      let vals = _.mapVals( result );
-      vals = vals.filter( ( e ) => e !== null && e !== '' );
-      if( vals.length === 0 )
+      for( let k in src )
+      result[ k ] = self.simplify( src[ k ] );
+
+      let keys = _.mapKeys( result );
+      if( keys.length > 0 )
       {
-        if( keys.length === 1 && keys[ 0 ] === '' )
-        result = '';
-        else if( keys.length === 1 )
-        result = keys[ 0 ];
+        if( keys.length !== 1 && keys.includes( '' ) && result[ '' ] === '' )
+        delete result[ '' ];
+
+        let vals = _.mapVals( result );
+        vals = vals.filter( ( e ) => e !== null && e !== '' );
+        if( vals.length === 0 )
+        {
+          if( keys.length === 1 && keys[ 0 ] === '' )
+          result = '';
+          else if( keys.length === 1 )
+          result = keys[ 0 ];
+        }
       }
+      else
+      result = '';
     }
     else
-    result = '';
-
-    if( dst === false )
-    return result;
+    {
+      for( let k in src )
+      src[ k ] = self.simplify( src[ k ] );
+      result = src;
+    }
   }
   else
   return src;
 
-  if( !_.boolIs( dst ) )
-  {
-    if( _.arrayIs( dst ) )
-    {
-      if( _.arrayIs( result ) )
-      _.arrayAppendArrayOnce( dst, result );
-      else if( _.mapIs( result ) )
-      _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
-      else
-      _.arrayAppendOnce( dst, result );
-    }
-    else if( _.mapIs( dst ) )
-    {
-      if( _.mapIs( result ) )
-      {
-        for( let k in result )
-        dst[ k ] = result[ k ];
-      }
-      else if( _.arrayIs( result ) )
-      {
-        for( let i in result )
-        dst[ i ] = result[ i ];
-      }
-      else
-      dst[ result ] = '';
-    }
-    else
-    dst = result;
-
-    result = dst
-  }
-
+  fillDst();
 
   return result;
+
+  /* */
+
+  function fillDst()
+  {
+    if( !_.boolIs( dst ) )
+    {
+      if( _.arrayIs( dst ) )
+      {
+        if( _.arrayIs( result ) )
+        _.arrayAppendArrayOnce( dst, result );
+        else if( _.mapIs( result ) )
+        _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
+        else
+        _.arrayAppendOnce( dst, result );
+      }
+      else if( _.mapIs( dst ) )
+      {
+        if( _.mapIs( result ) )
+        {
+          for( let k in result )
+          dst[ k ] = result[ k ];
+        }
+        else if( _.arrayIs( result ) )
+        {
+          for( let i in result )
+          dst[ i ] = result[ i ];
+        }
+        else
+        dst[ result ] = '';
+      }
+      else
+      dst = result;
+
+      result = dst
+    }
+  }
+  
 }
 
 //
