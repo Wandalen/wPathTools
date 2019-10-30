@@ -2353,6 +2353,125 @@ function simplifyInplace( src )
 
 //
 
+function simplify_( dst, src )
+{
+  let self = this;
+  let result;
+
+  if( arguments.length === 1 )
+  {
+    src = dst;
+    dst = true;
+  }
+  else
+  _.assert( arguments.length === 2 );
+
+  if( dst === null )
+  dst = true;
+  else if( dst === src )
+  dst = false;
+
+  if( src === null )
+  result = '';
+
+  else if( _.strIs( src ) )
+  result = src;
+
+  else if( _.boolLike( src ) )
+  result = !!src;
+
+  else if( _.arrayIs( src ) )
+  {
+    if( dst === false )
+    {
+      result = _.arrayRemoveDuplicates( src, ( e ) => e );
+      result = _.arrayRemoveElement( result, '', ( e ) => e === null || e === '' );
+      return result;
+    }
+    else
+    {
+      result = _.arrayAppendArrayOnce( null, src );
+      result = result.filter( ( e ) => e !== null && e !== '' );
+      if( result.length === 0 )
+      result = '';
+      else if( result.length === 1 )
+      result = result[ 0 ];
+    }
+  }
+
+  else if( _.mapIs( src ) )
+  {
+    if( dst === false )
+    result = src;
+    else
+    result = Object.create( null );
+
+    for( let k in src )
+    result[ k ] = self.simplify( src[ k ] );
+
+    let keys = _.mapKeys( result );
+    if( keys.length )
+    {
+      if( keys.length !== 1 && keys.includes( '' ) && result[ '' ] === '' )
+      delete result[ '' ];
+
+      let vals = _.mapVals( result );
+      vals = vals.filter( ( e ) => e !== null && e !== '' );
+      if( vals.length === 0 )
+      {
+        if( keys.length === 1 && keys[ 0 ] === '' )
+        result = '';
+        else if( keys.length === 1 )
+        result = keys[ 0 ];
+      }
+    }
+    else
+    result = '';
+
+    if( dst === false )
+    return result;
+  }
+  else
+  return src;
+
+  if( !_.boolIs( dst ) )
+  {
+    if( _.arrayIs( dst ) )
+    {
+      if( _.arrayIs( result ) )
+      _.arrayAppendArrayOnce( dst, result );
+      else if( _.mapIs( result ) )
+      _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
+      else
+      _.arrayAppendOnce( dst, result );
+    }
+    else if( _.mapIs( dst ) )
+    {
+      if( _.mapIs( result ) )
+      {
+        for( let k in result )
+        dst[ k ] = result[ k ];
+      }
+      else if( _.arrayIs( result ) )
+      {
+        for( let i in result )
+        dst[ i ] = result[ i ];
+      }
+      else
+      dst[ result ] = '';
+    }
+    else
+    dst = result;
+
+    result = dst
+  }
+
+
+  return result;
+}
+
+//
+
 /*
 qqq : make pathMap*From* optimal and add tests
 */
@@ -2829,8 +2948,9 @@ let Routines =
   mapsPair,
 
   simplify,
-  simplifyDst, /* qqq : cover simplifyDst */
+  simplifyDst, /* qqq : cover simplifyDst | Dmytro : covered */
   simplifyInplace,
+  simplify_,
 
   mapDstFromSrc,
   mapDstFromDst,
