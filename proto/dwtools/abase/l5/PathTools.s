@@ -2234,7 +2234,6 @@ function simplify( src )
   let keys = _.mapKeys( src );
   if( keys.length === 0 )
   return '';
-  // Dmytro : missed deleting empty pairs
   if( keys.length !== 1 && keys.includes( '' ) && src[ '' ] === '' )
   delete src[ '' ];
 
