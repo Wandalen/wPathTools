@@ -23581,29 +23581,76 @@ function simplifyWithDst_( test )
 
 function mapDstFromDst( test )
 {
-  let path = _.path;
+  test.case = 'null';
+  var exp = [];
+  var src = null;
+  var got = _.path.mapDstFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
 
-  test.case = '.';
+  test.case = 'boolean';
+  var exp = [ true ];
+  var src = true;
+  var got = _.path.mapDstFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'dot';
   var exp = [ '.' ];
   var src = '.';
-  var got = path.mapDstFromDst( src );
+  var got = _.path.mapDstFromDst( src );
   test.identical( got, exp );
   test.is( got !== src );
 
-  test.case = 'str';
+  test.case = 'string';
   var exp = [ '/dst' ];
   var src = '/dst';
-  var got = path.mapDstFromDst( src );
+  var got = _.path.mapDstFromDst( src );
   test.identical( got, exp );
   test.is( got !== src );
 
-  test.case = 'arr';
+  test.case = 'array';
   var exp = [ '/dst1', '/dst2' ];
   var src = [ '/dst1', '/dst2' ];
-  var got = path.mapDstFromDst( src );
+  var got = _.path.mapDstFromDst( src );
   test.identical( got, exp );
   test.is( got !== src );
 
+  test.case = 'Map';
+  var exp = [ new Map( [ [ 'str', 'str' ] ] ) ];
+  var src = new Map( [ [ 'str', 'str' ] ] );
+  var got = _.path.mapDstFromDst( src );
+  test.identical( [ ... got[ 0 ].entries() ], [ ... exp[ 0 ].entries() ] );
+  test.is( got !== src );
+
+  test.case = 'map, flat values';
+  var exp = [ 'a', 'd' ];
+  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd' };
+  var got = _.path.mapDstFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values';
+  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], };
+  var got = _.path.mapDstFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => _.path.mapDstFromDst() );
+
+  test.case = 'extra arguments';
+  test.shouldThrowErrorSync( () => _.path.mapDstFromDst( '/str', 'extra' ) );
+
+  test.case = 'wrong type of pathMap';
+  test.shouldThrowErrorSync( () => _.path.mapDstFromDst( undefined ) );
+  test.shouldThrowErrorSync( () => _.path.mapDstFromDst( _.argumentsArrayMake( [ '/str' ] ) ) );
 }
 
 // --
