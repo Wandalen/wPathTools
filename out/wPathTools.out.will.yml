@@ -6,12 +6,13 @@ consistency:
     hash: 71cac02773dc9953906b8e6fb55c9ffd
     size: 1950
   ../.im.will.yml: &ref_1
-    hash: ab3a2ce783433cca0dc2d1557e2f88df
-    size: 5115
+    hash: 2f9c0c49bd8b007224475ef3f7e3fb97
+    size: 5189
 module:
   wPathTools.out:
     about:
       name: wPathTools
+      org: noorg
       description: >-
         Collection of routines to operate paths reliably and consistently.
         Implements routines for manipulating paths maps and globing. Extends
@@ -67,9 +68,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wPathTools.git'
       origins:
@@ -79,15 +77,15 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/wPathTools/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: .
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - ../package-lock.json
+          - ../package.json
+          - ../node_modules
       proto:
         path: ../proto
       export:
@@ -152,11 +150,13 @@ module:
         path: '{path::out.*=}/source/Index.s'
       exported.dir.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path: ../proto
       exported.files.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path:
@@ -351,6 +351,7 @@ module:
           prefixPath: ../proto
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
       exported.files.proto.export:
@@ -363,6 +364,7 @@ module:
         recursive: 0
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
     step:
@@ -809,6 +811,7 @@ module:
   ../:
     about:
       name: wPathTools
+      org: noorg
       description: >-
         Collection of routines to operate paths reliably and consistently.
         Implements routines for manipulating paths maps and globing. Extends
@@ -850,9 +853,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wPathTools.git'
       origins:
@@ -862,21 +862,21 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/wPathTools/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: out
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - package-lock.json
+          - package.json
+          - node_modules
       proto:
-        path: ./proto
+        path: proto
       export:
         path: '{path::proto}/**'
       doc:
-        path: ./doc
+        path: doc
       out.raw.debug:
         criterion:
           debug: debug
@@ -1508,5 +1508,5 @@ module:
         hash: 71cac02773dc9953906b8e6fb55c9ffd
         size: 1950
       ../.im.will.yml:
-        hash: ab3a2ce783433cca0dc2d1557e2f88df
-        size: 5115
+        hash: 2f9c0c49bd8b007224475ef3f7e3fb97
+        size: 5189
