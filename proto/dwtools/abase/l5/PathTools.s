@@ -2613,7 +2613,8 @@ function traceToRoot( filePath )
 
   _.assert( arguments.length === 1 );
 
-  filePath = self.detrail( filePath );
+  // filePath = self.detrail( filePath ); // Dmytro : cycled loop if path is absolute and has form '/..'
+  filePath = self.canonize( filePath );
 
   if( self.isAbsolute( filePath ) )
   {

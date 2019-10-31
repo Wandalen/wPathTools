@@ -10279,7 +10279,7 @@ function filterInplace( test )
 
 //
 
-function filterInplaceExtends( test )
+function filterInplaceExtendedCallbacks( test )
 {
   test.open( 'double' );
 
@@ -15131,7 +15131,7 @@ function filterWithDst_( test )
 
 //
 
-function filterExtends( test )
+function filterExtendedCallbacks( test )
 {
   test.open( 'double' );
 
@@ -15915,6 +15915,7 @@ function filterExtends( test )
 /*
 qqq : sync test cases
 qqq : add single-argument test cases
+Dmytro : syncronized and added single-argument test cases
 */
 
 function mapExtend( test )
@@ -23640,47 +23641,47 @@ function traceToRoot( test )
 
   /* */
 
-  // test.case = 'one dir, dotted';
-  // var src = '/tmp/..';
-  // var got = _.path.traceToRoot( src );
-  // test.identical( got, [] );
-  //
-  // test.case = 'one dir, dotted, slash';
-  // var src = '/tmp/../';
-  // var got = _.path.traceToRoot( src );
-  // test.identical( got, [] );
-  //
-  // test.case = 'six dirs, dotted';
-  // var src = '/tmp/../tmp/../tmp/tmp';
-  // var got = _.path.traceToRoot( src );
-  // test.identical( got, [ '/tmp', '/tmp/tmp' ] );
-  //
-  // test.case = 'six dirs, dotted, slash';
-  // var src = '/tmp/../tmp/../tmp/tmp/';
-  // var got = _.path.traceToRoot( src );
-  // test.identical( got, [ '/tmp', '/tmp/tmp' ] );
+  test.case = 'one dir, dotted';
+  var src = '/tmp/..';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [] );
+
+  test.case = 'one dir, dotted, slash';
+  var src = '/tmp/../';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [] );
+
+  test.case = 'six dirs, dotted';
+  var src = '/tmp/../tmp/../tmp/tmp';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/tmp', '/tmp/tmp' ] );
+
+  test.case = 'six dirs, dotted, slash';
+  var src = '/tmp/../tmp/../tmp/tmp/';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/tmp', '/tmp/tmp' ] );
 
   /* */
 
   test.case = 'one dir, dotted';
   var src = './tmp/..';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ 'tmp/..' ] );
+  test.identical( got, [] );
 
   test.case = 'one dir, dotted, slash';
   var src = './tmp/../';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ 'tmp/..' ] );
+  test.identical( got, [] );
 
   test.case = 'six dirs, dotted';
   var src = './tmp/../tmp/../tmp/tmp';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ 'tmp', 'tmp/../tmp/../tmp/tmp' ] );
+  test.identical( got, [ 'tmp', 'tmp/tmp' ] );
 
   test.case = 'six dirs, dotted, slash';
   var src = './tmp/../tmp/../tmp/tmp/';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ 'tmp', 'tmp/../tmp/../tmp/tmp' ] );
+  test.identical( got, [ 'tmp', 'tmp/tmp' ] );
 }
 
 //
@@ -24871,9 +24872,9 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     filterPairsInplace_,
     filterPairsWithDst_,
     filterInplace,
-    filterInplaceExtends, /* qqq : ? */
+    filterInplaceExtendedCallbacks, /* qqq : ? */
     filter,
-    filterExtends,
+    filterExtendedCallbacks,
     filter_,
     filterInplace_,
     filterWithDst_,
