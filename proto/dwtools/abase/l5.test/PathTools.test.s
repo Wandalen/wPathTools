@@ -23623,6 +23623,19 @@ function mapDstFromSrc( test )
   test.identical( got, exp );
   test.is( got !== src );
 
+  test.case = 'constructor, has not own properties';
+  var Constr = function()
+  {
+    this.a = '/str';
+    return this;
+  };
+  Constr.prototype.b = '';
+  var exp = [ null ];
+  var src = new Constr();
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
   test.case = 'empty map';
   var exp = [];
   var src = {};
@@ -23707,6 +23720,19 @@ function mapDstFromDst( test )
   var src = new Map( [ [ 'str', 'str' ] ] );
   var got = _.path.mapDstFromDst( src );
   test.identical( [ ... got[ 0 ].entries() ], [ ... exp[ 0 ].entries() ] );
+  test.is( got !== src );
+
+  test.case = 'constructor, has not own properties';
+  var Constr = function()
+  {
+    this.a = '/str';
+    return this;
+  };
+  Constr.prototype.b = '';
+  var exp = [ new Constr() ];
+  var src = new Constr();
+  var got = _.path.mapDstFromDst( src );
+  test.identical( got, exp );
   test.is( got !== src );
 
   test.case = 'empty map';
@@ -23799,6 +23825,19 @@ function mapSrcFromSrc( test )
   test.identical( [ ... got[ 0 ].entries() ], [ ... exp[ 0 ].entries() ] );
   test.is( got !== src );
 
+  test.case = 'constructor, has not own properties';
+  var Constr = function()
+  {
+    this.a = '/str';
+    return this;
+  };
+  Constr.prototype.b = '';
+  var exp = [ new Constr() ];
+  var src = new Constr();
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
   test.case = 'empty map';
   var exp = [];
   var src = {};
@@ -23885,6 +23924,19 @@ function mapSrcFromDst( test )
   test.case = 'Map';
   var exp = [ null ];
   var src = new Map( [ [ 'str', 'str' ] ] );
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'constructor, has not own properties';
+  var Constr = function()
+  {
+    this.a = '/str';
+    return this;
+  };
+  Constr.prototype.b = '';
+  var exp = [ null ];
+  var src = new Constr();
   var got = _.path.mapSrcFromDst( src );
   test.identical( got, exp );
   test.is( got !== src );

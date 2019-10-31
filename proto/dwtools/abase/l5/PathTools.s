@@ -2484,6 +2484,7 @@ function simplify_( dst, src )
 
 /*
 qqq : make pathMap*From* optimal and add tests
+Dmytro : improved, added tests
 */
 
 function mapDstFromSrc( pathMap )
