@@ -2599,18 +2599,39 @@ function mapSrcFromSrc( pathMap )
   _.assert( arguments.length === 1 );
 
   if( !_.mapIs( pathMap ) )
-  if( pathMap === null )
-  return [];
-  else
-  return _.arrayAsShallowing( pathMap );
+  {
+    if( pathMap === null )
+    return [];
+    else
+    return _.arrayAsShallowing( pathMap );
+  }
 
-  // if( !_.mapIs( pathMap ) )
-  // return _.arrayAs( pathMap );
+  let result = [];
 
-  pathMap = this.mapExtend( null, pathMap );
+  for( let k in pathMap )
+  if( k !== '' || ( pathMap[ k ] !== '' && pathMap[ k ] !== null ) )
+  result.push( k );
 
-  return _.mapKeys( pathMap )
+  return result;
 }
+
+// function mapSrcFromSrc( pathMap )
+// {
+//   _.assert( arguments.length === 1 );
+//
+//   if( !_.mapIs( pathMap ) )
+//   if( pathMap === null )
+//   return [];
+//   else
+//   return _.arrayAsShallowing( pathMap );
+//
+//   // if( !_.mapIs( pathMap ) )
+//   // return _.arrayAs( pathMap );
+//
+//   pathMap = this.mapExtend( null, pathMap );
+//
+//   return _.mapKeys( pathMap )
+// }
 
 //
 
