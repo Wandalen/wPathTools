@@ -23623,16 +23623,30 @@ function mapDstFromSrc( test )
   test.identical( got, exp );
   test.is( got !== src );
 
+  test.case = 'empty map';
+  var exp = [];
+  var src = {};
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
   test.case = 'map, flat values';
-  var exp = [ 'a', 'd' ];
-  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd' };
+  var exp = [ 'a', 'd', false ];
+  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd', '' : false };
   var got = _.path.mapDstFromSrc( src );
   test.identical( got, exp );
   test.is( got !== src );
 
   test.case = 'map, arrays in values';
-  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e' ];
-  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], };
+  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e', '' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : '' };
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values, null';
+  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e', null ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : null };
   var got = _.path.mapDstFromSrc( src );
   test.identical( got, exp );
   test.is( got !== src );
@@ -23695,16 +23709,30 @@ function mapDstFromDst( test )
   test.identical( [ ... got[ 0 ].entries() ], [ ... exp[ 0 ].entries() ] );
   test.is( got !== src );
 
+  test.case = 'empty map';
+  var exp = [];
+  var src = {};
+  var got = _.path.mapDstFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
   test.case = 'map, flat values';
-  var exp = [ 'a', 'd' ];
-  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd' };
+  var exp = [ 'a', 'd', false ];
+  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd', '' : false };
   var got = _.path.mapDstFromDst( src );
   test.identical( got, exp );
   test.is( got !== src );
 
   test.case = 'map, arrays in values';
-  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e' ];
-  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], };
+  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e', '' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : '' };
+  var got = _.path.mapDstFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values, null';
+  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e', null ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : null };
   var got = _.path.mapDstFromDst( src );
   test.identical( got, exp );
   test.is( got !== src );
@@ -23723,6 +23751,96 @@ function mapDstFromDst( test )
   test.case = 'wrong type of pathMap';
   test.shouldThrowErrorSync( () => _.path.mapDstFromDst( undefined ) );
   test.shouldThrowErrorSync( () => _.path.mapDstFromDst( _.argumentsArrayMake( [ '/str' ] ) ) );
+}
+
+//
+
+function mapSrcFromSrc( test )
+{
+  test.case = 'null';
+  var exp = [];
+  var src = null;
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'boolean';
+  var exp = [ true ];
+  var src = true;
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'dot';
+  var exp = [ '.' ];
+  var src = '.';
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'string';
+  var exp = [ '/dst' ];
+  var src = '/dst';
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'array';
+  var exp = [ '/dst1', '/dst2' ];
+  var src = [ '/dst1', '/dst2' ];
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'Map';
+  var exp = [ new Map( [ [ 'str', 'str' ] ] ) ];
+  var src = new Map( [ [ 'str', 'str' ] ] );
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( [ ... got[ 0 ].entries() ], [ ... exp[ 0 ].entries() ] );
+  test.is( got !== src );
+
+  test.case = 'empty map';
+  var exp = [];
+  var src = {};
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, flat values';
+  var exp = [ 'a', 'b', 'c', '' ];
+  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd', '' : false };
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values';
+  var exp = [ 'a', 'b', 'cc', 'c' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : '' };
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values, null';
+  var exp = [ 'a', 'b', 'cc', 'c' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : null };
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc() );
+
+  test.case = 'extra arguments';
+  test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc( '/str', 'extra' ) );
+
+  test.case = 'wrong type of pathMap';
+  test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc( undefined ) );
+  test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc( _.argumentsArrayMake( [ '/str' ] ) ) );
 }
 
 // --
@@ -25012,6 +25130,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     simplifyWithDst_,
     mapDstFromSrc,
     mapDstFromDst,
+    mapSrcFromSrc,
 
     // etc
 
