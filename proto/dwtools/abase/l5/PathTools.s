@@ -2971,11 +2971,11 @@ let Routines =
   // etc
 
   // areBasePathsEquivalent,
-  traceToRoot, /* qqq : add basic test coverage */
+  traceToRoot, /* qqq : add basic test coverage | Dmytro : basic test coverage added */
   group,
   mapGroupByDst,
   setOptimize, /* xxx : deprecate maybe? */
-  mapOptimize, /* qqq : cover please */
+  mapOptimize, /* qqq : cover please | Dmytro : coverage is extended */
 
 }
 

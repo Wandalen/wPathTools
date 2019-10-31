@@ -23944,6 +23944,14 @@ function mapOptimize( test )
 {
   let path = _.path;
 
+  /* */
+
+  test.case = 'filePath is string';
+  var filePath = '/path/path';
+  var got = path.mapOptimize( filePath );
+  var expected = { '/path/path' : '' };
+  test.identical( got, expected );
+
   /* - */
 
   test.open( 'all levels, relative' );
@@ -24009,6 +24017,90 @@ function mapOptimize( test )
   test.identical( got, expected );
 
   test.close( 'all levels, relative' );
+
+  /* - */
+
+  test.open( 'all levels, boolean' );
+
+  test.case = 'direct order';
+  var filePath =
+  {
+    "module1" : true,
+    "module1/ami" : false,
+    "module1/amid" : true,
+    "module1/amid/dir" : false,
+    "module1/amid/dir/terminal" : true,
+    "module1/amid/dir2" : false,
+    "module2" : true,
+    "module2/amid" : false
+  }
+  var expected =
+  {
+    "module1" : true,
+    "module1/ami" : false,
+    "module1/amid" : true,
+    "module1/amid/dir" : false,
+    "module1/amid/dir/terminal" : true,
+    "module1/amid/dir2" : false,
+    "module2" : true,
+    "module2/amid" : false
+  };
+  var got = path.mapOptimize( filePath );
+  test.identical( got, expected );
+
+  test.case = 'revers order';
+  var filePath =
+  {
+    "module2/amid" : true,
+    "module2" : false,
+    "module1/amid/dir2" : true,
+    "module1/amid/dir/terminal" : false,
+    "module1/amid/dir" : true,
+    "module1/amid" : false,
+    "module1/ami" : true,
+    "module1" : false
+  }
+  var expected =
+  {
+    "module2/amid" : true,
+    "module2" : false,
+    "module1/amid/dir2" : true,
+    "module1/amid/dir/terminal" : false,
+    "module1/amid/dir" : true,
+    "module1/amid" : false,
+    "module1/ami" : true,
+    "module1" : false
+  };
+  var got = path.mapOptimize( filePath );
+  test.identical( got, expected );
+
+  test.case = 'no order';
+  var filePath =
+  {
+    "module1/amid/dir/terminal" : false,
+    "module2/amid" : true,
+    "module1/amid/dir2" : true,
+    "module1/amid/dir" : true,
+    "module2" : false,
+    "module1/amid" : false,
+    "module1" : false,
+    "module1/ami" : true,
+  };
+  var expected =
+  {
+    "module2/amid" : true,
+    "module2" : false,
+    "module1/amid/dir2" : true,
+    "module1/amid/dir/terminal" : false,
+    "module1/amid/dir" : true,
+    "module1/amid" : false,
+    "module1/ami" : true,
+    "module1" : false
+  };
+  var got = path.mapOptimize( filePath );
+  test.identical( got, expected );
+
+  test.close( 'all levels, boolean' );
 
   /* - */
 
@@ -24246,6 +24338,330 @@ function mapOptimize( test )
 
   /* - */
 
+  test.open( 'same keys in filePath and basePath, same order' );
+
+  test.case = 'direct order';
+  var filePath =
+  {
+    "module1" : `.`,
+    "module1/ami" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module2" : `.`,
+    "module2/amid" : `.`,
+  };
+  var basePath =
+  {
+    "module1" : `.`,
+    "module1/ami" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module2" : `.`,
+    "module2/amid" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  debugger;
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expected );
+
+  test.case = 'revers order';
+  var filePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  }
+  var basePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expected );
+
+  test.case = 'no order';
+  var filePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  };
+  var basePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expected );
+
+  test.close( 'same keys in filePath and basePath, same order' );
+
+  /* - */
+
+  test.open( 'same keys in filePath and basePath, opposite order' );
+
+  test.case = 'direct order';
+  var filePath =
+  {
+    "module1" : `.`,
+    "module1/ami" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module2" : `.`,
+    "module2/amid" : `.`,
+  };
+  var basePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expected );
+
+  test.case = 'revers order';
+  var filePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  }
+  var basePath =
+  {
+    "module1" : `.`,
+    "module1/ami" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module2" : `.`,
+    "module2/amid" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expected );
+
+  test.case = 'no order';
+  var filePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  };
+  var basePath =
+  {
+    "module1" : `.`,
+    "module1/ami" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module2" : `.`,
+    "module2/amid" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expected );
+
+  test.close( 'same keys in filePath and basePath, opposite order' );
+
+  /* - */
+
+  test.open( 'different keys in filePath and basePath' );
+
+  test.case = 'direct order';
+  var filePath =
+  {
+    "module1" : `.`,
+    "module1/ami" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module2" : `.`,
+    "module2/amid" : `.`,
+  };
+  var basePath =
+  {
+    "module4/amid" : `.`,
+    "module4" : `.`,
+    "module3/amid/dir2" : `.`,
+    "module3/amid/dir/terminal" : `.`,
+    "module3/amid/dir" : `.`,
+    "module3/amid" : `.`,
+    "module3/ami" : `.`,
+    "module3" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var expectedBase = _.entityMake( basePath );
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expectedBase );
+
+  test.case = 'revers order';
+  var filePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  }
+  var basePath =
+  {
+    "module3" : `.`,
+    "module3/ami" : `.`,
+    "module3/amid" : `.`,
+    "module3/amid/dir" : `.`,
+    "module3/amid/dir/terminal" : `.`,
+    "module3/amid/dir2" : `.`,
+    "module4" : `.`,
+    "module4/amid" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var expectedBase = _.entityMake( basePath );
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expectedBase );
+
+  test.case = 'no order';
+  var filePath =
+  {
+    "module2/amid" : `.`,
+    "module2" : `.`,
+    "module1/amid" : `.`,
+    "module1/amid/dir2" : `.`,
+    "module1/amid/dir" : `.`,
+    "module1/amid/dir/terminal" : `.`,
+    "module1/ami" : `.`,
+    "module1" : `.`,
+  };
+  var basePath =
+  {
+    "module3" : `.`,
+    "module3/ami" : `.`,
+    "module3/amid" : `.`,
+    "module3/amid/dir/terminal" : `.`,
+    "module3/amid/dir" : `.`,
+    "module3/amid/dir2" : `.`,
+    "module4" : `.`,
+    "module4/amid" : `.`,
+  };
+  var expected =
+  {
+    'module1' : '.',
+    'module2' : '.',
+  };
+  var expectedBase = _.entityMake( basePath );
+  var got = path.mapOptimize( filePath, basePath );
+  test.identical( got, expected );
+  test.identical( basePath, expectedBase );
+
+  test.close( 'different keys in filePath and basePath' );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => path.mapOptimize() );
+
+  test.case = 'extra arguments';
+  test.shouldThrowErrorSync( () => path.mapOptimize( '/path', { '/a' : 'b' }, 'extra' ) );
+
+  test.case = 'wrong type of filePath';
+  test.shouldThrowErrorSync( () => path.mapOptimize( new Set(), 'wrong' ) );
+
+  test.case = 'wrong type of basePath';
+  test.shouldThrowErrorSync( () => path.mapOptimize( '/path', 'wrong' ) );
 }
 
 // --
