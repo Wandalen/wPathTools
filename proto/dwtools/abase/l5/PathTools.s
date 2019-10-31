@@ -1741,6 +1741,7 @@ function _mapExtend( o )
         let val = dstPathMap[ f ];
         // qqq : boolean should not override null neither ''
         //       check all cases
+        // Dmytro : routine not override null and '' if it contains in dstMap
         if( ( val === null || val === '' ) && !_.boolLike( o.dstPath ) )
         {
           dstPathMap[ f ] = o.dstPath;

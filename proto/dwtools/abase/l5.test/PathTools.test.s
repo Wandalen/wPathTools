@@ -17559,6 +17559,32 @@ function mapSupplement( test )
 
   /* - */
 
+  test.case = 'no override of empty string by boolean';
+  var expected = { '.' : '', '**/.git/**' : false };
+  var dstMap = { '.' : '' };
+  var srcMap = '**/.git/**';
+  var dstPath = false;
+  var got = path.mapSupplement( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  test.case = 'dst is map, src is null, dstPath is str';
+  var expected = { '/src' : '/dst' };
+  var dstMap = { '/src' : '/dst' };
+  var srcMap = null;
+  var dstPath = '/dst2';
+  var got = path.mapSupplement( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  test.case = 'dst is map with empty str in src, src is map with empty str in src, dstPath is str';
+  var expected = { '/src' : '/dst', '' : '/dst3' };
+  var dstMap = { '/src' : '/dst' };
+  var srcMap = { '' : '/dst3' };
+  var dstPath = '/dst2';
+  var got = path.mapSupplement( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  /* - */
+
   test.open( 'single argument' );
 
   test.case = 'null';
@@ -19133,6 +19159,32 @@ function mapAppend( test )
   let obj0 = new constr( 0 );
   let obj1 = new constr( 1 );
   let obj2 = new constr( 2 );
+
+  /* - */
+
+  test.case = 'no override of empty string by boolean';
+  var expected = { '.' : '', '**/.git/**' : false };
+  var dstMap = { '.' : '' };
+  var srcMap = '**/.git/**';
+  var dstPath = false;
+  var got = path.mapAppend( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  test.case = 'dst is map, src is null, dstPath is str';
+  var expected = { '/src' : '/dst' };
+  var dstMap = { '/src' : '/dst' };
+  var srcMap = null;
+  var dstPath = '/dst2';
+  var got = path.mapAppend( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  test.case = 'dst is map with empty str in src, src is map with empty str in src, dstPath is str';
+  var expected = { '/src' : '/dst', '' : '/dst3' };
+  var dstMap = { '/src' : '/dst' };
+  var srcMap = { '' : '/dst3' };
+  var dstPath = '/dst2';
+  var got = path.mapAppend( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
 
   /* - */
 
@@ -20763,7 +20815,33 @@ function mapPrepend( test )
   let obj1 = new constr( 1 );
   let obj2 = new constr( 2 );
 
-  /* xxx */
+  /* - */
+
+  test.case = 'no override of empty string by boolean';
+  var expected = { '.' : '', '**/.git/**' : false };
+  var dstMap = { '.' : '' };
+  var srcMap = '**/.git/**';
+  var dstPath = false;
+  var got = path.mapPrepend( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  test.case = 'dst is map, src is null, dstPath is str';
+  var expected = { '/src' : '/dst' };
+  var dstMap = { '/src' : '/dst' };
+  var srcMap = null;
+  var dstPath = '/dst2';
+  var got = path.mapPrepend( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  test.case = 'dst is map with empty str in src, src is map with empty str in src, dstPath is str';
+  var expected = { '/src' : '/dst', '' : '/dst3' };
+  var dstMap = { '/src' : '/dst' };
+  var srcMap = { '' : '/dst3' };
+  var dstPath = '/dst2';
+  var got = path.mapPrepend( dstMap, srcMap, dstPath );
+  test.identical( got, expected );
+
+  /* - */
 
   test.case = 'temp';
   var expected = { '/src' : '/dst' };
