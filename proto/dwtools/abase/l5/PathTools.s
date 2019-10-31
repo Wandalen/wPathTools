@@ -2640,15 +2640,14 @@ function mapSrcFromDst( pathMap )
   _.assert( arguments.length === 1 );
 
   if( !_.mapIs( pathMap ) )
-  if( pathMap === null )
-  return [];
-  else
-  return [ null ];
+  {
+    if( pathMap === null )
+    return [];
+    else
+    return [ null ];
+  }
 
-  // if( !_.mapIs( pathMap ) )
-  // return [];
-
-  return _.mapKeys( pathMap )
+  return _.mapKeys( pathMap );
 }
 
 // --

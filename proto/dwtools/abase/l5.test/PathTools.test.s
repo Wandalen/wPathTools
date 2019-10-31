@@ -23843,6 +23843,92 @@ function mapSrcFromSrc( test )
   test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc( _.argumentsArrayMake( [ '/str' ] ) ) );
 }
 
+//
+
+function mapSrcFromDst( test )
+{
+  test.case = 'null';
+  var exp = [];
+  var src = null;
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'boolean';
+  var exp = [ null ];
+  var src = true;
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'dot';
+  var exp = [ null ];
+  var src = '.';
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'string';
+  var exp = [ null ];
+  var src = '/dst';
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'array';
+  var exp = [ null ];
+  var src = [ '/dst1', '/dst2' ];
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'Map';
+  var exp = [ null ];
+  var src = new Map( [ [ 'str', 'str' ] ] );
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'empty map';
+  var exp = [];
+  var src = {};
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, flat values';
+  var exp = [ 'a', 'b', 'c', '' ];
+  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd', '' : false };
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values';
+  var exp = [ 'a', 'b', 'cc', 'c', '' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : '' };
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values, null';
+  var exp = [ 'a', 'b', 'cc', 'c', '' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], '' : null };
+  var got = _.path.mapSrcFromDst( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => _.path.mapSrcFromDst() );
+
+  test.case = 'extra arguments';
+  test.shouldThrowErrorSync( () => _.path.mapSrcFromDst( '/str', 'extra' ) );
+}
+
 // --
 // etc
 // --
@@ -25131,6 +25217,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     mapDstFromSrc,
     mapDstFromDst,
     mapSrcFromSrc,
+    mapSrcFromDst,
 
     // etc
 
