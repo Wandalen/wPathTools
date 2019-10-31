@@ -2490,31 +2490,56 @@ function mapDstFromSrc( pathMap )
 {
   _.assert( arguments.length === 1 );
 
-  // if( _.strIs( pathMap ) )
-  // return [ null ];
-
-  // if( !_.mapIs( pathMap ) ) // yyy
-  // return [ null ];
-
   if( !_.mapIs( pathMap ) )
-  if( pathMap === null )
-  return [];
-  else
-  return [ null ];
-
-  let result = _.mapVals( pathMap );
-
-  result = _.filter( result, ( e ) =>
   {
-    if( _.arrayIs( e ) )
-    return _.unrollFrom( e );
-    return e;
-  });
+    if( pathMap === null )
+    return [];
+    else
+    return [ null ];
+  }
 
-  result = _.arrayAppendArrayOnce( null, result );
+  let result = [];
+
+  for( let k in pathMap )
+  {
+    if( _.arrayIs( pathMap[ k ] ) )
+    _.arrayAppendArrayOnce( result, pathMap[ k ] );
+    else
+    _.arrayAppendOnce( result, pathMap[ k ] );
+  }
 
   return result;
 }
+
+// function mapDstFromSrc( pathMap )
+// {
+//   _.assert( arguments.length === 1 );
+//
+//   // if( _.strIs( pathMap ) )
+//   // return [ null ];
+//
+//   // if( !_.mapIs( pathMap ) ) // yyy
+//   // return [ null ];
+//
+//   if( !_.mapIs( pathMap ) )
+//   if( pathMap === null )
+//   return [];
+//   else
+//   return [ null ];
+//
+//   let result = _.mapVals( pathMap );
+//
+//   result = _.filter( result, ( e ) =>
+//   {
+//     if( _.arrayIs( e ) )
+//     return _.unrollFrom( e );
+//     return e;
+//   });
+//
+//   result = _.arrayAppendArrayOnce( null, result );
+//
+//   return result;
+// }
 
 //
 
@@ -2527,7 +2552,7 @@ function mapDstFromDst( pathMap )
     if( pathMap === null )
     return [];
     else
-    return _.arrayAsShallowing( pathMap );    
+    return _.arrayAsShallowing( pathMap );
   }
 
   let result = [];
