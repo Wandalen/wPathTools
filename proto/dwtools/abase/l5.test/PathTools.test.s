@@ -23579,6 +23579,78 @@ function simplifyWithDst_( test )
 
 //
 
+function mapDstFromSrc( test )
+{
+  test.case = 'null';
+  var exp = [];
+  var src = null;
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'boolean';
+  var exp = [ null ];
+  var src = true;
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'dot';
+  var exp = [ null ];
+  var src = '.';
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'string';
+  var exp = [ null ];
+  var src = '/dst';
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'array';
+  var exp = [ null ];
+  var src = [ '/dst1', '/dst2' ];
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'Map';
+  var exp = [ null ];
+  var src = new Map( [ [ 'str', 'str' ] ] );
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, flat values';
+  var exp = [ 'a', 'd' ];
+  var src = { 'a' : 'a', 'b' : 'a', 'c' : 'd' };
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  test.case = 'map, arrays in values';
+  var exp = [ 'a', 'b', 'c', 'cc', 'd', 'e' ];
+  var src = { 'a' : [ 'a', 'b', 'c' ], 'b' : [ 'a', 'b', 'c' ], 'cc' : 'cc', 'c' : [ 'd', 'd', 'e' ], };
+  var got = _.path.mapDstFromSrc( src );
+  test.identical( got, exp );
+  test.is( got !== src );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => _.path.mapDstFromSrc() );
+
+  test.case = 'extra arguments';
+  test.shouldThrowErrorSync( () => _.path.mapDstFromSrc( '/str', 'extra' ) );
+}
+
+//
+
 function mapDstFromDst( test )
 {
   test.case = 'null';
@@ -24938,6 +25010,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     simplify_,
     simplifyInplace_,
     simplifyWithDst_,
+    mapDstFromSrc,
     mapDstFromDst,
 
     // etc
