@@ -1624,7 +1624,7 @@ function isEmpty( src )
     if( src.length === 0 )
     return true;
     if( src.length === 1 )
-    if( src[ 0 ] === null || src[ 0 ] === '' || src[ 0 ] === '.' ) // qqq zzz : refactor to remove dot case | uncomment routine above, please
+    if( src[ 0 ] === null || src[ 0 ] === '' || src[ 0 ] === '.' ) // qqq zzz : refactor to remove dot case | Dmytro : uncomment routine above, please
     return true;
     return false;
   }
