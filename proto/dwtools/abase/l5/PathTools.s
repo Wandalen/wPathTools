@@ -2523,24 +2523,49 @@ function mapDstFromDst( pathMap )
   _.assert( arguments.length === 1 );
 
   if( !_.mapIs( pathMap ) )
-  if( pathMap === null )
-  return [];
-  else
-  return _.arrayAsShallowing( pathMap );
-
-  let result = _.mapVals( pathMap );
-
-  result = _.filter( result, ( e ) =>
   {
-    if( _.arrayIs( e ) )
-    return _.unrollFrom( e );
-    return e;
-  });
+    if( pathMap === null )
+    return [];
+    else
+    return _.arrayAsShallowing( pathMap );    
+  }
 
-  result = _.arrayAppendArrayOnce( null, result );
+  let result = [];
+
+  for( let k in pathMap )
+  {
+    if( _.arrayIs( pathMap[ k ] ) )
+    _.arrayAppendArrayOnce( result, pathMap[ k ] );
+    else
+    _.arrayAppendOnce( result, pathMap[ k ] );
+  }
 
   return result;
 }
+
+// function mapDstFromDst( pathMap )
+// {
+//   _.assert( arguments.length === 1 );
+//
+//   if( !_.mapIs( pathMap ) )
+//   if( pathMap === null )
+//   return [];
+//   else
+//   return _.arrayAsShallowing( pathMap );
+//
+//   let result = _.mapVals( pathMap );
+//
+//   result = _.filter( result, ( e ) =>
+//   {
+//     if( _.arrayIs( e ) )
+//     return _.unrollFrom( e );
+//     return e;
+//   });
+//
+//   result = _.arrayAppendArrayOnce( null, result );
+//
+//   return result;
+// }
 
 //
 
