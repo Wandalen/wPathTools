@@ -955,10 +955,6 @@ function filterInplace( filePath, onEach )
 
 //
 
-/*
-  Dmytro : added codition if( dst.length === 0 ) in map
-*/
-
 function filter( filePath, onEach )
 {
   let self = this;
@@ -1611,6 +1607,7 @@ function isEmpty( src )
 /*
 qqq kos : extend tests for routine mapExtend
 qqq kos : cover single argument cases for routine mapExtend
+Dmytro : coverage is extended, added test cases with single arguments
 */
 
 function _mapExtend( o )
@@ -1932,6 +1929,7 @@ _mapExtend.defaults =
 /*
 
 qqq : implement _.path.mapSupplement, _.path.mapAppend, _.path.mapPrepend
+Dmytro : implemented and covered
 
 test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
 var expected = { "" : "/dst" };

@@ -15956,17 +15956,41 @@ function mapExtend( test )
   var got = path.mapExtend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
 
-  test.case = 'single string';
+  /* - */
+
+  test.open( 'single argument' );
+
+  test.case = 'null';
+  var expected = {};
+  var dstMap = null;
+  var got = path.mapExtend( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'empty string';
+  var expected = {};
+  var dstMap = '';
+  var got = path.mapExtend( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'string';
   var expected = { '/src' : '' };
   var dstMap = '/src';
   var got = path.mapExtend( dstMap );
   test.identical( got, expected );
 
-  test.case = 'single string';
-  var expected = { '/src' : '' };
-  var dstMap = { '/src' : null };
+  test.case = 'array';
+  var expected = { 'null' : '', 'false' : '', 'true' : '', 'str' : '' };
+  var dstMap = [ null, '', false, true, 'str' ];
   var got = path.mapExtend( dstMap );
   test.identical( got, expected );
+
+  test.case = 'map';
+  var expected = { '/src' : '', '/false' : false, '/true' : true, '/string' : 'str' };
+  var dstMap = { '/src' : null, '' : '', '/false' : false, '/true' : true, '/string' : 'str' };
+  var got = path.mapExtend( dstMap );
+  test.identical( got, expected );
+
+  test.close( 'single argument' );
 
   /* - */
 
@@ -16176,7 +16200,6 @@ function mapExtend( test )
   test.identical( got, expected );
 
   test.case = 'dstMap=map, srcMap=str, dstPath=null';
-  // var expected = { '/src' : '/dst' }
   var expected = { '/src' : '' }
   var dstMap = { '/src' : '/dst' };
   var srcMap = '/src';
@@ -16829,6 +16852,13 @@ function mapExtend( test )
   var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, [ '', null, '' ], true );
+  test.identical( got, expected );
+  test.is( got === dst );
+
+  test.case = 'src:null, dstPath:true';
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var got = path.mapExtend( dst, { '/Null' : null }, true );
   test.identical( got, expected );
   test.is( got === dst );
 
@@ -17526,6 +17556,42 @@ function mapSupplement( test )
   let obj0 = new constr( 0 );
   let obj1 = new constr( 1 );
   let obj2 = new constr( 2 );
+
+  /* - */
+
+  test.open( 'single argument' );
+
+  test.case = 'null';
+  var expected = {};
+  var dstMap = null;
+  var got = path.mapSupplement( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'empty string';
+  var expected = {};
+  var dstMap = '';
+  var got = path.mapSupplement( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'string';
+  var expected = { '/src' : '' };
+  var dstMap = '/src';
+  var got = path.mapSupplement( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'array';
+  var expected = { 'null' : '', 'false' : '', 'true' : '', 'str' : '' };
+  var dstMap = [ null, '', false, true, 'str' ];
+  var got = path.mapSupplement( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'map';
+  var expected = { '/src' : '', '/false' : false, '/true' : true, '/string' : 'str' };
+  var dstMap = { '/src' : null, '' : '', '/false' : false, '/true' : true, '/string' : 'str' };
+  var got = path.mapSupplement( dstMap );
+  test.identical( got, expected );
+
+  test.close( 'single argument' );
 
   /* - */
 
@@ -19068,7 +19134,43 @@ function mapAppend( test )
   let obj1 = new constr( 1 );
   let obj2 = new constr( 2 );
 
-  /* xxx */
+  /* - */
+
+  test.open( 'single argument' );
+
+  test.case = 'null';
+  var expected = {};
+  var dstMap = null;
+  var got = path.mapAppend( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'empty string';
+  var expected = {};
+  var dstMap = '';
+  var got = path.mapAppend( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'string';
+  var expected = { '/src' : '' };
+  var dstMap = '/src';
+  var got = path.mapAppend( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'array';
+  var expected = { 'null' : '', 'false' : '', 'true' : '', 'str' : '' };
+  var dstMap = [ null, '', false, true, 'str' ];
+  var got = path.mapAppend( dstMap );
+  test.identical( got, expected );
+
+  test.case = 'map';
+  var expected = { '/src' : '', '/false' : false, '/true' : true, '/string' : 'str' };
+  var dstMap = { '/src' : null, '' : '', '/false' : false, '/true' : true, '/string' : 'str' };
+  var got = path.mapAppend( dstMap );
+  test.identical( got, expected );
+
+  test.close( 'single argument' );
+
+  /* - */
 
   test.case = 'temp';
   var expected = { '/src' : '/dst' };
