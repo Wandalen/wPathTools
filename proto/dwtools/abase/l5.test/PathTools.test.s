@@ -24872,7 +24872,6 @@ function mapOptimize( test )
     'module1' : '.',
     'module2' : '.',
   };
-  debugger;
   var got = path.mapOptimize( filePath, basePath );
   test.identical( got, expected );
   test.identical( basePath, expected );

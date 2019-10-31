@@ -2647,8 +2647,28 @@ function mapSrcFromDst( pathMap )
     return [ null ];
   }
 
-  return _.mapKeys( pathMap );
+  let result = [];
+
+  for( let k in pathMap )
+  result.push( k );
+
+  return result;
 }
+
+// function mapSrcFromDst( pathMap )
+// {
+//   _.assert( arguments.length === 1 );
+//
+//   if( !_.mapIs( pathMap ) )
+//   {
+//     if( pathMap === null )
+//     return [];
+//     else
+//     return [ null ];
+//   }
+//
+//   return _.mapKeys( pathMap );
+// }
 
 // --
 // etc
