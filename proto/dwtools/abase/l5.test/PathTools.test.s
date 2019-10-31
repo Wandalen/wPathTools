@@ -15912,6 +15912,103 @@ function filterExtendedCallbacks( test )
 
 //
 
+function isEmpty( test )
+{
+  test.case = 'null';
+  var src = null;
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  test.case = 'empty string';
+  var src = '';
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  test.case = 'string';
+  var src = '/src';
+  var got = _.path.isEmpty( src );
+  test.identical( got, false );
+
+  // test.case = 'dot';
+  // var src = '.';
+  // var got = _.path.isEmpty( src );
+  // test.identical( got, false );
+
+  test.case = 'empty array';
+  var src = [];
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  test.case = 'array.length === 1, null';
+  var src = [ null ];
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  test.case = 'array.length === 1, empty string';
+  var src = [ '' ];
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  // test.case = 'array.length === 1, dot';
+  // var src = [ '.' ];
+  // var got = _.path.isEmpty( src );
+  // test.identical( got, false );
+
+  test.case = 'array.length === 1, string';
+  var src = [ '/src' ];
+  var got = _.path.isEmpty( src );
+  test.identical( got, false );
+
+  test.case = 'empty map';
+  var src = {};
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  test.case = 'map, key - empty string, null';
+  var src = { '' : null };
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  test.case = 'map, key - empty string, empty string';
+  var src = { '' : '' };
+  var got = _.path.isEmpty( src );
+  test.identical( got, true );
+
+  // test.case = 'map, key - dot, null';
+  // var src = { '.' : null };
+  // var got = _.path.isEmpty( src );
+  // test.identical( got, false );
+  //
+  // test.case = 'map, key - dot, empty string';
+  // var src = { '.' : '' };
+  // var got = _.path.isEmpty( src );
+  // test.identical( got, false );
+
+  test.case = 'map, key - string';
+  var src = { '/src' : '' };
+  var got = _.path.isEmpty( src );
+  test.identical( got, false );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'without arguments';
+  test.shouldThrowErrorSync( () => _.path.isEmpty() );
+
+  test.case = 'extra arguments';
+  test.shouldThrowErrorSync( () => _.path.isEmpty( '/dir', 'extra' ) );
+
+  test.case = 'wrong type of src';
+  test.shouldThrowErrorSync( () => _.path.isEmpty( new Set() ) );
+  test.shouldThrowErrorSync( () => _.path.isEmpty( _.argumentsArrayMake( [] ) ) );
+  var Constr = function(){ this.a = ''; return this };
+  test.shouldThrowErrorSync( () => _.path.isEmpty( new Constr() ) );
+}
+
+//
+
 /*
 qqq : sync test cases
 qqq : add single-argument test cases
@@ -25253,18 +25350,21 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     filterInplace_,
     filterWithDst_,
 
+    isEmpty,
     mapExtend,
     mapSupplement,
     mapAppend,
     mapAppendExperiment,
     mapPrepend,
     mapsPair,
+
     simplify,
     simplifyDst,
     simplifyInplace,
     simplify_,
     simplifyInplace_,
     simplifyWithDst_,
+
     mapDstFromSrc,
     mapDstFromDst,
     mapSrcFromSrc,

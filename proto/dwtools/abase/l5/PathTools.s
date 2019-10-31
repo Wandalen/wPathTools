@@ -1570,7 +1570,41 @@ function none( filePath, onEach )
 
 /*
 qqq : implement good tests for routine isEmpty
+Dmytro : implemented good tests. Uncomment refactored routine below, and uncomment test cases in test routine, please
 */
+
+// function isEmpty( src )
+// {
+//   let self = this;
+//
+//   _.assert( arguments.length === 1 );
+//
+//   if( src === null || src === '' )
+//   return true;
+//   else if( _.strIs( src ) )
+//   return false;
+//   else if( _.arrayIs( src ) )
+//   {
+//     if( src.length === 0 )
+//     return true;
+//     if( src.length === 1 )
+//     if( src[ 0 ] === null || src[ 0 ] === '' )
+//     return true;
+//     return false;
+//   }
+//   else if( _.mapIs( src ) )
+//   {
+//     let keys = _.mapKeys( src );
+//     if( keys.length === 0 )
+//     return true;
+//     if( keys.length === 1 )
+//     if( src[ '' ] === null || src[ '' ] === '' )
+//     return true;
+//     return false;
+//   }
+//   else
+//   _.assert( 0 );
+// }
 
 function isEmpty( src )
 {
@@ -1590,13 +1624,15 @@ function isEmpty( src )
     if( src.length === 0 )
     return true;
     if( src.length === 1 )
-    if( src[ 0 ] === null || src[ 0 ] === '' || src[ 0 ] === '.' ) // qqq zzz : refactor to remove dot case
+    if( src[ 0 ] === null || src[ 0 ] === '' || src[ 0 ] === '.' ) // qqq zzz : refactor to remove dot case | uncomment routine above, please
     return true;
     return false;
   }
 
+  if( _.mapKeys( src ).length === 0 ) // Dmytro : missed
+  return true;
   if( _.mapKeys( src ).length === 1 )
-  if( src[ '.' ] === null || src[ '.' ] === '' || src[ '' ] === null || src[ '' ] === '' ) // qqq zzz : refactor to remove dot
+  if( src[ '.' ] === null || src[ '.' ] === '' || src[ '' ] === null || src[ '' ] === '' ) // qqq zzz : refactor to remove dot | Dmytro : uncomment routine above, please
   return true;
 
   return false;
