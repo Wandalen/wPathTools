@@ -429,7 +429,7 @@ function _filterPairsInplace( o )
     src = '';
     if( dst === null )
     dst = '';
-    _.assert( container[ src ] === undefined );
+    _.assert( container[ src ] === undefined || container[ src ] === dst );
     _.assert( _.strIs( src ) );
     _.assert( _.strIs( dst ) || _.arrayIs( dst ) );
     container[ src ] = dst;
