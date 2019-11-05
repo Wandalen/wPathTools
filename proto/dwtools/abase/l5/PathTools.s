@@ -262,7 +262,8 @@ function filterPairs( filePath, onEach )
 
 //
 
-function filterPairsInplace( filePath, onEach )
+// function _filterPairsInplace( filePath, onEach )
+function _filterPairsInplace( o )
 {
   let result = Object.create( null );
   let hasDst = false;
@@ -271,29 +272,33 @@ function filterPairsInplace( filePath, onEach )
   it.src = '';
   it.dst = '';
 
-  _.assert( arguments.length === 2 );
-  _.assert( filePath === null || _.strIs( filePath ) || _.arrayIs( filePath ) || _.mapIs( filePath ) );
-  _.routineIs( onEach );
+  _.routineOptions( _filterPairsInplace, arguments );
+  _.assert( arguments.length === 1 );
+  _.assert( o.filePath === null || _.strIs( o.filePath ) || _.arrayIs( o.filePath ) || _.mapIs( o.filePath ) );
+  _.routineIs( o.onEach );
 
-  if( _.strIs( filePath ) || filePath === null )
+  if( _.strIs( o.filePath ) || o.filePath === null )
   {
-    if( filePath === null )
-    filePath = '';
-    it.src = filePath;
-    let r = onEach( it );
-    elementsWrite( result, it, r );
-    filePath = normalizeArray ( _.mapKeys( result ) );
-    if( filePath.length === 0 )
-    return '';
-    if( filePath. length === 1 )
-    return filePath[ 0 ];
+    if( o.filePath === null )
+    o.filePath = '';
+    if( o.isSrc )
+    it.src = o.filePath;
     else
-    return filePath;
+    it.dst = o.filePath;
+    let r = o.onEach( it );
+    elementsWrite( result, it, r );
+    o.filePath = normalizeArray( _.mapKeys( result ) );
+    if( o.filePath.length === 0 )
+    return '';
+    if( o.filePath. length === 1 )
+    return o.filePath[ 0 ];
+    else
+    return o.filePath;
   }
-  else if( _.arrayIs( filePath ) )
+  else if( _.arrayIs( o.filePath ) )
   {
-    let filePath2 = _.arrayAppendArraysOnce( [], filePath );
-    filePath.splice( 0, filePath.length );
+    let filePath2 = _.arrayAppendArraysOnce( [], o.filePath );
+    o.filePath.splice( 0, o.filePath.length );
     for( let p = 0 ; p < filePath2.length ; p++ )
     {
       it.src = filePath2[ p ];
@@ -304,19 +309,19 @@ function filterPairsInplace( filePath, onEach )
       }
       else
       {
-        let r = onEach( it );
+        let r = o.onEach( it );
         elementsWrite( result, it, r );
       }
     }
-    _.arrayAppendArrayOnce( filePath, normalizeArray( _.mapKeys( result ) ) );
+    _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.mapKeys( result ) ) );
   }
-  else if( _.mapIs( filePath ) )
+  else if( _.mapIs( o.filePath ) )
   {
-    for( let src in filePath )
+    for( let src in o.filePath )
     {
-      let dst = filePath[ src ];
+      let dst = o.filePath[ src ];
 
-      delete filePath[ src ];
+      delete o.filePath[ src ];
 
       if( _.arrayIs( dst ) )
       {
@@ -324,8 +329,8 @@ function filterPairsInplace( filePath, onEach )
         {
           it.src = src;
           it.dst = '';
-          let r = onEach( it );
-          elementsWrite( filePath, it, r );
+          let r = o.onEach( it );
+          elementsWrite( o.filePath, it, r );
         }
         else
         for( let d = 0 ; d < dst.length ; d++ )
@@ -334,8 +339,8 @@ function filterPairsInplace( filePath, onEach )
           it.dst = dst[ d ];
           if( dst[ d ] === null )
           it.dst = '';
-          let r = onEach( it );
-          elementsWrite( filePath, it, r );
+          let r = o.onEach( it );
+          elementsWrite( o.filePath, it, r );
         }
       }
       else
@@ -344,25 +349,47 @@ function filterPairsInplace( filePath, onEach )
         it.dst = dst;
         if( dst === null )
         it.dst = '';
-        let r = onEach( it );
-        elementsWrite( filePath, it, r );
+        let r = o.onEach( it );
+        elementsWrite( o.filePath, it, r );
       }
     }
   }
   else _.assert( 0 );
 
-  if( _.mapIs( filePath ) )
+  if( _.mapIs( o.filePath ) )
   {
-    if( filePath[ '' ] === '' )
-    delete filePath[ '' ];
+    if( o.filePath[ '' ] === '' )
+    delete o.filePath[ '' ];
   }
 
-  return filePath;
+  return o.filePath;
 
   /* */
 
   function elementsWrite( filePath, it, elements )
   {
+
+    /* qqq : cover and implement for filterPairs, please */
+    if( elements === it )
+    {
+      _.assert( it.src === null || _.strIs( it.src ) || _.arrayIs( it.src ) );
+      _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) );
+      elements = Object.create( null );
+      if( _.arrayIs( it.src ) )
+      {
+        for( let s = 0 ; s < it.src.length ; s++ )
+        {
+          put( elements, it.src, it.dst );
+          _.assert( _.strIs( it.src[ s ] ) );
+          _.assert( elements[ it.src[ s ] ] === undefined );
+          elements[ it.src[ s ] ] = it.dst;
+        }
+      }
+      else
+      {
+        put( elements, it.src, it.dst );
+      }
+    }
 
     _.assert( elements === undefined || elements === null || _.strIs( elements ) || _.arrayIs( elements ) || _.mapIs( elements ) );
 
@@ -373,13 +400,15 @@ function filterPairsInplace( filePath, onEach )
     return elementWrite( filePath, '', '' );
 
     if( _.strIs( elements ) )
+    if( o.isSrc )
     return elementWrite( filePath, elements, it.dst );
+    else
+    return elementWrite( filePath, it.src, elements );
 
     if( _.arrayIs( elements ) )
     {
       if( elements.length === 0 )
       return elementWrite( filePath, '', '' );
-
       elements.forEach( ( r ) => elementsWrite( filePath, it, r ) );
       return filePath;
     }
@@ -395,6 +424,20 @@ function filterPairsInplace( filePath, onEach )
     }
 
     _.assert( 0 );
+  }
+
+  /* */
+
+  function put( container, src, dst )
+  {
+    if( src === null )
+    src = '';
+    if( dst === null )
+    dst = '';
+    _.assert( container[ src ] === undefined );
+    _.assert( _.strIs( src ) );
+    _.assert( _.strIs( dst ) || _.arrayIs( dst ) );
+    container[ src ] = dst;
   }
 
   /* */
@@ -449,9 +492,9 @@ function filterPairsInplace( filePath, onEach )
       }
     }
     else
-    filePath[ src ] = dst;
-
-    // filePath[ src ] = _.scalarAppendOnce( filePath[ src ], dst );
+    {
+      filePath[ src ] = dst;
+    }
 
     return filePath;
   }
@@ -461,6 +504,49 @@ function filterPairsInplace( filePath, onEach )
     return _.arrayRemoveElement( src, '' );
   }
 
+}
+
+_filterPairsInplace.defaults =
+{
+  filePath : null,
+  onEach : null,
+  isSrc : true,
+}
+
+//
+
+function filterPairsInplace( filePath, onEach )
+{
+  return this._filterPairsInplace
+  ({
+    filePath,
+    onEach,
+    isSrc : true,
+  });
+}
+
+//
+
+function filterSrcPairsInplace( filePath, onEach )
+{
+  return this._filterPairsInplace
+  ({
+    filePath,
+    onEach,
+    isSrc : true,
+  });
+}
+
+//
+
+function filterDstPairsInplace( filePath, onEach )
+{
+  return this._filterPairsInplace
+  ({
+    filePath,
+    onEach,
+    isSrc : false,
+  });
 }
 
 //
@@ -1105,7 +1191,7 @@ function _mapExtend( o )
   _.routineOptions( _mapExtend, arguments );
   _.assert( o.dstPathMap === null || _.strIs( o.dstPathMap ) || _.arrayIs( o.dstPathMap ) || _.mapIs( o.dstPathMap ) );
   _.assert( !_.mapIs( o.dstPath ) );
-  _.assert( _.arrayHas( [ 'replace', 'append', 'prepend' ], o.mode ) );
+  _.assert( _.longHas( [ 'replace', 'append', 'prepend' ], o.mode ) );
 
   // let removing = o.srcPathMap === '' || o.srcPathMap === null;
   // removing = false; /* off the feature */
@@ -2296,7 +2382,10 @@ let Routines =
   // path map
 
   filterPairs,
+  _filterPairsInplace,
   filterPairsInplace,
+  filterSrcPairsInplace,
+  filterDstPairsInplace,
   filterInplace,
   filter,
   all,
