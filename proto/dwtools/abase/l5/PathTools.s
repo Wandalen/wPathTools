@@ -289,13 +289,39 @@ function _filterPairsInplace( o )
     let r = o.onEach( it );
 
     elementsWrite( result, it, r );
-    o.filePath = normalizeArray( _.mapKeys( result ) );
-    if( o.filePath.length === 0 )
-    return '';
-    if( o.filePath. length === 1 )
-    return o.filePath[ 0 ];
+
+    if( _.arrayIs( result ) )
+    {
+      o.filePath = normalizeArray( _.mapKeys( result ) );
+      if( o.filePath.length === 0 )
+      return '';
+      if( o.filePath. length === 1 )
+      return o.filePath[ 0 ];
+      else
+      return o.filePath;
+    }
     else
-    return o.filePath;
+    {
+      o.filePath = result;
+
+      if( _.mapIs( o.filePath ) )
+      {
+        let keys = _.mapKeys( o.filePath );
+        let vals = _.mapVals( o.filePath );
+        if( o.isSrc )
+        {
+          if( vals.length === 1 && ( vals[ 0 ] === '' || vals[ 0 ] === null ) )
+          return keys[ 0 ];
+        }
+        else
+        {
+          if( keys.length === 1 && keys[ 0 ] === '' )
+          return vals[ 0 ];
+        }
+      }
+
+      return o.filePath;
+    }
   }
   else if( _.arrayIs( o.filePath ) )
   {
