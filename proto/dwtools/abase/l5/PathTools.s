@@ -375,7 +375,7 @@ function _filterPairsInplace( o )
     if( elements === it )
     {
       _.assert( it.src === null || _.strIs( it.src ) || _.arrayIs( it.src ) );
-      _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) );
+      _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) || _.boolLike( it.dst ) );
       elements = Object.create( null );
       if( _.arrayIs( it.src ) )
       {
@@ -433,7 +433,7 @@ function _filterPairsInplace( o )
     dst = '';
     _.assert( container[ src ] === undefined || container[ src ] === dst );
     _.assert( _.strIs( src ) );
-    _.assert( _.strIs( dst ) || _.arrayIs( dst ) );
+    _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) );
     container[ src ] = dst;
   }
 
