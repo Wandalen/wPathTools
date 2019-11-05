@@ -285,7 +285,9 @@ function _filterPairsInplace( o )
     it.src = o.filePath;
     else
     it.dst = o.filePath;
+
     let r = o.onEach( it );
+
     elementsWrite( result, it, r );
     o.filePath = normalizeArray( _.mapKeys( result ) );
     if( o.filePath.length === 0 )
@@ -2377,10 +2379,12 @@ let Routines =
   // path map
 
   filterPairs,
+
   _filterPairsInplace,
   filterPairsInplace,
   filterSrcPairsInplace,
   filterDstPairsInplace,
+
   filterInplace,
   filter,
   all,
