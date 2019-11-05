@@ -378,12 +378,7 @@ function _filterPairsInplace( o )
       if( _.arrayIs( it.src ) )
       {
         for( let s = 0 ; s < it.src.length ; s++ )
-        {
-          put( elements, it.src, it.dst );
-          _.assert( _.strIs( it.src[ s ] ) );
-          _.assert( elements[ it.src[ s ] ] === undefined );
-          elements[ it.src[ s ] ] = it.dst;
-        }
+        put( elements, it.src[ s ], it.dst );
       }
       else
       {
