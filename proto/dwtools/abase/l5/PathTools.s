@@ -36,7 +36,7 @@ let Self = _.path = _.path || Object.create( null );
 // path map
 // --
 
-function filterPairs( filePath, onEach )
+function _filterPairs( o )
 {
   let result = Object.create( null );
   let hasDst = false;
@@ -45,50 +45,51 @@ function filterPairs( filePath, onEach )
   it.src = '';
   it.dst = '';
 
-  _.assert( arguments.length === 2 );
-  _.assert( filePath === null || _.strIs( filePath ) || _.arrayIs( filePath ) || _.mapIs( filePath ) );
-  _.routineIs( onEach );
+  _.routineOptions( _filterPairs, o );
+  _.assert( arguments.length === 1 );
+  _.assert( o.filePath === null || _.strIs( o.filePath ) || _.arrayIs( o.filePath ) || _.mapIs( o.filePath ) );
+  _.routineIs( o.onEach );
 
-  if( filePath === null || filePath === '' )
+  if( o.filePath === null )
   {
-    let r = onEach( it );
+    o.filePath = '';
+  }
+  if( _.strIs( o.filePath ) )
+  {
+    if( o.isSrc )
+    it.src = o.filePath;
+    else
+    it.dst = o.filePath;
+
+    let r = o.onEach( it );
     elementsWrite( result, it, r );
   }
-  else if( _.strIs( filePath ) )
+  else if( _.arrayIs( o.filePath ) )
   {
-    it.src = filePath;
-    let r = onEach( it );
-    elementsWrite( result, it, r );
-  }
-  else if( _.arrayIs( filePath ) )
-  {
-    for( let p = 0 ; p < filePath.length ; p++ )
+    for( let p = 0 ; p < o.filePath.length ; p++ )
     {
-      it.src = filePath[ p ];
-      if( filePath[ p ] === null )
+      it.src = o.filePath[ p ];
+      if( o.filePath[ p ] === null )
       it.src = '';
-      if( _.boolIs( filePath[ p ] ) )
+      if( !_.boolIs( o.filePath[ p ] ) )
       {
-      }
-      else
-      {
-        let r = onEach( it );
+        let r = o.onEach( it );
         elementsWrite( result, it, r );
       }
     }
   }
-  else if( _.mapIs( filePath ) )
+  else if( _.mapIs( o.filePath ) )
   {
-    for( let src in filePath )
+    for( let src in o.filePath )
     {
-      let dst = filePath[ src ];
+      let dst = o.filePath[ src ];
       if( _.arrayIs( dst ) )
       {
         if( !dst.length )
         {
           it.src = src;
           it.dst = '';
-          let r = onEach( it );
+          let r = o.onEach( it );
           elementsWrite( result, it, r );
         }
         else
@@ -98,7 +99,7 @@ function filterPairs( filePath, onEach )
           it.dst = dst[ d ];
           if( it.dst === null )
           it.dst = '';
-          let r = onEach( it );
+          let r = o.onEach( it );
           elementsWrite( result, it, r );
         }
       }
@@ -108,7 +109,7 @@ function filterPairs( filePath, onEach )
         it.dst = dst;
         if( it.dst === null )
         it.dst = '';
-        let r = onEach( it );
+        let r = o.onEach( it );
         elementsWrite( result, it, r );
       }
     }
@@ -121,6 +122,22 @@ function filterPairs( filePath, onEach )
 
   function elementsWrite( result, it, elements )
   {
+
+    if( elements === it )
+    {
+      _.assert( it.src === null || _.strIs( it.src ) || _.arrayIs( it.src ) );
+      _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) || _.boolLike( it.dst ) );
+      elements = Object.create( null );
+      if( _.arrayIs( it.src ) )
+      {
+        for( let s = 0 ; s < it.src.length ; s++ )
+        put( elements, it.src[ s ], it.dst );
+      }
+      else
+      {
+        put( elements, it.src, it.dst );
+      }
+    }
 
     if( _.arrayIs( elements ) )
     {
@@ -156,6 +173,20 @@ function filterPairs( filePath, onEach )
     }
 
     _.assert( 0 );
+  }
+
+  /* */
+
+  function put( container, src, dst )
+  {
+    if( src === null )
+    src = '';
+    if( dst === null )
+    dst = '';
+    _.assert( container[ src ] === undefined || container[ src ] === dst );
+    _.assert( _.strIs( src ) );
+    _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) );
+    container[ src ] = dst;
   }
 
   /* */
@@ -259,6 +290,281 @@ function filterPairs( filePath, onEach )
   }
 
 }
+_filterPairs.defaults =
+{
+  filePath : null,
+  onEach : null,
+  isSrc : true,
+}
+
+//
+
+function filterPairs( filePath, onEach )
+{
+
+  _.assert( arguments.length === 2 )
+
+  return this._filterPairs
+  ({
+    filePath,
+    onEach,
+    isSrc : true,
+  });
+}
+
+//
+
+function filterSrcPairs( filePath, onEach )
+{
+
+  _.assert( arguments.length === 2 )
+
+  return this._filterPairs
+  ({
+    filePath,
+    onEach,
+    isSrc : true,
+  });
+}
+
+//
+
+function filterDstPairs( filePath, onEach )
+{
+
+  _.assert( arguments.length === 2 )
+
+  return this._filterPairs
+  ({
+    filePath,
+    onEach,
+    isSrc : false,
+  });
+}
+
+// function filterPairs( filePath, onEach )
+// {
+//   let result = Object.create( null );
+//   let hasDst = false;
+//   let hasSrc = false;
+//   let it = Object.create( null );
+//   it.src = '';
+//   it.dst = '';
+//
+//   _.assert( arguments.length === 2 );
+//   _.assert( filePath === null || _.strIs( filePath ) || _.arrayIs( filePath ) || _.mapIs( filePath ) );
+//   _.routineIs( onEach );
+//
+//   if( filePath === null || filePath === '' )
+//   {
+//     let r = onEach( it );
+//     elementsWrite( result, it, r );
+//   }
+//   else if( _.strIs( filePath ) )
+//   {
+//     it.src = filePath;
+//     let r = onEach( it );
+//     elementsWrite( result, it, r );
+//   }
+//   else if( _.arrayIs( filePath ) )
+//   {
+//     for( let p = 0 ; p < filePath.length ; p++ )
+//     {
+//       it.src = filePath[ p ];
+//       if( filePath[ p ] === null )
+//       it.src = '';
+//       if( _.boolIs( filePath[ p ] ) )
+//       {
+//       }
+//       else
+//       {
+//         let r = onEach( it );
+//         elementsWrite( result, it, r );
+//       }
+//     }
+//   }
+//   else if( _.mapIs( filePath ) )
+//   {
+//     for( let src in filePath )
+//     {
+//       let dst = filePath[ src ];
+//       if( _.arrayIs( dst ) )
+//       {
+//         if( !dst.length )
+//         {
+//           it.src = src;
+//           it.dst = '';
+//           let r = onEach( it );
+//           elementsWrite( result, it, r );
+//         }
+//         else
+//         for( let d = 0 ; d < dst.length ; d++ )
+//         {
+//           it.src = src;
+//           it.dst = dst[ d ];
+//           if( it.dst === null )
+//           it.dst = '';
+//           let r = onEach( it );
+//           elementsWrite( result, it, r );
+//         }
+//       }
+//       else
+//       {
+//         it.src = src;
+//         it.dst = dst;
+//         if( it.dst === null )
+//         it.dst = '';
+//         let r = onEach( it );
+//         elementsWrite( result, it, r );
+//       }
+//     }
+//   }
+//   else _.assert( 0 );
+//
+//   return end();
+//
+//   /* */
+//
+//   function elementsWrite( result, it, elements )
+//   {
+//
+//     if( _.arrayIs( elements ) )
+//     {
+//       elements.forEach( ( r ) => elementsWrite( result, it, r ) );
+//       return result;
+//     }
+//
+//     _.assert( elements === undefined || elements === null || _.strIs( elements ) || _.arrayIs( elements ) || _.mapIs( elements ) );
+//
+//     if( elements === undefined )
+//     return result;
+//
+//     if( elements === null || elements === '' )
+//     return elementWrite( result, '', '' );
+//
+//     if( _.strIs( elements ) )
+//     return elementWrite( result, elements, it.dst );
+//
+//     if( _.arrayIs( elements ) )
+//     {
+//       elements.forEach( ( src ) => elementWrite( result, src, it.dst ) );
+//       return result;
+//     }
+//
+//     if( _.mapIs( elements ) )
+//     {
+//       for( let src in elements )
+//       {
+//         let dst = elements[ src ];
+//         elementWrite( result, src, dst );
+//       }
+//       return result;
+//     }
+//
+//     _.assert( 0 );
+//   }
+//
+//   /* */
+//
+//   function elementWrite( result, src, dst )
+//   {
+//     if( _.arrayIs( dst ) )
+//     {
+//       if( dst.length )
+//       dst.forEach( ( dst ) => elementWriteSingle( result, src, dst ) );
+//       else
+//       elementWriteSingle( result, src, '' );
+//       return result;
+//     }
+//     elementWriteSingle( result, src, dst );
+//     return result;
+//   }
+//
+//   /* */
+//
+//   function elementWriteSingle( result, src, dst )
+//   {
+//     if( dst === null )
+//     dst = '';
+//     if( src === null )
+//     src = '';
+//
+//     _.assert( _.strIs( src ) );
+//     _.assert( _.strIs( dst ) || _.boolLike( dst ) || _.instanceIs( dst ) );
+//
+//
+//     if( _.boolLike( dst ) )
+//     dst = !!dst;
+//
+//     if( _.boolLike( result[ src ] ) )
+//     {
+//       if( dst !== '' )
+//       result[ src ] = dst;
+//     }
+//     else if( _.arrayIs( result[ src ] ) )
+//     {
+//       if( dst !== '' && !_.boolLike( dst ) )
+//       result[ src ] =  _.scalarAppendOnce( result[ src ], dst );
+//     }
+//     else if( _.strIs( result[ src ] ) || _.instanceIs( result[ src ] ) )
+//     {
+//       if( result[ src ] === '' || result[ src ] === dst || dst === false )
+//       result[ src ] = dst;
+//       else if( result[ src ] !== '' && dst !== '' )
+//       {
+//         if( dst !== true )
+//         result[ src ] =  _.scalarAppendOnce( result[ src ], dst );
+//       }
+//     }
+//     else
+//     result[ src ] = dst;
+//
+//     // result[ src ] = _.scalarAppendOnce( result[ src ], dst );
+//
+//     if( src )
+//     hasSrc = true;
+//
+//     if( dst !== '' )
+//     hasDst = true;
+//
+//     return result;
+//   }
+//
+//   /* */
+//
+//   function end()
+//   {
+//     let r;
+//
+//     if( result[ '' ] === '' )
+//     delete result[ '' ];
+//
+//     if( !hasSrc )
+//     {
+//       if( !hasDst )
+//       return '';
+//       return result;
+//     }
+//     else if( !hasDst )
+//     {
+//       r = _.mapKeys( result );
+//     }
+//     else
+//     return result;
+//
+//     if( _.arrayIs( r ) )
+//     {
+//       if( r.length === 1 )
+//       r = r[ 0 ]
+//       else if( r.length === 0 )
+//       r = '';
+//     }
+//
+//     _.assert( _.strIs( r ) || _.arrayIs( r ) )
+//     return r;
+//   }
+//
+// }
 
 //
 
@@ -3188,7 +3494,10 @@ let Routines =
 
   // path map
 
+  _filterPairs,
   filterPairs,
+  filterSrcPairs,
+  filterDstPairs,
 
   _filterPairsInplace,
   filterPairsInplace,
