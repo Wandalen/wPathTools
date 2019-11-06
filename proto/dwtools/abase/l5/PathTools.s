@@ -312,11 +312,15 @@ function _filterPairsInplace( o )
         {
           if( vals.length === 1 && ( vals[ 0 ] === '' || vals[ 0 ] === null ) )
           return keys[ 0 ];
+          else if( vals.length === 0 )
+          return '';
         }
         else
         {
           if( keys.length === 1 && keys[ 0 ] === '' )
           return vals[ 0 ];
+          else if( keys.length === 0 )
+          return '';
         }
       }
 
@@ -423,10 +427,12 @@ function _filterPairsInplace( o )
     return elementWrite( filePath, '', '' );
 
     if( _.strIs( elements ) )
-    if( o.isSrc )
-    return elementWrite( filePath, elements, it.dst );
-    else
-    return elementWrite( filePath, it.src, elements );
+    {
+      if( o.isSrc )
+      return elementWrite( filePath, elements, it.dst );
+      else
+      return elementWrite( filePath, it.src, elements );
+    }
 
     if( _.arrayIs( elements ) )
     {
@@ -540,6 +546,8 @@ _filterPairsInplace.defaults =
 
 function filterPairsInplace( filePath, onEach )
 {
+  _.assert( arguments.length === 2 );
+
   return this._filterPairsInplace
   ({
     filePath,
@@ -552,6 +560,8 @@ function filterPairsInplace( filePath, onEach )
 
 function filterSrcPairsInplace( filePath, onEach )
 {
+  _.assert( arguments.length === 2 );
+
   return this._filterPairsInplace
   ({
     filePath,
@@ -564,6 +574,8 @@ function filterSrcPairsInplace( filePath, onEach )
 
 function filterDstPairsInplace( filePath, onEach )
 {
+  _.assert( arguments.length === 2 );
+
   return this._filterPairsInplace
   ({
     filePath,
@@ -3182,6 +3194,8 @@ let Routines =
   filterPairsInplace,
   filterSrcPairsInplace,
   filterDstPairsInplace,
+
+  filterPairs_,
 
   filterInplace,
   filter,
