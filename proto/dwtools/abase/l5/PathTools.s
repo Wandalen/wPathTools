@@ -630,7 +630,7 @@ function _filterPairsInplace( o )
         }
       }
 
-      return o.filePath;
+      // return o.filePath;
     }
   }
   else if( _.arrayIs( o.filePath ) )
@@ -892,45 +892,88 @@ function filterDstPairsInplace( filePath, onEach )
 
 //
 
-function filterPairs_( dst, filePath, onEach )
+function filterPairs_pre( routine, args )
+{
+  _.assert( arguments.length === 2 );
+
+  let o = Object.create( null );
+  if( args.length === 1 )
+  {
+    _.assert( _.mapIs( args[ 0 ] ) );
+    o = args[ 0 ];
+  }
+  else
+  {
+    if( args.length === 3 )
+    {
+      o.onEach = args[ 2 ];
+      o.filePath = args[ 1 ];
+
+      if( args[ 0 ] === null )
+      o.dst = true;
+      else if( args[ 0 ] === filePath )
+      o.dst = false;
+      else
+      _.assert( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) );
+    }
+    else if( args.length === 2 )
+    {
+      o.onEach = args[ 1 ];
+      o.filePath = args[ 0 ];
+      o.dst = true;
+    }
+    else
+    _.assert( 0 );
+  }
+
+  _.routineOptions( routine, o );
+  _.routineIs( o.onEach, '{-onEach-} should be a routine' );
+
+  return o;
+}
+
+//
+
+function filterPairs_body( o )
 {
   let self = this;
   let result = Object.create( null );
-
-  argumentsCheckAndSet( arguments );
-
   let hasDst = false;
   let hasSrc = false;
   let it = Object.create( null );
   it.src = '';
   it.dst = '';
 
-  if( filePath === null )
-  filePath = '';
-  if( _.strIs( filePath ) )
+  if( o.filePath === null )
+  o.filePath = '';
+  if( _.strIs( o.filePath ) )
   {
-    it.src = filePath;
-    let r = onEach( it );
+    if( o.isSrc )
+    it.src = o.filePath;
+    else
+    it.dst = o.filePath;
+
+    let r = o.onEach( it );
     elementsWrite( result, it, r );
   }
-  else if( _.arrayIs( filePath ) )
+  else if( _.arrayIs( o.filePath ) )
   {
-    for( let p = 0 ; p < filePath.length ; p++ )
+    for( let p = 0; p < o.filePath.length; p++ )
     {
-      it.src = filePath[ p ] === null ? '' : filePath[ p ];
+      it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
 
-      if( !_.boolIs( filePath[ p ] ) )
+      if( !_.boolIs( o.filePath[ p ] ) )
       {
-        let r = onEach( it );
+        let r = o.onEach( it );
         elementsWrite( result, it, r );
       }
     }
   }
-  else if( _.mapIs( filePath ) )
+  else if( _.mapIs( o.filePath ) )
   {
-    for( let src in filePath )
+    for( let src in o.filePath )
     {
-      let dst1 = filePath[ src ];
+      let dst1 = o.filePath[ src ];
 
       if( _.arrayIs( dst1 ) )
       {
@@ -938,7 +981,7 @@ function filterPairs_( dst, filePath, onEach )
         {
           it.src = src;
           it.dst = '';
-          let r = onEach( it );
+          let r = o.onEach( it );
           elementsWrite( result, it, r );
         }
         else
@@ -946,7 +989,7 @@ function filterPairs_( dst, filePath, onEach )
         {
           it.src = src;
           it.dst = dst1[ d ] === null ? '' : dst1[ d ];
-          let r = onEach( it );
+          let r = o.onEach( it );
           elementsWrite( result, it, r );
         }
       }
@@ -954,7 +997,7 @@ function filterPairs_( dst, filePath, onEach )
       {
         it.src = src;
         it.dst = dst1 === null ? '' : dst1;
-        let r = onEach( it );
+        let r = o.onEach( it );
         elementsWrite( result, it, r );
       }
     }
@@ -1062,31 +1105,6 @@ function filterPairs_( dst, filePath, onEach )
 
   /* */
 
-  function argumentsCheckAndSet( args )
-  {
-    if( args.length === 3 )
-    {
-      if( dst === null )
-      dst = true;
-      else if( dst === filePath )
-      dst = false;
-      else
-      _.assert( _.arrayIs( dst ) || _.mapIs( dst ) );
-    }
-    else if( args.length === 2 )
-    {
-      onEach = filePath;
-      filePath = dst;
-      dst = true;
-    }
-    else
-    _.assert( 0 );
-
-    _.routineIs( onEach, '{-onEach-} should be a routine' );
-  }
-
-  /* */
-
   function end()
   {
     if( !hasSrc && !hasDst )
@@ -1094,37 +1112,37 @@ function filterPairs_( dst, filePath, onEach )
     else if( !hasDst )
     result = _.mapKeys( result );
 
-    if( dst === false )
+    if( o.dst === false )
     {
-      if( _.arrayIs( filePath ) )
+      if( _.arrayIs( o.filePath ) )
       {
-        filePath.splice( 0, filePath.length );
+        o.filePath.splice( 0, filePath.length );
 
         if( _.arrayIs( result ) )
-        result = _.arrayAppendArrayOnce( filePath, result );
+        result = _.arrayAppendArrayOnce( o.filePath, result );
         else if( _.mapIs( result ) )
-        result = _.arrayAppendArrayOnce( filePath, _.mapKeys( result ) );
+        result = _.arrayAppendArrayOnce( o.filePath, _.mapKeys( result ) );
         else
-        result = _.arrayAppendOnce( filePath, result );
+        result = _.arrayAppendOnce( o.filePath, result );
       }
-      else if( _.mapIs( filePath ) )
+      else if( _.mapIs( o.filePath ) )
       {
-        for( let k in filePath )
-        delete filePath[ k ];
+        for( let k in o.filePath )
+        delete o.filePath[ k ];
 
         if( _.mapIs( result ) )
         for( let k in result )
-        filePath[ k ] = result[ k ];
+        o.filePath[ k ] = result[ k ];
 
         else if( _.arrayIs( result ) )
-        for( let e of result )
-        filePath[ e ] = '';
+        for( let i = 0; i < result.length; i++ )
+        o.filePath[ result[ i ] ] = '';
         else
-        filePath[ result ] = '';
+        o.filePath[ result ] = '';
 
-        result = filePath;
+        result = o.filePath;
       }
-      else if( _.primitiveIs( filePath ) )
+      else if( _.primitiveIs( o.filePath ) )
       {
         if( result.length === 1 )
         return result[ 0 ];
@@ -1135,30 +1153,30 @@ function filterPairs_( dst, filePath, onEach )
     }
     else
     {
-      if( dst !== true )
+      if( o.dst !== true )
       {
-        if( _.arrayIs( dst ) )
+        if( _.arrayIs( o.dst ) )
         {
           if( _.arrayIs( result ) )
-          result = _.arrayAppendArrayOnce( dst, result );
+          result = _.arrayAppendArrayOnce( o.dst, result );
           else if( _.mapIs( result ) )
-          result = _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
+          result = _.arrayAppendArrayOnce( o.dst, _.mapKeys( result ) );
           else
-          result = _.arrayAppendOnce( dst, result );
+          result = _.arrayAppendOnce( o.dst, result );
         }
-        else if( _.mapIs( dst ) )
+        else if( _.mapIs( o.dst ) )
         {
           if( _.mapIs( result ) )
           for( let k in result )
-          dst[ k ] = result[ k ];
+          o.dst[ k ] = result[ k ];
 
           else if( _.arrayIs( result ) )
-          for( let e of result )
-          dst[ e ] = '';
+          for( let i = 0; i < result.length; i++ )
+          o.dst[ result[ i ] ] = '';
           else
-          dst[ result ] = '';
+          o.dst[ result ] = '';
 
-          result = dst;
+          result = o.dst;
         }
         result = self.simplify_( result, result );
       }
@@ -1179,6 +1197,46 @@ function filterPairs_( dst, filePath, onEach )
     return result;
   }
 
+}
+filterPairs_body.defaults =
+{
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : true,
+}
+
+//
+
+var filterPairs_ = _.routineFromPreAndBody( filterPairs_pre, filterPairs_body );
+filterPairs_.defaults =
+{
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : true,
+}
+
+//
+
+var filterSrcPairs_ = _.routineFromPreAndBody( filterPairs_pre, filterPairs_body );
+filterSrcPairs_.defaults =
+{
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : true,
+}
+
+//
+
+var filterDstPairs_ = _.routineFromPreAndBody( filterPairs_pre, filterPairs_body );
+filterDstPairs_.defaults =
+{
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : false,
 }
 
 //
@@ -3505,6 +3563,8 @@ let Routines =
   filterDstPairsInplace,
 
   filterPairs_,
+  filterSrcPairs_,
+  filterDstPairs_,
 
   filterInplace,
   filter,
