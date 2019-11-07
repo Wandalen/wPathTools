@@ -1012,6 +1012,22 @@ function filterPairs_body( o )
   function elementsWrite( filePath, it, elements )
   {
 
+    if( elements === it )
+    {
+      _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) || _.boolLike( it.dst ) );
+      elements = Object.create( null );
+      if( _.arrayIs( it.src ) )
+      {
+        for( let s = 0 ; s < it.src.length ; s++ )
+        put( elements, it.src[ s ], it.dst );
+      }
+      else
+      {
+        _.assert( it.src === null || _.strIs( it.src ) );
+        put( elements, it.src, it.dst );
+      }
+    }
+
     if( elements === undefined )
     return filePath;
 
@@ -1039,6 +1055,20 @@ function filterPairs_body( o )
     }
     else
     _.assert( 0 );
+  }
+
+  /* */
+
+  function put( container, src, dst )
+  {
+    if( src === null )
+    src = '';
+    if( dst === null )
+    dst = '';
+    _.assert( container[ src ] === undefined || container[ src ] === dst );
+    _.assert( _.strIs( src ) );
+    _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) );
+    container[ src ] = dst;
   }
 
   /* */
