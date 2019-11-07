@@ -66,15 +66,29 @@ function _filterPairs( o )
   }
   else if( _.arrayIs( o.filePath ) )
   {
-    for( let p = 0 ; p < o.filePath.length ; p++ )
+    if( o.isSrc )
     {
-      it.src = o.filePath[ p ];
-      if( o.filePath[ p ] === null )
-      it.src = '';
-      if( !_.boolIs( o.filePath[ p ] ) )
+      for( let p = 0 ; p < o.filePath.length ; p++ )
       {
-        let r = o.onEach( it );
-        elementsWrite( result, it, r );
+        if( !_.boolIs( o.filePath[ p ] ) )
+        {
+          it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+          let r = o.onEach( it );
+          elementsWrite( result, it, r );
+        }
+      }
+    }
+    else
+    {
+      for( let p = 0 ; p < o.filePath.length ; p++ )
+      {
+        if( !_.boolIs( o.filePath[ p ] ) )
+        {
+          it.src = '';
+          it.dst = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+          let r = o.onEach( it );
+          elementsWrite( result, it, r );
+        }
       }
     }
   }
@@ -911,7 +925,7 @@ function filterPairs_pre( routine, args )
 
       if( args[ 0 ] === null )
       o.dst = true;
-      else if( args[ 0 ] === filePath )
+      else if( args[ 0 ] === o.filePath )
       o.dst = false;
       else
       _.assert( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) );
@@ -1146,7 +1160,7 @@ function filterPairs_body( o )
     {
       if( _.arrayIs( o.filePath ) )
       {
-        o.filePath.splice( 0, filePath.length );
+        o.filePath.splice( 0, o.filePath.length );
 
         if( _.arrayIs( result ) )
         result = _.arrayAppendArrayOnce( o.filePath, result );
