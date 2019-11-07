@@ -47,7 +47,6 @@ function _filterPairs( o )
 
   _.routineOptions( _filterPairs, o );
   _.assert( arguments.length === 1 );
-  _.assert( o.filePath === null || _.strIs( o.filePath ) || _.arrayIs( o.filePath ) || _.mapIs( o.filePath ) );
   _.routineIs( o.onEach );
 
   if( o.filePath === null )
@@ -107,22 +106,20 @@ function _filterPairs( o )
           elementsWrite( result, it, r );
         }
         else
-        for( let d = 0 ; d < dst.length ; d++ )
         {
-          it.src = src;
-          it.dst = dst[ d ];
-          if( it.dst === null )
-          it.dst = '';
-          let r = o.onEach( it );
-          elementsWrite( result, it, r );
+          for( let d = 0 ; d < dst.length ; d++ )
+          {
+            it.src = src;
+            it.dst = dst[ d ] === null ? '' : dst[ d ];
+            let r = o.onEach( it );
+            elementsWrite( result, it, r );
+          }
         }
       }
       else
       {
         it.src = src;
-        it.dst = dst;
-        if( it.dst === null )
-        it.dst = '';
+        it.dst = dst === null ? '' : dst;
         let r = o.onEach( it );
         elementsWrite( result, it, r );
       }
@@ -139,7 +136,6 @@ function _filterPairs( o )
 
     if( elements === it )
     {
-      _.assert( it.src === null || _.strIs( it.src ) || _.arrayIs( it.src ) );
       _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) || _.boolLike( it.dst ) );
       elements = Object.create( null );
       if( _.arrayIs( it.src ) )
@@ -149,6 +145,7 @@ function _filterPairs( o )
       }
       else
       {
+        _.assert( it.src === null || _.strIs( it.src ) );
         put( elements, it.src, it.dst );
       }
     }
@@ -159,16 +156,20 @@ function _filterPairs( o )
       return result;
     }
 
-    _.assert( elements === undefined || elements === null || _.strIs( elements ) || _.arrayIs( elements ) || _.mapIs( elements ) );
-
     if( elements === undefined )
-    return result;
+    {
+      return result;
+    }
 
     if( elements === null || elements === '' )
-    return elementWrite( result, '', '' );
+    {
+      return elementWrite( result, '', '' );
+    }
 
     if( _.strIs( elements ) )
-    return elementWrite( result, elements, it.dst );
+    {
+      return elementWrite( result, elements, it.dst );
+    }
 
     if( _.arrayIs( elements ) )
     {
@@ -199,7 +200,7 @@ function _filterPairs( o )
     dst = '';
     _.assert( container[ src ] === undefined || container[ src ] === dst );
     _.assert( _.strIs( src ) );
-    _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) );
+    // _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) ); // Dmytro : has no sense, this assertions checks above
     container[ src ] = dst;
   }
 
@@ -213,10 +214,14 @@ function _filterPairs( o )
       dst.forEach( ( dst ) => elementWriteSingle( result, src, dst ) );
       else
       elementWriteSingle( result, src, '' );
+
       return result;
     }
-    elementWriteSingle( result, src, dst );
-    return result;
+    else
+    {
+      elementWriteSingle( result, src, dst );
+      return result;
+    }
   }
 
   /* */
@@ -233,7 +238,9 @@ function _filterPairs( o )
 
 
     if( _.boolLike( dst ) )
-    dst = !!dst;
+    {
+      dst = !!dst;
+    }
 
     if( _.boolLike( result[ src ] ) )
     {
@@ -256,13 +263,12 @@ function _filterPairs( o )
       }
     }
     else
-    result[ src ] = dst;
-
-    // result[ src ] = _.scalarAppendOnce( result[ src ], dst );
+    {
+      result[ src ] = dst;
+    }
 
     if( src )
     hasSrc = true;
-
     if( dst !== '' )
     hasDst = true;
 
@@ -289,7 +295,9 @@ function _filterPairs( o )
       r = _.mapKeys( result );
     }
     else
-    return result;
+    {
+      return result;
+    }
 
     if( _.arrayIs( r ) )
     {
@@ -594,61 +602,46 @@ function _filterPairsInplace( o )
 
   _.routineOptions( _filterPairsInplace, arguments );
   _.assert( arguments.length === 1 );
-  _.assert( o.filePath === null || _.strIs( o.filePath ) || _.arrayIs( o.filePath ) || _.mapIs( o.filePath ) );
   _.routineIs( o.onEach );
 
-  if( _.strIs( o.filePath ) || o.filePath === null )
+  if( o.filePath === null )
   {
-    if( o.filePath === null )
     o.filePath = '';
+  }
+  if( _.strIs( o.filePath ) )
+  {
+
     if( o.isSrc )
     it.src = o.filePath;
     else
     it.dst = o.filePath;
 
     let r = o.onEach( it );
-
     elementsWrite( result, it, r );
 
-    if( _.arrayIs( result ) )
+    o.filePath = result;
+
+    let keys = _.mapKeys( o.filePath );
+    let vals = _.mapVals( o.filePath );
+    if( o.isSrc )
     {
-      o.filePath = normalizeArray( _.mapKeys( result ) );
-      if( o.filePath.length === 0 )
+      if( vals.length === 1 && ( vals[ 0 ] === '' || vals[ 0 ] === null ) )
+      return keys[ 0 ];
+      else if( vals.length === 0 )
       return '';
-      if( o.filePath. length === 1 )
-      return o.filePath[ 0 ];
-      else
-      return o.filePath;
     }
     else
     {
-      o.filePath = result;
-
-      if( _.mapIs( o.filePath ) )
-      {
-        let keys = _.mapKeys( o.filePath );
-        let vals = _.mapVals( o.filePath );
-        if( o.isSrc )
-        {
-          if( vals.length === 1 && ( vals[ 0 ] === '' || vals[ 0 ] === null ) )
-          return keys[ 0 ];
-          else if( vals.length === 0 )
-          return '';
-        }
-        else
-        {
-          if( keys.length === 1 && keys[ 0 ] === '' )
-          return vals[ 0 ];
-          else if( keys.length === 0 )
-          return '';
-        }
-      }
-
-      // return o.filePath;
+      if( keys.length === 1 && keys[ 0 ] === '' )
+      return vals[ 0 ];
+      else if( keys.length === 0 )
+      return '';
     }
+
   }
   else if( _.arrayIs( o.filePath ) )
   {
+
     if( o.isSrc )
     {
       let filePath2 = _.arrayAppendArraysOnce( [], o.filePath );
@@ -664,23 +657,6 @@ function _filterPairsInplace( o )
         }
       }
       _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.mapKeys( result ) ) );
-      // let filePath2 = _.arrayAppendArraysOnce( [], o.filePath );
-      // o.filePath.splice( 0, o.filePath.length );
-      // for( let p = 0 ; p < filePath2.length ; p++ )
-      // {
-        //   it.src = filePath2[ p ];
-        //   if( filePath2[ p ] === null )
-        //   it.src = '';
-        //   if( _.boolIs( filePath2[ p ] ) )
-        //   {
-          //   }
-          //   else
-          //   {
-            //     let r = o.onEach( it );
-            //     elementsWrite( result, it, r );
-            //   }
-            // }
-            // _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.mapKeys( result ) ) );
     }
     else
     {
@@ -694,10 +670,13 @@ function _filterPairsInplace( o )
           elementsWrite( result, it, r );
         }
       }
+      o.filePath = result;
     }
+
   }
   else if( _.mapIs( o.filePath ) )
   {
+
     for( let src in o.filePath )
     {
       let dst = o.filePath[ src ];
@@ -717,9 +696,7 @@ function _filterPairsInplace( o )
         for( let d = 0 ; d < dst.length ; d++ )
         {
           it.src = src;
-          it.dst = dst[ d ];
-          if( dst[ d ] === null )
-          it.dst = '';
+          it.dst = dst[ d ] === null ? '' : dst[ d ];
           let r = o.onEach( it );
           elementsWrite( o.filePath, it, r );
         }
@@ -727,13 +704,12 @@ function _filterPairsInplace( o )
       else
       {
         it.src = src;
-        it.dst = dst;
-        if( dst === null )
-        it.dst = '';
+        it.dst = dst === null ? '' : dst;
         let r = o.onEach( it );
         elementsWrite( o.filePath, it, r );
       }
     }
+
   }
   else _.assert( 0 );
 
@@ -753,7 +729,6 @@ function _filterPairsInplace( o )
     /* qqq : cover and implement for filterPairs, please */
     if( elements === it )
     {
-      _.assert( it.src === null || _.strIs( it.src ) || _.arrayIs( it.src ) );
       _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) || _.boolLike( it.dst ) );
       elements = Object.create( null );
       if( _.arrayIs( it.src ) )
@@ -763,17 +738,20 @@ function _filterPairsInplace( o )
       }
       else
       {
+        _.assert( it.src === null || _.strIs( it.src ) );
         put( elements, it.src, it.dst );
       }
     }
 
-    _.assert( elements === undefined || elements === null || _.strIs( elements ) || _.arrayIs( elements ) || _.mapIs( elements ) );
-
     if( elements === undefined )
-    return filePath;
+    {
+      return filePath;
+    }
 
     if( elements === null || elements === '' )
-    return elementWrite( filePath, '', '' );
+    {
+      return elementWrite( filePath, '', '' );
+    }
 
     if( _.strIs( elements ) )
     {
@@ -814,7 +792,7 @@ function _filterPairsInplace( o )
     dst = '';
     _.assert( container[ src ] === undefined || container[ src ] === dst );
     _.assert( _.strIs( src ) );
-    _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) );
+    // _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) ); // Dmytro : it has no sense, this assertions check dst above
     container[ src ] = dst;
   }
 
@@ -828,10 +806,14 @@ function _filterPairsInplace( o )
       dst.forEach( ( dst ) => elementWriteSingle( filePath, src, dst ) );
       else
       elementWriteSingle( filePath, src, '' );
+
       return filePath;
     }
-    elementWriteSingle( filePath, src, dst );
-    return filePath;
+    else
+    {
+      elementWriteSingle( filePath, src, dst );
+      return filePath;
+    }
   }
 
   /* */
@@ -847,7 +829,9 @@ function _filterPairsInplace( o )
     _.assert( _.strIs( dst ) || _.boolLike( dst ) || _.instanceIs( dst ) );
 
     if( _.boolLike( dst ) )
-    dst = !!dst;
+    {
+      dst = !!dst;
+    }
 
     if( _.boolLike( filePath[ src ] ) )
     {
@@ -876,6 +860,8 @@ function _filterPairsInplace( o )
 
     return filePath;
   }
+
+  /* */
 
   function normalizeArray( src )
   {
