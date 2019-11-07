@@ -649,23 +649,52 @@ function _filterPairsInplace( o )
   }
   else if( _.arrayIs( o.filePath ) )
   {
-    let filePath2 = _.arrayAppendArraysOnce( [], o.filePath );
-    o.filePath.splice( 0, o.filePath.length );
-    for( let p = 0 ; p < filePath2.length ; p++ )
+    if( o.isSrc )
     {
-      it.src = filePath2[ p ];
-      if( filePath2[ p ] === null )
-      it.src = '';
-      if( _.boolIs( filePath2[ p ] ) )
+      let filePath2 = _.arrayAppendArraysOnce( [], o.filePath );
+      o.filePath.splice( 0, o.filePath.length );
+
+      for( let p = 0 ; p < filePath2.length ; p++ )
       {
+        if( !_.boolIs( filePath2[ p ] ) )
+        {
+          it.src = filePath2[ p ] === null ? '' : filePath2[ p ];
+          let r = o.onEach( it );
+          elementsWrite( result, it, r );
+        }
       }
-      else
+      _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.mapKeys( result ) ) );
+      // let filePath2 = _.arrayAppendArraysOnce( [], o.filePath );
+      // o.filePath.splice( 0, o.filePath.length );
+      // for( let p = 0 ; p < filePath2.length ; p++ )
+      // {
+        //   it.src = filePath2[ p ];
+        //   if( filePath2[ p ] === null )
+        //   it.src = '';
+        //   if( _.boolIs( filePath2[ p ] ) )
+        //   {
+          //   }
+          //   else
+          //   {
+            //     let r = o.onEach( it );
+            //     elementsWrite( result, it, r );
+            //   }
+            // }
+            // _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.mapKeys( result ) ) );
+    }
+    else
+    {
+      for( let p = 0; p < o.filePath.length; p++ )
       {
-        let r = o.onEach( it );
-        elementsWrite( result, it, r );
+        if( !_.boolIs( o.filePath[ p ] ) )
+        {
+          it.src = '';
+          it.dst = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+          let r = o.onEach( it );
+          elementsWrite( result, it, r );
+        }
       }
     }
-    _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.mapKeys( result ) ) );
   }
   else if( _.mapIs( o.filePath ) )
   {
