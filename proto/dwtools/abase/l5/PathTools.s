@@ -38,6 +38,7 @@ let Self = _.path = _.path || Object.create( null );
 
 function _filterPairs( o )
 {
+  let self = this;
   let result = Object.create( null );
   let hasDst = false;
   let hasSrc = false;
@@ -283,24 +284,30 @@ function _filterPairs( o )
     {
       if( !hasDst )
       return '';
+      else if( !o.isSrc && !_.mapIs( o.filePath ) )
+      return _.mapVals( result )[ 0 ];
       return result;
     }
     else if( !hasDst )
     {
       r = _.mapKeys( result );
     }
+    else if( !o.isSrc && !_.mapIs( o.filePath ) )
+    {
+      let keys = _.mapKeys( result );
+      if( keys.length === 1 && keys[ 0 ] === '' )
+      return result[ '' ];
+      return result;
+    }
     else
     {
       return result;
     }
 
-    if( _.arrayIs( r ) )
-    {
-      if( r.length === 1 )
-      r = r[ 0 ]
-      else if( r.length === 0 )
-      r = '';
-    }
+    if( r.length === 1 )
+    r = r[ 0 ]
+    else if( r.length === 0 )
+    r = '';
 
     _.assert( _.strIs( r ) || _.arrayIs( r ) )
     return r;

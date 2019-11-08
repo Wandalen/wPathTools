@@ -2325,7 +2325,7 @@ function filterDstPairs( test )
   var src = '/a/b';
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, double );
-  var expected = { '' : [ '/a/b/a/b', '/a/b' ] };
+  var expected = [ '/a/b/a/b', '/a/b' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -2341,7 +2341,7 @@ function filterDstPairs( test )
   var src = [ '/a/b' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, double );
-  var expected = { '' : [ '/a/b/a/b', '/a/b' ] };
+  var expected = [ '/a/b/a/b', '/a/b' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -2349,7 +2349,7 @@ function filterDstPairs( test )
   var src = [ '/a/b', '/cd' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, double );
-  var expected = { '' : [ '/a/b/a/b', '/a/b', '/cd/cd', '/cd' ] };
+  var expected = [ '/a/b/a/b', '/a/b', '/cd/cd', '/cd' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -2357,7 +2357,7 @@ function filterDstPairs( test )
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, double );
-  var expected = { '' : [ '/a/b/a/b', '/a/b', '/c/d/c/d', '/c/d' ] };
+  var expected = [ '/a/b/a/b', '/a/b', '/c/d/c/d', '/c/d' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -2893,7 +2893,7 @@ function filterDstPairs( test )
   var src = '/a/b';
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstOnly );
-  var expected = { '' : '/a/b' };
+  var expected = '/a/b';
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -2909,7 +2909,7 @@ function filterDstPairs( test )
   var src = [ '/a/b' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstOnly );
-  var expected = { '' : '/a/b' };
+  var expected = '/a/b';
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -2917,7 +2917,7 @@ function filterDstPairs( test )
   var src = [ '/a/b', '/cd' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstOnly );
-  var expected = { '' : [ '/a/b', '/cd' ] };
+  var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -2925,7 +2925,7 @@ function filterDstPairs( test )
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstOnly );
-  var expected = { '' : [ '/a/b', '/c/d' ] };
+  var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -3035,7 +3035,7 @@ function filterDstPairs( test )
   var src = '/a/b';
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstDouble );
-  var expected = { '' : '/a/b' };
+  var expected = '/a/b';
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -3051,7 +3051,7 @@ function filterDstPairs( test )
   var src = [ '/a/b' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstDouble );
-  var expected = { '' : '/a/b' };
+  var expected = '/a/b';
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -3059,7 +3059,7 @@ function filterDstPairs( test )
   var src = [ '/a/b', '/cd' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstDouble );
-  var expected = { '' : [ '/a/b', '/cd' ] };
+  var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -3067,7 +3067,7 @@ function filterDstPairs( test )
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, dstDouble );
-  var expected = { '' : [ '/a/b', '/c/d' ] };
+  var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -3173,7 +3173,7 @@ function filterDstPairs( test )
   test.case = 'string';
   var src = '/a/b';
   var got = _.path.filterDstPairs( src, returnSelf );
-  var expected = { '' : '/a/b' };
+  var expected = '/a/b';
   test.identical( got, expected );
 
   test.case = 'empty array';
@@ -3186,21 +3186,21 @@ function filterDstPairs( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairs( src, returnSelf );
-  var expected = { '' : '/a/b' };
+  var expected = '/a/b';
   test.identical( got, expected );
   test.is( got !== src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairs( src, returnSelf );
-  var expected = { '' : [ '/a/b', '/cd' ] };
+  var expected = [ '/a/b', '/cd' ];
   test.identical( got, expected );
   test.is( got !== src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairs( src, returnSelf );
-  var expected = { '' : [ '/a/b', '/c/d' ] };
+  var expected = [ '/a/b', '/c/d' ];
   test.identical( got, expected );
   test.is( got !== src );
 
@@ -3296,7 +3296,7 @@ function filterDstPairs( test )
   test.case = 'string';
   var src = '/a/b';
   var got = _.path.filterDstPairs( src, arrayInSelf );
-  var expected = { '' : '/a/b', '1' : '/a/b' };
+  var expected = { '1' : '/a/b', '' : '/a/b' };
   test.identical( got, expected );
 
   test.case = 'empty array';
@@ -3309,21 +3309,21 @@ function filterDstPairs( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairs( src, arrayInSelf );
-  var expected = { '' : '/a/b', '1' : '/a/b' };
+  var expected = { '1' : '/a/b', '' : '/a/b' };
   test.identical( got, expected );
   test.is( got !== src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairs( src, arrayInSelf );
-  var expected = { '' : [ '/a/b', '/cd' ], '1' : [ '/a/b', '/cd' ] };
+  var expected = { '1' : [ '/a/b', '/cd' ], '' : [ '/a/b', '/cd' ] };
   test.identical( got, expected );
   test.is( got !== src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairs( src, arrayInSelf );
-  var expected = { '' : [ '/a/b', '/c/d' ], '1' : [ '/a/b', '/c/d' ] };
+  var expected = { '1' : [ '/a/b', '/c/d' ], '' : [ '/a/b', '/c/d' ] };
   test.identical( got, expected );
   test.is( got !== src );
 
