@@ -624,9 +624,9 @@ function _filterPairsInplace( o )
     o.filePath = result;
 
     let keys = _.mapKeys( o.filePath );
-    let vals = _.mapVals( o.filePath );
     if( o.isSrc )
     {
+      let vals = _.mapVals( o.filePath );
       if( vals.length === 1 && ( vals[ 0 ] === '' || vals[ 0 ] === null ) )
       return keys[ 0 ];
       else if( vals.length === 0 )
@@ -635,7 +635,7 @@ function _filterPairsInplace( o )
     else
     {
       if( keys.length === 1 && keys[ 0 ] === '' )
-      return vals[ 0 ];
+      return o.filePath[ '' ];
       else if( keys.length === 0 )
       return '';
     }
@@ -672,7 +672,26 @@ function _filterPairsInplace( o )
           elementsWrite( result, it, r );
         }
       }
-      o.filePath = result;
+
+      let keys = _.mapKeys( result );
+      if( keys.length === 1 && keys[ 0 ] === '' )
+      {
+        o.filePath.splice( 0, o.filePath.length );
+        if( _.arrayIs( result[ '' ] ) )
+        _.arrayAppendArrayOnce( o.filePath, result[ '' ] );
+        else
+        _.arrayAppendOnce( o.filePath, result[ '' ] );
+
+        normalizeArray( o.filePath );
+      }
+      else if( keys.length === 0 )
+      {
+        o.filePath.splice( 0, o.filePath.length );
+      }
+      else
+      {
+        o.filePath = result;
+      }
     }
 
   }

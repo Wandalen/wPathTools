@@ -6586,21 +6586,21 @@ function filterDstPairsInplace( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly1 );
-  var expected = [ '/a/b' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly1 );
-  var expected = [ '/a/b', '/cd' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly1 );
-  var expected = [ '/a/b', '/c/d' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
@@ -6710,21 +6710,21 @@ function filterDstPairsInplace( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly2 );
-  var expected = [ '/a/b' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly2 );
-  var expected = [ '/a/b', '/cd' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly2 );
-  var expected = [ '/a/b', '/c/d' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
@@ -6836,21 +6836,21 @@ function filterDstPairsInplace( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly3 );
-  var expected = [ '/a/b' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly3 );
-  var expected = [ '/a/b', '/cd' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairsInplace( src, srcOnly3 );
-  var expected = [ '/a/b', '/c/d' ];
+  var expected = [];
   test.identical( got, expected );
   test.is( got === src );
 
@@ -6959,21 +6959,21 @@ function filterDstPairsInplace( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairsInplace( src, dstOnly );
-  var expected = [];
+  var expected = [ '/a/b' ];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairsInplace( src, dstOnly );
-  var expected = [];
+  var expected = [ '/a/b', '/cd' ];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairsInplace( src, dstOnly );
-  var expected = [];
+  var expected = [ '/a/b', '/c/d' ];
   test.identical( got, expected );
   test.is( got === src );
 
@@ -7082,21 +7082,21 @@ function filterDstPairsInplace( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairsInplace( src, dstDouble );
-  var expected = [];
+  var expected = [ '/a/b' ];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairsInplace( src, dstDouble );
-  var expected = [];
+  var expected = [ '/a/b', '/cd' ];
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairsInplace( src, dstDouble );
-  var expected = [];
+  var expected = [ '/a/b', '/c/d' ];
   test.identical( got, expected );
   test.is( got === src );
 
@@ -7328,23 +7328,23 @@ function filterDstPairsInplace( test )
   test.case = 'single element array';
   var src = [ '/a/b' ];
   var got = _.path.filterDstPairsInplace( src, arrayInSelf );
-  var expected = [ '/a/b', '/a/b1' ];
+  var expected = { '1' : '/a/b', '' : '/a/b' };
   test.identical( got, expected );
-  test.is( got === src );
+  test.is( got !== src );
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
   var got = _.path.filterDstPairsInplace( src, arrayInSelf );
-  var expected = [ '/a/b', '/a/b1', '/cd', '/cd1' ];
+  var expected = { '' : [ '/a/b', '/cd' ], '1' : [ '/a/b', '/cd' ] };
   test.identical( got, expected );
-  test.is( got === src );
+  test.is( got !== src );
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
   var got = _.path.filterDstPairsInplace( src, arrayInSelf );
-  var expected = [ '/a/b', '/a/b1', '/c/d', '/c/d1' ];
+  var expected = { '' : [ '/a/b', '/c/d' ], '1' : [ '/a/b', '/c/d' ] };
   test.identical( got, expected );
-  test.is( got === src );
+  test.is( got !== src );
 
   test.case = 'empty map';
   var src = {};
@@ -8080,7 +8080,7 @@ function filterDstPairsInplace( test )
   test.case = 'duplicates, onEach return array';
   var src = [ '/b', null, null, '', '', '/b' ];
   var got = _.path.filterDstPairsInplace( src, ( it ) => [ it.src, '/file', '/dst', '', null, '', null, undefined ] );
-  var expected = [ '/b' ];
+  var expected = [ '/file', '/dst' ];
   test.identical( got, expected );
   test.is( got === src );
 
@@ -8115,7 +8115,7 @@ function filterDstPairsInplace( test )
   test.case = 'duplicates in array';
   var src = [ '/dir1', '/a', null, '', '', null ];
   var got = _.path.filterDstPairsInplace( src, duplicates2 );
-  var expected = [ '/dir1', '/a' ];
+  var expected = [ '1' ];
   test.identical( got, expected );
   test.is( got === src );
 
@@ -8124,7 +8124,7 @@ function filterDstPairsInplace( test )
   test.case = 'boolean values';
   var src = [ '/dir1', true, null, '', '', null ];
   var got = _.path.filterDstPairsInplace( src, duplicates2 );
-  var expected = [ '/dir1' ];
+  var expected = [ '1' ];
   test.identical( got, expected );
   test.is( got === src );
 
