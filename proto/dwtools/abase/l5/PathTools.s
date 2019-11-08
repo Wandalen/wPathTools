@@ -1016,7 +1016,8 @@ function filterPairs_body( o )
       for( let p = 0; p < o.filePath.length; p++ )
       {
         it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
-
+        it.dst = '';
+        
         if( !_.boolIs( o.filePath[ p ] ) )
         {
           let r = o.onEach( it );
@@ -1266,44 +1267,41 @@ function filterPairs_body( o )
 
       result = self.simplify_( result, result );
     }
+    else if( o.dst !== true )
+    {
+      if( _.arrayIs( o.dst ) )
+      {
+        if( _.arrayIs( result ) )
+        result = _.arrayAppendArrayOnce( o.dst, result );
+        else if( _.mapIs( result ) )
+        result = _.arrayAppendArrayOnce( o.dst, _.mapKeys( result ) );
+        else
+        result = _.arrayAppendOnce( o.dst, result );
+      }
+      else if( _.mapIs( o.dst ) )
+      {
+        if( _.mapIs( result ) )
+        for( let k in result )
+        o.dst[ k ] = result[ k ];
+
+        else if( _.arrayIs( result ) )
+        for( let i = 0; i < result.length; i++ )
+        o.dst[ result[ i ] ] = '';
+        else
+        o.dst[ result ] = '';
+
+        result = o.dst;
+      }
+      result = self.simplify_( result, result );
+    }
     else
     {
-      if( o.dst !== true )
-      {
-        if( _.arrayIs( o.dst ) )
-        {
-          if( _.arrayIs( result ) )
-          result = _.arrayAppendArrayOnce( o.dst, result );
-          else if( _.mapIs( result ) )
-          result = _.arrayAppendArrayOnce( o.dst, _.mapKeys( result ) );
-          else
-          result = _.arrayAppendOnce( o.dst, result );
-        }
-        else if( _.mapIs( o.dst ) )
-        {
-          if( _.mapIs( result ) )
-          for( let k in result )
-          o.dst[ k ] = result[ k ];
+      if( result.length === 1 )
+      return result[ 0 ];
+      else if( result.length === 0 )
+      return '';
 
-          else if( _.arrayIs( result ) )
-          for( let i = 0; i < result.length; i++ )
-          o.dst[ result[ i ] ] = '';
-          else
-          o.dst[ result ] = '';
-
-          result = o.dst;
-        }
-        result = self.simplify_( result, result );
-      }
-      else
-      {
-        if( result.length === 1 )
-        return result[ 0 ];
-        else if( result.length === 0 )
-        return '';
-
-        result = self.simplify_( null, result );
-      }
+      result = self.simplify_( null, result );
     }
 
     if( _.mapIs( result ) && result[ '' ] === '' )
