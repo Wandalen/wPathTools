@@ -1017,7 +1017,7 @@ function filterPairs_body( o )
       {
         it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
         it.dst = '';
-        
+
         if( !_.boolIs( o.filePath[ p ] ) )
         {
           let r = o.onEach( it );
@@ -1238,7 +1238,10 @@ function filterPairs_body( o )
         if( _.arrayIs( result ) )
         result = _.arrayAppendArrayOnce( o.filePath, result );
         else if( _.mapIs( result ) )
-        result = _.arrayAppendArrayOnce( o.filePath, _.mapKeys( result ) );
+        {
+          if( o.isSrc )
+          result = _.arrayAppendArrayOnce( o.filePath, _.mapKeys( result ) );
+        }
         else
         result = _.arrayAppendOnce( o.filePath, result );
       }
