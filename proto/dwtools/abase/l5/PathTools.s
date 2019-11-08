@@ -959,8 +959,10 @@ function filterPairs_pre( routine, args )
       o.dst = true;
       else if( args[ 0 ] === o.filePath )
       o.dst = false;
+      else if(  _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) )
+      o.dst = args[ 0 ];
       else
-      _.assert( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) );
+      _.assert( 0 );
     }
     else if( args.length === 2 )
     {
@@ -1216,8 +1218,13 @@ function filterPairs_body( o )
 
   function end()
   {
-    if( !hasSrc && !hasDst )
-    result = '';
+    if( !hasSrc )
+    {
+      if( !hasDst )
+      result = '';
+      else if( !o.isSrc && !_.mapIs( o.filePath ) )
+      result = _.mapVals( result )[ 0 ];
+    }
     else if( !hasDst )
     result = _.mapKeys( result );
 
