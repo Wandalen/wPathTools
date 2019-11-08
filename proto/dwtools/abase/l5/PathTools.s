@@ -1226,7 +1226,7 @@ function filterPairs_body( o )
       else if( !o.isSrc && !_.mapIs( o.filePath ) )
       result = _.mapVals( result )[ 0 ];
     }
-    else if( !hasDst )
+    else if( !hasDst && o.isSrc )
     result = _.mapKeys( result );
 
     if( o.dst === false )
@@ -1277,28 +1277,58 @@ function filterPairs_body( o )
         if( _.arrayIs( result ) )
         result = _.arrayAppendArrayOnce( o.dst, result );
         else if( _.mapIs( result ) )
-        result = _.arrayAppendArrayOnce( o.dst, _.mapKeys( result ) );
+        {
+          if( o.isSrc )
+          result = _.arrayAppendArrayOnce( o.dst, _.mapKeys( result ) );
+          else
+          result = _.arrayAppendArraysOnce( o.dst, _.mapVals( result ) );
+        }
         else
         result = _.arrayAppendOnce( o.dst, result );
       }
       else if( _.mapIs( o.dst ) )
       {
         if( _.mapIs( result ) )
-        for( let k in result )
-        o.dst[ k ] = result[ k ];
+        {
+          if( !o.isSrc && !_.mapIs( o.filePath ) )
+          {
+            for( let k in result )
+            o.dst[ '' ] = _.scalarAppendOnce( o.dst[ '' ], result[ k ] );
+          }
+          else
+          {
+            for( let k in result )
+            o.dst[ k ] = result[ k ];
+          }
+        }
 
         else if( _.arrayIs( result ) )
-        for( let i = 0; i < result.length; i++ )
-        o.dst[ result[ i ] ] = '';
+        {
+          if( !o.isSrc && !_.mapIs( o.filePath ) )
+          {
+            for( let i = 0; i < result.length; i++ )
+            o.dst[ '' ] = _.scalarAppend( o.dst[ '' ], result[ i ] );
+          }
+          else
+          {
+            for( let i = 0; i < result.length; i++ )
+            o.dst[ result[ i ] ] = '';
+          }
+        }
         else
-        o.dst[ result ] = '';
+        {
+          if( o.isSrc )
+          o.dst[ result ] = '';
+          else
+          o.dst[ '' ] = result;
+        }
 
         result = o.dst;
       }
       result = self.simplify_( result, result );
     }
     else
-    {
+    {      
       if( result.length === 1 )
       return result[ 0 ];
       else if( result.length === 0 )
