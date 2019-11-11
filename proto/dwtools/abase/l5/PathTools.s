@@ -1437,13 +1437,15 @@ function _filterInplace( o )
     {
       let filePath2 = o.filePath.slice();
       o.filePath.splice( 0, o.filePath.length );
+      it.side = 'src';
+
       for( let p = 0 ; p < filePath2.length ; p++ )
       {
+
         it.index = p;
         it.src = filePath2[ p ] === null ? '' : filePath2[ p ];
         it.dst = '';
-        it.value = filePath2[ p ] === null ? '' : filePath2[ p ];
-        it.side = 'src';
+        it.value = it.src;
 
         let r = o.onEach( it.value, it );
         if( r !== undefined )
@@ -1457,13 +1459,14 @@ function _filterInplace( o )
     {
       let filePath2 = o.filePath.slice();
       o.filePath.splice( 0, o.filePath.length );
+      it.side = 'dst';
+
       for( let p = 0 ; p < filePath2.length ; p++ )
       {
         it.index = p;
         it.src = '';
         it.dst = filePath2[ p ] === null ? '' : filePath2[ p ];
-        it.value = filePath2[ p ] === null ? '' : filePath2[ p ];
-        it.side = 'dst';
+        it.value = it.dst;
 
         let r = o.onEach( it.value, it );
         if( r !== undefined )
@@ -1662,46 +1665,85 @@ function filterDstInplace( filePath, onEach )
 
 //
 
-function filter( filePath, onEach )
+function _filter( o )
 {
   let self = this;
   let it = Object.create( null );
+  let result;
 
-  _.assert( arguments.length === 2 );
-  _.assert( filePath === null || _.strIs( filePath ) || _.arrayIs( filePath ) || _.mapIs( filePath ) );
-  _.routineIs( onEach );
+  _.routineOptions( _filter, o );
+  _.assert( arguments.length === 1 );
+  _.routineIs( o.onEach );
 
-  if( filePath === null || _.strIs( filePath ) )
+  if( o.filePath === null )
   {
-    it.value = filePath;
-    if( filePath === null )
-    it.value = '';
-    let r = onEach( it.value, it );
-    if( r === undefined )
-    return null;
-    return self.simplify( r );
+    o.filePath = '';
   }
-  else if( _.arrayIs( filePath ) )
+  if( _.strIs( o.filePath ) )
   {
-    let result = [];
-    for( let p = 0 ; p < filePath.length ; p++ )
+
+    it.value = o.filePath;
+    if( o.isSrc )
     {
-      it.index = p;
-      it.value = filePath[ p ];
-      if( filePath[ p ] === null )
-      it.value = '';
-      let r = onEach( it.value, it );
-      if( r !== undefined )
-      _.arrayAppendArraysOnce( result, r );
+      it.src = o.filePath;
+      it.dst = '';
+      it.side = 'src';
     }
-    return self.simplify( result );
-  }
-  else if( _.mapIs( filePath ) )
-  {
-    let result = Object.create( null );
-    for( let src in filePath )
+    else
     {
-      let dst = filePath[ src ];
+      it.src = '';
+      it.dst = o.filePath;
+      it.side = 'dst';
+    }
+
+    result = o.onEach( it.value, it );
+    if( result === undefined )
+    return null;
+
+  }
+  else if( _.arrayIs( o.filePath ) )
+  {
+
+    result = [];
+
+    if( o.isSrc )
+    {
+      it.side = 'src';
+      for( let p = 0; p < o.filePath.length; p++ )
+      {
+        it.index = p;
+        it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+        it.dst = '';
+        it.value = it.src;
+
+        let r = o.onEach( it.value, it );
+        if( r !== undefined )
+        _.arrayAppendArraysOnce( result, r );
+      }
+    }
+    else
+    {
+      it.side = 'dst';
+      for( let p = 0; p < o.filePath.length; p++ )
+      {
+        it.index = p;
+        it.src = '';
+        it.dst = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+        it.value = it.dst;
+        let r = o.onEach( it.value, it );
+        if( r !== undefined )
+        _.arrayAppendArraysOnce( result, r );
+      }
+    }
+
+  }
+  else if( _.mapIs( o.filePath ) )
+  {
+
+    result = Object.create( null );
+    for( let src in o.filePath )
+    {
+      let dst = o.filePath[ src ];
 
       if( _.arrayIs( dst ) )
       {
@@ -1712,10 +1754,10 @@ function filter( filePath, onEach )
           it.dst = '';
           it.value = it.src;
           it.side = 'src';
-          let srcResult = onEach( it.value, it );
+          let srcResult = o.onEach( it.value, it );
           it.value = it.dst;
           it.side = 'dst';
-          let dstResult = onEach( it.value, it );
+          let dstResult = o.onEach( it.value, it );
           write( result, srcResult, dstResult );
         }
         else
@@ -1723,15 +1765,13 @@ function filter( filePath, onEach )
           for( let d = 0 ; d < dst.length ; d++ )
           {
             it.src = src;
-            it.dst = dst[ d ];
-            if( dst[ d ] === null )
-            it.dst = '';
+            it.dst = dst[ d ] === null ? '' : dst[ d ];
             it.value = it.src;
             it.side = 'src';
-            let srcResult = onEach( it.value, it );
+            let srcResult = o.onEach( it.value, it );
             it.value = it.dst;
             it.side = 'dst';
-            let dstResult = onEach( it.value, it );
+            let dstResult = o.onEach( it.value, it );
             write( result, srcResult, dstResult );
           }
         }
@@ -1739,23 +1779,21 @@ function filter( filePath, onEach )
       else
       {
         it.src = src;
-        it.dst = dst;
-        if( dst === null )
-        it.dst = '';
+        it.dst = dst === null ? '' : dst;
         it.value = it.src;
         it.side = 'src';
-        let srcResult = onEach( it.value, it );
+        let srcResult = o.onEach( it.value, it );
         it.value = it.dst;
         it.side = 'dst';
-        let dstResult = onEach( it.value, it );
+        let dstResult = o.onEach( it.value, it );
         write( result, srcResult, dstResult );
       }
-
     }
 
-    return self.simplify( result );
   }
   else _.assert( 0 );
+
+  return self.simplify( result );
 
   /* */
 
@@ -1785,6 +1823,59 @@ function filter( filePath, onEach )
   }
 
 }
+_filter.defaults =
+{
+  filePath : null,
+  onEach : null,
+  isSrc : true,
+}
+
+//
+
+function filter( filePath, onEach )
+{
+
+  _.assert( arguments.length === 2 );
+
+  return this._filter
+  ({
+    filePath,
+    onEach,
+    isSrc : true,
+  });
+}
+
+//
+
+function filterSrc( filePath, onEach )
+{
+
+  _.assert( arguments.length === 2 );
+
+  return this._filter
+  ({
+    filePath,
+    onEach,
+    isSrc : true,
+  });
+}
+
+//
+
+function filterDst( filePath, onEach )
+{
+
+  _.assert( arguments.length === 2 );
+
+  return this._filter
+  ({
+    filePath,
+    onEach,
+    isSrc : false,
+  });
+}
+
+//
 
 // function filter( filePath, onEach )
 // {
@@ -3789,7 +3880,10 @@ let Routines =
   filterSrcInplace,
   filterDstInplace,
 
+  _filter,
   filter,
+  filterSrc,
+  filterDst,
   filter_,
   all,
   any,
