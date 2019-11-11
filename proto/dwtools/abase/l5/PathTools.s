@@ -1699,6 +1699,13 @@ function _filter( o )
     result = o.onEach( it.value, it );
     if( result === undefined )
     return null;
+    else if( result === null )
+    return '';
+    else if( _.strIs( result ) )
+    return result;
+
+    if( _.arrayIs( result ) )
+    result = write( null, result );
 
   }
   else if( _.arrayIs( o.filePath ) )
