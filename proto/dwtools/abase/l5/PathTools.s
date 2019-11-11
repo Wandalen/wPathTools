@@ -1328,7 +1328,7 @@ function filterPairs_body( o )
       result = self.simplify_( result, result );
     }
     else
-    {      
+    {
       if( result.length === 1 )
       return result[ 0 ];
       else if( result.length === 0 )
@@ -1456,7 +1456,7 @@ function _filterInplace( o )
     else
     {
       let filePath2 = o.filePath.slice();
-      filePath.splice( 0, o.filePath.length );
+      o.filePath.splice( 0, o.filePath.length );
       for( let p = 0 ; p < filePath2.length ; p++ )
       {
         it.index = p;
