@@ -1699,14 +1699,7 @@ function _filter( o )
     result = o.onEach( it.value, it );
     if( result === undefined )
     return null;
-    //else if( result === null )
-    //return '';
-    //else if( _.strIs( result ) )
-    //return result;
-
-    //if( _.arrayIs( result ) )
-    //result = write( null, result );
-
+    
   }
   else if( _.arrayIs( o.filePath ) )
   {
@@ -1983,30 +1976,83 @@ function filterDst( filePath, onEach )
 
 //
 
-function filter_( dst, filePath, onEach )
+function filter_pre( routine, args )
+{
+  _.assert( arguments.length === 2 );
+
+  let o = Object.create( null );
+  if( args.length === 1 )
+  {
+    _.assert( _.mapIs( args[ 0 ] ) );
+    o = args[ 0 ];
+  }
+  else
+  {
+    if( args.length === 3 )
+    {
+      if( args[ 0 ] === null )
+      o.dst = true;
+      else if( args[ 0 ] === args[ 1 ] )
+      o.dst = false;
+      else
+      _.assert( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) );
+    }
+    else if( args.length === 2 )
+    {
+      o.onEach = args[ 1 ];
+      o.filePath = args[ 0 ];
+      o.dst = true;
+    }
+    else
+    _.assert( 0 );
+
+  
+  }
+
+  _.routineOptions( routine, o );
+  _.routineIs( o.onEach, '{-onEach-} should be a routine' );
+
+  return o;
+}
+
+
+function filter_body( o )
 {
 
-  argumentsCheckAndSet( arguments );
-
-  if( filePath === null )
-  filePath = '';
+  if( o.filePath === null )
+  o.filePath = '';
 
   let result;
   let it = Object.create( null );
 
-  if( dst === true )
-  result = new filePath.constructor();
-  else if( dst === false )
-  result = filePath;
+  if( o.dst === true )
+  result = new o.filePath.constructor();
+  else if( o.dst === false )
+  result = o.filePath;
   else
-  result = dst;
+  result = o.dst;
 
-  if( _.strIs( filePath ) )
+  if( _.strIs( o.filePath ) )
   {
-    it.value = filePath;
-    let r = onEach( it.value, it );
+    it.value = o.filePath;
+		if( o.isSrc )
+		{
+			it.src = o.filePath;
+			it.dst = '';
+			it.side = 'src';
+		}
+		else
+		{
+			it.src = '';
+			it.dst = o.filePath;
+			it.side = 'dst';
+		}
+
+    let r = o.onEach( it.value, it );
     if( r === undefined || r === null )
-    r = '';
+		{
+			r = '';
+		}
     else if( _.arrayIs( r ) )
     {
       if( r.length === 0 )
@@ -2022,68 +2068,108 @@ function filter_( dst, filePath, onEach )
     else
     result = r;
   }
-  else if( _.arrayIs( filePath ) )
+  else if( _.arrayIs( o.filePath ) )
   {
-    for( let p = 0; p < filePath.length; p++ )
-    {
-      it.index = p;
-      it.value = filePath[ p ] === null ? '' : filePath[ p ];
+		if( o.isSrc )
+		{
+			it.side = 'src';
+			for( let p = 0; p < o.filePath.length; p++ )
+			{
+				it.index = p;
+				it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+				it.dst = '';
+				it.value = it.src;
 
-      let r = onEach( it.value, it );
-      if( r === undefined || r === null )
-      r = '';
-      else if( _.arrayIs( r ) )
-      {
-        if( r.length === 0 )
-        r = '';
-        else if( r.length === 1 )
-        r = r[ 0 ];
-      }
+				let r = o.onEach( it.value, it );
+				if( r === undefined || r === null )
+				{
+					r = '';
+				}
+				else if( _.arrayIs( r ) )
+				{
+					if( r.length === 0 )
+					r = '';
+					else if( r.length === 1 )
+					r = r[ 0 ];
+				}
 
-      if( dst === false )
-      result[ p ] = r;
-      else if( _.arrayIs( result ) )
-      _.arrayAppendArraysOnce( result, r );
-      else if( _.mapIs( result ) )
-      result[ r ] = '';
-    }
+				if( o.dst === false )
+				result[ p ] = r;
+				else if( _.arrayIs( result ) )
+				_.arrayAppendArraysOnce( result, r );
+				else if( _.mapIs( result ) )
+				result[ r ] = '';
+			}
+		}
+		else
+		{
+			it.side = 'dst';
+			for( let p = 0; p < o.filePath.length; p++ )
+			{
+				it.index = p;
+				it.src = '';
+				it.dst = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+				it.value = it.dst;
+
+				let r = o.onEach( it.value, it );
+				if( r === undefined || r === null )
+				{
+					r = '';
+				}
+				else if( _.arrayIs( r ) )
+				{
+					if( r.length === 0 )
+					r = '';
+					else if( r.length === 1 )
+					r = r[ 0 ];
+				}
+
+				if( o.dst === false )
+				result[ p ] = r;
+				else if( _.arrayIs( result ) )
+				_.arrayAppendArraysOnce( result, r );
+				else if( _.mapIs( result ) )
+				result[ r ] = '';
+			}
+		}
+
   }
-  else if( _.mapIs( filePath ) )
+  else if( _.mapIs( o.filePath ) )
   {
-    for( let src in filePath )
+    for( let src in o.filePath )
     {
-      let dst1 = filePath[ src ];
+      let dst = o.filePath[ src ];
 
-      if( dst === false )
-      delete filePath[ src ];
+      if( o.dst === false )
+      delete o.filePath[ src ];
 
-      if( _.arrayIs( dst1 ) )
+      if( _.arrayIs( dst ) )
       {
-        dst1 = dst1.slice();
-        if( dst1.length === 0 )
+        if( dst.length === 0 )
         {
           it.src = src;
           it.dst = '';
           it.value = it.src;
           it.side = 'src';
-          let srcResult = onEach( it.value, it );
+          let srcResult = o.onEach( it.value, it );
           it.side = 'dst';
           it.value = it.dst;
-          let dstResult = onEach( it.value, it );
+          let dstResult = o.onEach( it.value, it );
           write( result, srcResult, dstResult );
         }
         else
         {
-          for( let d = 0 ; d < dst1.length ; d++ )
+					dst = dst.slice();
+          for( let d = 0; d < dst.length; d++ )
           {
             it.src = src;
-            it.dst = dst1[ d ] === null ? '' : dst1[ d ];
+            it.dst = dst[ d ] === null ? '' : dst[ d ];
             it.value = it.src;
             it.side = 'src';
-            let srcResult = onEach( it.value, it );
+            let srcResult = o.onEach( it.value, it );
             it.value = it.dst;
             it.side = 'dst';
-            let dstResult = onEach( it.value, it );
+            let dstResult = o.onEach( it.value, it );
             write( result, srcResult, dstResult );
           }
         }
@@ -2091,13 +2177,13 @@ function filter_( dst, filePath, onEach )
       else
       {
         it.src = src;
-        it.dst = dst1 === null ? '' : dst1;
+        it.dst = dst === null ? '' : dst;
         it.value = it.src;
         it.side = 'src';
-        let srcResult = onEach( it.value, it );
+        let srcResult = o.onEach( it.value, it );
         it.side = 'dst';
         it.value = it.dst;
-        let dstResult = onEach( it.value, it );
+        let dstResult = o.onEach( it.value, it );
         write( result, srcResult, dstResult );
       }
 
@@ -2105,8 +2191,10 @@ function filter_( dst, filePath, onEach )
   }
   else _.assert( 0 );
 
-  if( dst === true )
-  result = this.simplify_( null, result );
+  if( o.dst === true )
+	{
+		result = this.simplify_( null, result );
+	}
   else
   {
     if( _.mapIs( result ) && result[ '' ] === '' )
@@ -2179,31 +2267,46 @@ function filter_( dst, filePath, onEach )
     }
   }
 
-  /* */
+}
+filter_body.defaults =
+{
+	dst : null,
+	filePath : null,
+	onEach : null,
+	isSrc : true,
+}
 
-  function argumentsCheckAndSet( args )
-  {
-    if( args.length === 3 )
-    {
-      if( dst === null )
-      dst = true;
-      else if( dst === filePath )
-      dst = false;
-      else
-      _.assert( _.arrayIs( dst ) || _.mapIs( dst ) );
-    }
-    else if( args.length === 2 )
-    {
-      onEach = filePath;
-      filePath = dst;
-      dst = true;
-    }
-    else
-    _.assert( 0 );
+//
 
-    _.routineIs( onEach, '{-onEach-} should be a routine' );
-  }
+let filter_ = _.routineFromPreAndBody( filter_pre, filter_body );
+filter_.defaults =
+{
+	dst : null,
+	filePath : null,
+	onEach : null,
+	isSrc : true,
+}
 
+//
+
+let filterSrc_ = _.routineFromPreAndBody( filter_pre, filter_body );
+filterSrc_.defaults =
+{
+	dst : null,
+	filePath : null,
+	onEach : null,
+	isSrc : true,
+}
+
+//
+
+let filterDst_ = _.routineFromPreAndBody( filter_pre, filter_body );
+filterDst_.defaults =
+{
+	dst : null,
+	filePath : null,
+	onEach : null,
+	isSrc : false,
 }
 
 //
@@ -3891,7 +3994,10 @@ let Routines =
   filter,
   filterSrc,
   filterDst,
+
   filter_,
+  filterSrc_,
+  filterDst_,
   all,
   any,
   none,
