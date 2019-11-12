@@ -1699,7 +1699,7 @@ function _filter( o )
     result = o.onEach( it.value, it );
     if( result === undefined )
     return null;
-    
+
   }
   else if( _.arrayIs( o.filePath ) )
   {
@@ -1997,8 +1997,10 @@ function filter_pre( routine, args )
       o.dst = true;
       else if( args[ 0 ] === args[ 1 ] )
       o.dst = false;
+      else if( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) )
+      o.dst = args[ 0 ];
       else
-      _.assert( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) );
+      _.assert( 0 );
     }
     else if( args.length === 2 )
     {
@@ -2009,7 +2011,7 @@ function filter_pre( routine, args )
     else
     _.assert( 0 );
 
-  
+
   }
 
   _.routineOptions( routine, o );
