@@ -1990,6 +1990,9 @@ function filter_pre( routine, args )
   {
     if( args.length === 3 )
     {
+			o.onEach = args[ 2 ];
+			o.filePath = args[ 1 ];
+
       if( args[ 0 ] === null )
       o.dst = true;
       else if( args[ 0 ] === args[ 1 ] )
