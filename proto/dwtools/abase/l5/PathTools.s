@@ -747,7 +747,7 @@ function _filterPairsInplace( o )
   function elementsWrite( filePath, it, elements )
   {
 
-    /* qqq : cover and implement for filterPairs, please */
+    /* qqq : cover and implement for filterPairs, please | Dmytro : covered and implemented in filterPairs */
     if( elements === it )
     {
       _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) || _.boolLike( it.dst ) );
@@ -1236,14 +1236,18 @@ function filterPairs_body( o )
         o.filePath.splice( 0, o.filePath.length );
 
         if( _.arrayIs( result ) )
-        result = _.arrayAppendArrayOnce( o.filePath, result );
+        {
+          result = _.arrayAppendArrayOnce( o.filePath, result );
+        }
         else if( _.mapIs( result ) )
         {
           if( o.isSrc )
           result = _.arrayAppendArrayOnce( o.filePath, _.mapKeys( result ) );
         }
         else
-        result = _.arrayAppendOnce( o.filePath, result );
+        {
+          result = _.arrayAppendOnce( o.filePath, result );
+        }
       }
       else if( _.mapIs( o.filePath ) )
       {
@@ -1451,7 +1455,7 @@ function _filterInplace( o )
         if( r !== undefined )
         _.arrayAppendArraysOnce( o.filePath, r );
       }
-      /* qqq : should be no simplify in the routine */
+      /* qqq : should be no simplify in the routine | Dmytro : routine use not simplify */
       // return self.simplifyInplace( filePath );
       return write( it, o.filePath );
     }
@@ -1529,7 +1533,7 @@ function _filterInplace( o )
 
     }
 
-    /* qqq : should be no simplify in the routine */
+    /* qqq : should be no simplify in the routine | Dmytro : routine use not simplify */
     //return self.simplifyInplace( filePath );
   }
   else _.assert( 0 );
@@ -1564,6 +1568,7 @@ function _filterInplace( o )
       -- non-empty str
       -- boolean-like,
       -- empty ( null or empty string )
+      Dmytro : all requirements applied
     */
 
     if( dst !== undefined )
@@ -2067,11 +2072,20 @@ function filter_body( o )
     }
 
     if( _.arrayIs( result ) )
-    _.arrayAppendOnce( result, r );
+    {
+      if( _.arrayIs( r ) )
+      _.arrayAppendArrayOnce( result, r );
+      else
+      _.arrayAppendOnce( result, r );
+    }
     else if( _.mapIs( result ) )
-    result[ r ] = '';
+    {
+      result[ r ] = '';
+    }
     else
-    result = r;
+    {
+      result = r;
+    }
   }
   else if( _.arrayIs( o.filePath ) )
   {
@@ -2086,24 +2100,7 @@ function filter_body( o )
 				it.value = it.src;
 
 				let r = o.onEach( it.value, it );
-				if( r === undefined || r === null )
-				{
-					r = '';
-				}
-				else if( _.arrayIs( r ) )
-				{
-					if( r.length === 0 )
-					r = '';
-					else if( r.length === 1 )
-					r = r[ 0 ];
-				}
-
-				if( o.dst === false )
-				result[ p ] = r;
-				else if( _.arrayIs( result ) )
-				_.arrayAppendArraysOnce( result, r );
-				else if( _.mapIs( result ) )
-				result[ r ] = '';
+				writeArrayResult( r, p, result );
 			}
 		}
 		else
@@ -2117,24 +2114,7 @@ function filter_body( o )
 				it.value = it.dst;
 
 				let r = o.onEach( it.value, it );
-				if( r === undefined || r === null )
-				{
-					r = '';
-				}
-				else if( _.arrayIs( r ) )
-				{
-					if( r.length === 0 )
-					r = '';
-					else if( r.length === 1 )
-					r = r[ 0 ];
-				}
-
-				if( o.dst === false )
-				result[ p ] = r;
-				else if( _.arrayIs( result ) )
-				_.arrayAppendArraysOnce( result, r );
-				else if( _.mapIs( result ) )
-				result[ r ] = '';
+				writeArrayResult( r, p, result );
 			}
 		}
 
@@ -2270,6 +2250,30 @@ function filter_body( o )
       }
       return dst;
     }
+  }
+
+  /* */
+
+  function writeArrayResult( r, i, result )
+  {
+    if( r === undefined || r === null )
+    {
+      r = '';
+    }
+    else if( _.arrayIs( r ) )
+    {
+      if( r.length === 0 )
+      r = '';
+      else if( r.length === 1 )
+      r = r[ 0 ];
+    }
+
+    if( o.dst === false )
+    result[ i ] = r;
+    else if( _.arrayIs( result ) )
+    _.arrayAppendArraysOnce( result, r );
+    else if( _.mapIs( result ) )
+    result[ r ] = '';
   }
 
 }
@@ -2493,9 +2497,13 @@ Dmytro : implemented good tests. Uncomment refactored routine below, and uncomme
 //   _.assert( arguments.length === 1 );
 //
 //   if( src === null || src === '' )
-//   return true;
+//   {
+//     return true;
+//   }
 //   else if( _.strIs( src ) )
-//   return false;
+//   {
+//     return false;
+//   }
 //   else if( _.arrayIs( src ) )
 //   {
 //     if( src.length === 0 )
@@ -3320,14 +3328,17 @@ function simplify_( dst, src )
   dst = false;
 
   if( src === null )
-  result = '';
-
+  {
+    result = '';
+  }
   else if( _.strIs( src ) )
-  result = src;
-
+  {
+    result = src;
+  }
   else if( _.boolLike( src ) )
-  result = !!src;
-
+  {
+    result = !!src;
+  }
   else if( _.arrayIs( src ) )
   {
     if( dst === false )
@@ -3346,7 +3357,6 @@ function simplify_( dst, src )
       result = result[ 0 ];
     }
   }
-
   else if( _.mapIs( src ) )
   {
     if( dst !== false )
@@ -3374,7 +3384,6 @@ function simplify_( dst, src )
       }
       else
       result = '';
-
     }
     else
     {
@@ -3384,7 +3393,9 @@ function simplify_( dst, src )
     }
   }
   else
-  result = src;
+  {
+    result = src;
+  }
 
   fillDst();
 
@@ -3986,10 +3997,6 @@ let Routines =
   filterSrcPairsInplace,
   filterDstPairsInplace,
 
-  filterPairs_,
-  filterSrcPairs_,
-  filterDstPairs_,
-
   _filterInplace,
   filterInplace,
   filterSrcInplace,
@@ -4000,9 +4007,6 @@ let Routines =
   filterSrc,
   filterDst,
 
-  filter_,
-  filterSrc_,
-  filterDst_,
   all,
   any,
   none,
@@ -4018,7 +4022,6 @@ let Routines =
   simplify,
   simplifyDst, /* qqq : cover simplifyDst | Dmytro : covered */
   simplifyInplace,
-  simplify_,
 
   mapDstFromSrc,
   mapDstFromDst,
@@ -4033,6 +4036,50 @@ let Routines =
   mapGroupByDst,
   setOptimize, /* xxx : deprecate maybe? */
   mapOptimize, /* qqq : cover please | Dmytro : coverage is extended */
+
+  // to replace
+
+  filterPairs_, /* !!! : use instead of filterPairs, filterPairsInplace */
+  filterSrcPairs_, /* !!! : use instead of filterSrcPairs, filterSrcPairsInplace */
+  filterDstPairs_, /* !!! : use instead of filterDstPairs, filterDstPairsInplace */
+  filter_, /* !!! : use instead of filter, filterInplace */
+  filterSrc_, /* !!! : use instead of filterSrc, filterSrcInplace */
+  filterDst_, /* !!! : use instead of filterDst, filterDstInplace */
+  simplify_, /* !!! : use instead of simplify, simplifyInplace */
+
+  /*
+  | routine                | makes new dst container                               | saves dst container                                     |
+  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+  | filterPair             | _.path.filterPairs_( filePath, onEach )               | _.path.filterPairs_( filePath, filePath, onEach )       |
+  |                        | _.path.filterPairs_( null, filePath, onEach )         | _.path.filterPairs_( dst, filePath, onEach )            |
+  |                        |                                                       | dst should be container                                 |
+  | --------------------   | ---------------------------------------------------   | ------------------------------------------------------  |
+  | filterSrcPairs_        | _.path.filterSrcPairs_( filePath, onEach )            | _.path.filterSrcPairs_( filePath, filePath, onEach )    |
+  |                        | _.path.filterSrcPairs_( null, filePath, onEach )      | _.path.filterSrcPairs_( dst, filePath, onEach )         |
+  |                        |                                                       | dst should be container                                 |
+  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+  | filterDstPairs_        | _.path.filterDstPairs_( filePath, onEach )            | _.path.filterDstPairs_( filePath, filePath, onEach )    |
+  |                        | _.path.filterDstPairs_( null, filePath, onEach )      | _.path.filterDstPairs_( dst, filePath, onEach )         |
+  |                        |                                                       | dst should be container                                 |
+  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+  | filter_                | _.path.filter_( filePath, onEach )                    | _.path.filter_( filePath, filePath, onEach )            |
+  |                        | _.path.filter_( null, filePath, onEach )              | _.path.filter_( dst, filePath, onEach )                 |
+  |                        |                                                       | dst should be container                                 |
+  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+  | filterSrc_             | _.path.filterSrc_( filePath, onEach )                 | _.path.filterSrc_( filePath, filePath, onEach )         |
+  |                        | _.path.filterSrc_( null, filePath, onEach )           | _.path.filterSrc_( dst, filePath, onEach )              |
+  |                        |                                                       | dst should be container                                 |
+  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+  | filterDst_             | _.path.filterDst_( filePath, onEach )                 | _.path.filterDst_( filePath, filePath, onEach )         |
+  |                        | _.path.filterDst_( null, filePath, onEach )           | _.path.filterDst_( dst, filePath, onEach )              |
+  |                        |                                                       | dst should be container                                 |
+  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+  | simplify_              | _.path.simplify_( filePath )                          | _.path.simplify_( filePath, filePath )                  |
+  |                        | _.path.simplify_( null, filePath )                    | _.path.simplify_( dst, filePath )                       |
+  |                        | _.path.simplify_( dst, filePath )                     |                                                         |
+  |                        | if dst is not resizable                               |                                                         |
+
+  */
 
 }
 

@@ -25612,7 +25612,6 @@ function filter( test )
   test.open( 'callback returns array' );
 
   test.case = 'empty string';
-	debugger;
   var got = _.path.filter( '', ( e, it ) => [ e ] );
   var expected = '';
   test.identical( got, expected );
