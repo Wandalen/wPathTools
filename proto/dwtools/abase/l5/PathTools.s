@@ -4050,7 +4050,7 @@ let Routines =
   /*
   | routine                | makes new dst container                               | saves dst container                                     |
   | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | filterPair             | _.path.filterPairs_( filePath, onEach )               | _.path.filterPairs_( filePath, filePath, onEach )       |
+  | filterPairs_           | _.path.filterPairs_( filePath, onEach )               | _.path.filterPairs_( filePath, filePath, onEach )       |
   |                        | _.path.filterPairs_( null, filePath, onEach )         | _.path.filterPairs_( dst, filePath, onEach )            |
   |                        |                                                       | dst should be container                                 |
   | --------------------   | ---------------------------------------------------   | ------------------------------------------------------  |
