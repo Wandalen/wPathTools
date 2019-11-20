@@ -2011,7 +2011,7 @@ function filter_pre( routine, args )
     {
       o.onEach = args[ 1 ];
       o.filePath = args[ 0 ];
-      o.dst = true;
+      o.dst = false;
     }
     else
     _.assert( 0 );
@@ -4048,39 +4048,42 @@ let Routines =
   simplify_, /* !!! : use instead of simplify, simplifyInplace */
 
   /*
-  | routine                | makes new dst container                               | saves dst container                                     |
-  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | filterPairs_           | _.path.filterPairs_( null, filePath, onEach )         | _.path.filterPairs_( filePath, onEach )                 |
-  |                        |                                                       | _.path.filterPairs_( filePath, filePath, onEach )       |
-  |                        |                                                       | _.path.filterPairs_( dst, filePath, onEach )            |
-  |                        |                                                       | dst should be array or map                              |
-  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | filterSrcPairs_        | _.path.filterSrcPairs_( null, filePath, onEach )      | _.path.filterSrcPairs_( filePath, onEach )              |
-  |                        |                                                       | _.path.filterSrcPairs_( filePath, filePath, onEach )    |
-  |                        |                                                       | _.path.filterSrcPairs_( dst, filePath, onEach )         |
-  |                        |                                                       | dst should be array or map                              |
-  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | filterDstPairs_        | _.path.filterDstPairs_( null, filePath, onEach )      | _.path.filterDstPairs_( filePath, onEach )              |
-  |                        |                                                       | _.path.filterDstPairs_( filePath, filePath, onEach )    |
-  |                        |                                                       | _.path.filterDstPairs_( dst, filePath, onEach )         |
-  |                        |                                                       | dst should be array or map                              |
-  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | filter_                | _.path.filter_( filePath, onEach )                    | _.path.filter_( filePath, filePath, onEach )            |
-  |                        | _.path.filter_( null, filePath, onEach )              | _.path.filter_( dst, filePath, onEach )                 |
-  |                        |                                                       | dst should be container                                 |
-  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | filterSrc_             | _.path.filterSrc_( filePath, onEach )                 | _.path.filterSrc_( filePath, filePath, onEach )         |
-  |                        | _.path.filterSrc_( null, filePath, onEach )           | _.path.filterSrc_( dst, filePath, onEach )              |
-  |                        |                                                       | dst should be container                                 |
-  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | filterDst_             | _.path.filterDst_( filePath, onEach )                 | _.path.filterDst_( filePath, filePath, onEach )         |
-  |                        | _.path.filterDst_( null, filePath, onEach )           | _.path.filterDst_( dst, filePath, onEach )              |
-  |                        |                                                       | dst should be container                                 |
-  | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-  | simplify_              | _.path.simplify_( filePath )                          | _.path.simplify_( filePath, filePath )                  |
-  |                        | _.path.simplify_( null, filePath )                    | _.path.simplify_( dst, filePath )                       |
-  |                        | _.path.simplify_( dst, filePath )                     |                                                         |
-  |                        | if dst is not resizable                               |                                                         |
+    | routine                | makes new dst container                               | saves dst container                                     |
+    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+    | filterPairs_           | _.path.filterPairs_( null, filePath, onEach )         | _.path.filterPairs_( filePath, onEach )                 |
+    |                        |                                                       | _.path.filterPairs_( filePath, filePath, onEach )       |
+    |                        |                                                       | _.path.filterPairs_( dst, filePath, onEach )            |
+    |                        |                                                       | dst should be array or map                              |
+    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+    | filterSrcPairs_        | _.path.filterSrcPairs_( null, filePath, onEach )      | _.path.filterSrcPairs_( filePath, onEach )              |
+    |                        |                                                       | _.path.filterSrcPairs_( filePath, filePath, onEach )    |
+    |                        |                                                       | _.path.filterSrcPairs_( dst, filePath, onEach )         |
+    |                        |                                                       | dst should be array or map                              |
+    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+    | filterDstPairs_        | _.path.filterDstPairs_( null, filePath, onEach )      | _.path.filterDstPairs_( filePath, onEach )              |
+    |                        |                                                       | _.path.filterDstPairs_( filePath, filePath, onEach )    |
+    |                        |                                                       | _.path.filterDstPairs_( dst, filePath, onEach )         |
+    |                        |                                                       | dst should be array or map                              |
+    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+    | filter_                | _.path.filter_( null, filePath, onEach )              | _.path.filter_( filePath, onEach )                      |
+    |                        |                                                       | _.path.filter_( filePath, filePath, onEach )            |
+    |                        |                                                       | _.path.filter_( dst, filePath, onEach )                 |
+    |                        |                                                       | dst should be array or map                              |
+    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+    | filterSrc_             | _.path.filterSrc_( null, filePath, onEach )           | _.path.filterSrc_( filePath, onEach )                   |
+    |                        |                                                       | _.path.filterSrc_( filePath, filePath, onEach )         |
+    |                        |                                                       | _.path.filterSrc_( dst, filePath, onEach )              |
+    |                        |                                                       | dst should be array or map                              |
+    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+    | filterDst_             | _.path.filterDst_( null, filePath, onEach )           | _.path.filterDst_( filePath, onEach )                   |
+    |                        |                                                       | _.path.filterDst_( filePath, filePath, onEach )         |
+    |                        |                                                       | _.path.filterDst_( dst, filePath, onEach )              |
+    |                        |                                                       | dst should be array or map                              |
+    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+    | simplify_              | _.path.simplify_( filePath )                          | _.path.simplify_( filePath, filePath )                  |
+    |                        | _.path.simplify_( null, filePath )                    | _.path.simplify_( dst, filePath )                       |
+    |                        | _.path.simplify_( dst, filePath )                     |                                                         |
+    |                        | if dst is not resizable                               |                                                         |
 
   */
 
