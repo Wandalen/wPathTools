@@ -293,6 +293,53 @@ function globSplitToRegexp( glob )
 
 //
 
+function globFit_pre( routine, args )
+{
+  let result;
+
+  _.assert( arguments.length === 2 );
+  _.assert( args.length === 1 || args.length === 2 );
+
+  let o = args[ 0 ];
+  if( args[ 1 ] !== undefined )
+  o = { src : args[ 0 ], selector : args[ 1 ] }
+
+  o = _.routineOptions( routine, o );
+
+  return o;
+}
+
+//
+
+function globFit_body( o )
+{
+  let result;
+
+  _.assert( arguments.length === 1 );
+
+  if( this.isGlob( o.selector ) )
+  {
+    let regexp = this.globsShortToRegexps( o.selector );
+    result = regexp.test( o.src );
+  }
+  else
+  {
+    result = o.src === o.selector;
+  }
+
+  return result;
+}
+
+globFit_body.defaults =
+{
+  src : null,
+  selector : null,
+}
+
+let globFit = _.routineFromPreAndBody( globFit_pre, globFit_body );
+
+//
+
 function globFilter_pre( routine, args )
 {
   let result;
@@ -323,19 +370,19 @@ function globFilter_body( o )
 
   _.assert( arguments.length === 1 );
 
-  if( !this.isGlob( o.selector ) )
-  {
-    result = _.filter( o.src, ( e, k ) =>
-    {
-      return o.onEvaluate( e, k, o.src ) === o.selector ? e : undefined;
-    });
-  }
-  else
+  if( this.isGlob( o.selector ) )
   {
     let regexp = this.globsShortToRegexps( o.selector );
     result = _.filter( o.src, ( e, k ) =>
     {
       return regexp.test( o.onEvaluate( e, k, o.src ) ) ? e : undefined;
+    });
+  }
+  else
+  {
+    result = _.filter( o.src, ( e, k ) =>
+    {
+      return o.onEvaluate( e, k, o.src ) === o.selector ? e : undefined;
     });
   }
 
@@ -1712,6 +1759,7 @@ let Routines =
 
   globSplitToRegexp,
   globsShortToRegexps : _vectorize( globSplitToRegexp ),
+  globFit,
   globFilter,
   globFilterVals,
   globFilterKeys,
