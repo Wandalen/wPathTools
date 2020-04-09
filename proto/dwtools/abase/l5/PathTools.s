@@ -14,7 +14,7 @@
 /**
  * @summary Collection of routines to operate paths reliably and consistently.
  * @namespace "wTools.path"
- * @memberof module:Tools/PathTools
+ * @module Tools/PathTools
  */
 
 if( typeof module !== 'undefined' )
