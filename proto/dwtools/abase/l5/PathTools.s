@@ -13,7 +13,7 @@
 
 /**
  * @summary Collection of routines to operate paths reliably and consistently.
- * @namespace "wTools.path"
+ * @namespace wTools.path
  * @module Tools/PathTools
  */
 
