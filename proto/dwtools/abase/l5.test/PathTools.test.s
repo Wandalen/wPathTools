@@ -10343,7 +10343,7 @@ function filterDstPairs_( test )
   var expected =
   {
     '/path/path' : '[object Object][object Object]',
-    '/path' : { 'value' : undefined }
+    '/path' : obj
   };
   test.identical( got, expected );
 
@@ -10357,34 +10357,34 @@ function filterDstPairs_( test )
   test.case = 'srcOnly2';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, srcOnly2 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'srcOnly3';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   var src = { '/path' : [ obj, obj ] };
   var got = _.path.filterDstPairs_( src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'dstOnly';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, dstOnly );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'dstDouble';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, dstDouble );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
@@ -12336,7 +12336,7 @@ function filterPairsInplace_( test )
   var expected =
   {
     '/path/path' : '[object Object][object Object]',
-    '/path' : { 'value' : undefined }
+    '/path' : obj
   };
   test.identical( got, expected );
   test.is( got === src );
@@ -12351,34 +12351,34 @@ function filterPairsInplace_( test )
   test.case = 'srcOnly2';
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( src, src, srcOnly2 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'srcOnly3';
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( src, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   var src = { '/path' : [ obj, obj ] };
   var got = _.path.filterPairs_( src, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'dstOnly';
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( src, src, dstOnly );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'dstDouble';
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( src, src, dstDouble );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
@@ -14302,7 +14302,7 @@ function filterDstPairsInplace_( test )
   var expected =
   {
     '/path/path' : '[object Object][object Object]',
-    '/path' : { 'value' : undefined }
+    '/path' : obj
   };
   test.identical( got, expected );
   test.is( got === src );
@@ -14317,34 +14317,34 @@ function filterDstPairsInplace_( test )
   test.case = 'srcOnly2';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, src, srcOnly2 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'srcOnly3';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   var src = { '/path' : [ obj, obj ] };
   var got = _.path.filterDstPairs_( src, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'dstOnly';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, src, dstOnly );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'dstDouble';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( src, src, dstDouble );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
@@ -16284,7 +16284,7 @@ function filterPairsWithDst_( test )
   var dst = { 'a' : 'b' };
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( dst, src, srcOnly2 );
-  var expected = { 'a' : 'b', '/path' : { 'value' : undefined } };
+  var expected = { 'a' : 'b', '/path' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -16293,7 +16293,7 @@ function filterPairsWithDst_( test )
   var dst = {};
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( dst, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -16301,7 +16301,7 @@ function filterPairsWithDst_( test )
   var src = { '/path' : [ obj, obj ] };
   var dst = {};
   var got = _.path.filterPairs_( dst, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -16310,7 +16310,7 @@ function filterPairsWithDst_( test )
   var dst = {};
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( dst, src, dstOnly );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -16319,7 +16319,7 @@ function filterPairsWithDst_( test )
   var dst = {};
   var src = { '/path' : obj };
   var got = _.path.filterPairs_( dst, src, dstDouble );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
