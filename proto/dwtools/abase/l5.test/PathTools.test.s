@@ -41,7 +41,7 @@ function filterPairs( test )
   var expected =
   {
     '/path/path' : '[object Object][object Object]',
-    '/path' : { 'value' : undefined }
+    '/path' : obj
   };
   test.identical( src, src2 );
   test.identical( got, expected );
@@ -58,7 +58,7 @@ function filterPairs( test )
   var src = { '/path' : obj };
   var src2 = _.entityMake( src );
   var got = _.path.filterPairs( src, srcOnly2 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -66,14 +66,14 @@ function filterPairs( test )
   var src = { '/path' : obj };
   var src2 = _.entityMake( src );
   var got = _.path.filterPairs( src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( src, src2 );
   test.identical( got, expected );
 
   var src = { '/path' : [ obj, obj ] };
   var src2 = _.entityMake( src );
   var got = _.path.filterPairs( src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -81,7 +81,7 @@ function filterPairs( test )
   var src = { '/path' : obj };
   var src2 = _.entityMake( src );
   var got = _.path.filterPairs( src, dstOnly );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -89,7 +89,7 @@ function filterPairs( test )
   var src = { '/path' : obj };
   var src2 = _.entityMake( src );
   var got = _.path.filterPairs( src, dstDouble );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( src, src2 );
   test.identical( got, expected );
 
