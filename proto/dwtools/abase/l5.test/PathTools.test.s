@@ -18718,7 +18718,7 @@ function filterDstPairsWithDst_( test )
   var dst = [];
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( dst, src, double );
-  var expected = [ '[object Object][object Object]', { 'value' : undefined } ];
+  var expected = [ '[object Object][object Object]', obj ];
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -18736,7 +18736,7 @@ function filterDstPairsWithDst_( test )
   var dst = { 'a' : 'b' };
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( dst, src, srcOnly2 );
-  var expected = { 'a' : 'b', '/path' : { 'value' : undefined } };
+  var expected = { 'a' : 'b', '/path' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -18745,7 +18745,7 @@ function filterDstPairsWithDst_( test )
   var dst = {};
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( dst, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -18753,7 +18753,7 @@ function filterDstPairsWithDst_( test )
   var src = { '/path' : [ obj, obj ] };
   var dst = {};
   var got = _.path.filterDstPairs_( dst, src, srcOnly3 );
-  var expected = { '/path' : { 'value' : undefined } };
+  var expected = { '/path' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -18762,7 +18762,7 @@ function filterDstPairsWithDst_( test )
   var dst = {};
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( dst, src, dstOnly );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -18771,7 +18771,7 @@ function filterDstPairsWithDst_( test )
   var dst = {};
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( dst, src, dstDouble );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
