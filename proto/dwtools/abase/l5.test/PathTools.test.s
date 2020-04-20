@@ -6353,7 +6353,7 @@ function filterDstPairsInplace( test )
   var expected =
   {
     '/path/path' : '[object Object][object Object]',
-    '/path' : { 'value' : undefined }
+    '/path' : obj
   };
   test.identical( got, expected );
   test.is( got === src );
@@ -6388,14 +6388,14 @@ function filterDstPairsInplace( test )
   test.case = 'dstOnly';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairsInplace( src, dstOnly );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
   test.case = 'dstDouble';
   var src = { '/path' : obj };
   var got = _.path.filterDstPairsInplace( src, dstDouble );
-  var expected = { '' : { 'value' : undefined } };
+  var expected = { '' : obj };
   test.identical( got, expected );
   test.is( got === src );
 
