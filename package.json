@@ -1,29 +1,56 @@
 {
-  "name" : "wpathtools", 
-  "version" : "0.5.67", 
-  "engine" : "node >= 8.0.0", 
-  "description" : "Collection of routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.", 
-  "license" : "MIT", 
-  "author" : "Kostiantyn Wandalen <wanalen@willbe.so>", 
-  "contributors" : 
-  [
-    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@willbe.so" }, 
-    { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" }, 
-    { "name" : "Dmytro Kryvoruchko", "email" : "dm.vict.kr@gmail.com" }
-  ], 
-  "main" : "proto/dwtools/abase/l5/PathTools.s", 
-  "files" : [ "proto/dwtools/abase/l5", "proto/dwtools/Tools.s" ], 
-  "scripts" : { "test" : "wtest .run proto/**", "gendoc" : "wdoc proto" }, 
-  "repository" : 
-  {
-    "type" : "git", 
-    "url" : "https://github.com/Wandalen/wPathTools.git"
-  }, 
-  "bugs" : 
-  {
-    "url" : "https://github.com/Wandalen/wPathTools/issues"
-  }, 
-  "dependencies" : { "wTools" : "alpha", "wpathbasic" : "alpha", "warraysorted" : "alpha" }, 
-  "devDependencies" : { "wFiles" : "alpha", "wTesting" : "alpha" }, 
-  "keywords" : [ "wTools", "wPath", "path", "url", "uri", "path", "file" ]
+  "name": "wpathtools",
+  "version": "0.5.67",
+  "engine": "node >= 8.0.0",
+  "description": "Collection of routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
+  "license": "MIT",
+  "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
+  "contributors": [
+    {
+      "name": "Kostiantyn Wandalen",
+      "email": "wanalen@willbe.so"
+    },
+    {
+      "name": "Volodymyr M.",
+      "email": "volodymyr.migdal@gmail.com"
+    },
+    {
+      "name": "Dmytro Kryvoruchko",
+      "email": "dm.vict.kr@gmail.com"
+    }
+  ],
+  "main": "proto/dwtools/abase/l5/PathTools.s",
+  "files": [
+    "proto/dwtools/abase/l5",
+    "proto/dwtools/Tools.s"
+  ],
+  "scripts": {
+    "test": "wtest .run proto/**",
+    "gendoc": "wdoc proto"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wPathTools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/wPathTools/issues"
+  },
+  "dependencies": {
+    "wTools": "alpha",
+    "wpathbasic": "alpha",
+    "warraysorted": "alpha"
+  },
+  "devDependencies": {
+    "wFiles": "alpha",
+    "wTesting": "alpha"
+  },
+  "keywords": [
+    "wTools",
+    "wPath",
+    "path",
+    "url",
+    "uri",
+    "path",
+    "file"
+  ]
 }
