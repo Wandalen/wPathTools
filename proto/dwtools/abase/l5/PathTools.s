@@ -3664,8 +3664,14 @@ function traceToRoot( filePath )
 
   _.assert( arguments.length === 1 );
 
+  filePath = self.normalize( filePath );
   // filePath = self.detrail( filePath ); // Dmytro : cycled loop if path is absolute and has form '/..'
-  filePath = self.canonize( filePath );
+  // filePath = self.canonize( filePath );
+
+  /*
+    should preserve trailing of the longest path
+    /a/b/ -> [ '/', '/a', '/a/b/' ]
+  */
 
   if( self.isAbsolute( filePath ) )
   {
@@ -3686,6 +3692,8 @@ function traceToRoot( filePath )
     }
     while( !self.isDotted( filePath ) );
   }
+
+  result.unshift( filePath );
 
   return result;
 }
@@ -3842,79 +3850,78 @@ function mapGroupByDst( pathMap )
 }
 
 //
-
-function setOptimize( filePath )
-{
-  let self = this;
-  let topToBottom = Object.create( null );
-  let bottomToTops = Object.create( null );
-
-  if( !_.mapIs( filePath ) )
-  filePath = self.mapExtend( null, filePath );
-
-  for( let src in filePath )
-  {
-    let dst = filePath[ src ];
-    if( _.boolLike( dst ) )
-    continue;
-
-    if( topToBottom[ src ] && _.strBegins( topToBottom[ src ], src ) )
-    {
-      revisit( src );
-    }
-    else
-    {
-      let topPaths = self.traceToRoot( src );
-      if( !isVisited( topPaths, src ) )
-      visit( topPaths, src );
-    }
-
-  }
-
-  let result = Object.keys( bottomToTops );
-  result.sort();
-  return result;
-
-  /* */
-
-  function isVisited( topPaths, src )
-  {
-    for( let d = 0 ; d < topPaths.length ; d++ )
-    {
-      if( topToBottom[ topPaths[ d ] ] )
-      return true;
-    }
-    return false;
-  }
-
-  /* */
-
-  function visit( topPaths, src )
-  {
-    _.assert( bottomToTops[ src ] === undefined );
-    bottomToTops[ src ] = topPaths;
-    for( let d = 0 ; d < topPaths.length ; d++ )
-    {
-      let dir = topPaths[ d ];
-      topToBottom[ dir ] = src;
-    }
-  }
-
-  /* */
-
-  function revisit( src )
-  {
-    let topPaths = bottomToTops[ topToBottom[ src ] ];
-    delete bottomToTops[ topToBottom[ src ] ];
-    bottomToTops[ src ] = topPaths
-    for( let d = 0 ; d < topPaths.length ; d++ )
-    {
-      let dir = topPaths[ d ]
-      topToBottom[ dir ] = src;
-    }
-  }
-
-}
+// function setOptimize( filePath )
+// {
+//   let self = this;
+//   let topToBottom = Object.create( null );
+//   let bottomToTops = Object.create( null );
+//
+//   if( !_.mapIs( filePath ) )
+//   filePath = self.mapExtend( null, filePath );
+//
+//   for( let src in filePath )
+//   {
+//     let dst = filePath[ src ];
+//     if( _.boolLike( dst ) )
+//     continue;
+//
+//     if( topToBottom[ src ] && _.strBegins( topToBottom[ src ], src ) )
+//     {
+//       revisit( src );
+//     }
+//     else
+//     {
+//       let topPaths = self.traceToRoot( src );
+//       if( !isVisited( topPaths, src ) )
+//       visit( topPaths, src );
+//     }
+//
+//   }
+//
+//   let result = Object.keys( bottomToTops );
+//   result.sort();
+//   return result;
+//
+//   /* */
+//
+//   function isVisited( topPaths, src )
+//   {
+//     for( let d = 0 ; d < topPaths.length ; d++ )
+//     {
+//       if( topToBottom[ topPaths[ d ] ] )
+//       return true;
+//     }
+//     return false;
+//   }
+//
+//   /* */
+//
+//   function visit( topPaths, src )
+//   {
+//     _.assert( bottomToTops[ src ] === undefined );
+//     bottomToTops[ src ] = topPaths;
+//     for( let d = 0 ; d < topPaths.length ; d++ )
+//     {
+//       let dir = topPaths[ d ];
+//       topToBottom[ dir ] = src;
+//     }
+//   }
+//
+//   /* */
+//
+//   function revisit( src )
+//   {
+//     let topPaths = bottomToTops[ topToBottom[ src ] ];
+//     delete bottomToTops[ topToBottom[ src ] ];
+//     bottomToTops[ src ] = topPaths
+//     for( let d = 0 ; d < topPaths.length ; d++ )
+//     {
+//       let dir = topPaths[ d ]
+//       topToBottom[ dir ] = src;
+//     }
+//   }
+//
+// }
 
 //
 
@@ -3929,45 +3936,60 @@ function mapOptimize( filePath, basePath )
   if( !_.mapIs( filePath ) )
   filePath = self.mapExtend( null, filePath );
 
-  let arrayPath = [];
+  let include = [];
+  let exclude = [];
+  let trunk = [];
 
   for( let src in filePath )
   {
     let dst = filePath[ src ];
     if( !_.boolLike( dst ) )
-    arrayPath.push( src );
+    trunk.push( src );
+    else if( dst )
+    include.push( src );
+    else
+    exclude.push( src );
   }
 
-  arrayPath.sort();
+  optimize( include );
+  optimize( exclude );
+  optimize( trunk );
 
-  for( let i1 = 0 ; i1 < arrayPath.length ; i1++ )
+  return filePath;
+
+  /* */
+
+  function optimize( array )
   {
-    let path1 = arrayPath[ i1 ];
-    for( let i2 = i1+1 ; i2 < arrayPath.length ; i2++ )
+    array.sort();
+    for( let i1 = 0 ; i1 < array.length ; i1++ )
     {
-      let path2 = arrayPath[ i2 ];
-
-      if( !self.begins( path2, path1 ) )
-      break;
-
-      if( filePath[ path1 ] !== filePath[ path2 ] )
-      continue;
-
-      if( basePath )
+      let path1 = array[ i1 ];
+      for( let i2 = i1+1 ; i2 < array.length ; i2++ )
       {
-        if( basePath[ path1 ] !== basePath[ path2 ] )
-        continue;
-        else
-        delete basePath[ path2 ];
-      }
+        let path2 = array[ i2 ];
 
-      arrayPath.splice( i2, 1 );
-      delete filePath[ path2 ];
-      i2 -= 1;
+        if( !self.begins( path2, path1 ) )
+        break;
+
+        if( filePath[ path1 ] != filePath[ path2 ] )
+        continue;
+
+        if( basePath )
+        {
+          if( basePath[ path1 ] !== basePath[ path2 ] )
+          continue;
+          else
+          delete basePath[ path2 ];
+        }
+
+        array.splice( i2, 1 );
+        delete filePath[ path2 ];
+        i2 -= 1;
+      }
     }
   }
 
-  return filePath;
 }
 
 // --
@@ -4034,7 +4056,7 @@ let Routines =
   traceToRoot, /* qqq : add basic test coverage | Dmytro : basic test coverage added */
   group,
   mapGroupByDst,
-  setOptimize, /* xxx : deprecate maybe? */
+  // setOptimize, /* xxx : deprecate maybe? */
   mapOptimize, /* qqq : cover please | Dmytro : coverage is extended */
 
   // to replace

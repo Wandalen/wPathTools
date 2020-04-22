@@ -5,7 +5,7 @@
 if( typeof module !== 'undefined' )
 {
 
-  let _ = require( '../../Tools.s' );
+  let _ = require( '../../../dwtools/Tools.s' );
   _.include( 'wTesting' );
   require( '../l5/PathTools.s' );
 
@@ -44548,260 +44548,259 @@ function mapGroupByDst( test )
 }
 
 //
-
-function setOptimize( test )
-{
-  let path = _.path;
-
-  /* - */
-
-  test.open( 'all levels, relative' );
-
-  test.case = 'direct order';
-  var filePath =
-  {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
-  }
-  var expected = [ 'module1', 'module2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'revers order';
-  var filePath =
-  {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
-  }
-  var expected = [ 'module1', 'module2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'no order';
-  var filePath =
-  {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
-  }
-  var expected = [ 'module1', 'module2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.close( 'all levels, relative' );
-
-  /* - */
-
-  test.open( 'gap in levels, relative' );
-
-  test.case = 'direct order';
-  var filePath =
-  {
-    'a1' : '',
-    'a1/b1/c1' : '',
-    'a1/b1/c2' : '',
-    'a1/b1/c3' : '',
-    'a1/b1/c4/d1/e1/f1' : '',
-    'a2' : '',
-    'a2/b1/c1' : '',
-    'a2/b1/c1/d1/e1/f1' : '',
-    'a2/b1/c2' : '',
-  }
-  var expected = [ 'a1', 'a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'revers order';
-  var filePath =
-  {
-    'a1/b1/c4/d1/e1/f1' : '',
-    'a1/b1/c3' : '',
-    'a1/b1/c2' : '',
-    'a1/b1/c1' : '',
-    'a1' : '',
-    'a2/b1/c2' : '',
-    'a2/b1/c1/d1/e1/f1' : '',
-    'a2/b1/c1' : '',
-    'a2' : '',
-  }
-  var expected = [ 'a1', 'a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'no order, simpler';
-  var filePath =
-  {
-    'a2/b1/c1/d1/e1/f1' : '',
-    'a2' : '',
-    'a2/b1/c1' : '',
-    'a2/b1/c2' : '',
-  }
-  var expected = [ 'a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'no order';
-  var filePath =
-  {
-    'a1/b1/c3' : '',
-    'a1' : '',
-    'a1/b1/c1' : '',
-    'a1/b1/c2' : '',
-    'a1/b1/c4/d1/e1/f1' : '',
-    'a2/b1/c1/d1/e1/f1' : '',
-    'a2' : '',
-    'a2/b1/c1' : '',
-    'a2/b1/c2' : '',
-  }
-  var expected = [ 'a1', 'a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.close( 'gap in levels, relative' );
-
-  /* - */
-
-  test.open( 'all levels, absolute' );
-
-  test.case = 'direct order';
-  var filePath =
-  {
-    "/module1" : `.`,
-    "/module1/ami" : `.`,
-    "/module1/amid" : `.`,
-    "/module1/amid/dir" : `.`,
-    "/module1/amid/dir/terminal" : `.`,
-    "/module1/amid/dir2" : `.`,
-    "/module2" : `.`,
-    "/module2/amid" : `.`,
-  }
-  var expected = [ '/module1', '/module2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'revers order';
-  var filePath =
-  {
-    "/module2/amid" : `.`,
-    "/module2" : `.`,
-    "/module1/amid/dir2" : `.`,
-    "/module1/amid/dir/terminal" : `.`,
-    "/module1/amid/dir" : `.`,
-    "/module1/amid" : `.`,
-    "/module1/ami" : `.`,
-    "/module1" : `.`,
-  }
-  var expected = [ '/module1', '/module2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'no order';
-  var filePath =
-  {
-    "/module2/amid" : `.`,
-    "/module2" : `.`,
-    "/module1/amid" : `.`,
-    "/module1/amid/dir2" : `.`,
-    "/module1/amid/dir" : `.`,
-    "/module1/amid/dir/terminal" : `.`,
-    "/module1/ami" : `.`,
-    "/module1" : `.`,
-  }
-  var expected = [ '/module1', '/module2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.close( 'all levels, absolute' );
-
-  /* - */
-
-  test.open( 'gap in levels, absolute' );
-
-  test.case = 'direct order';
-  var filePath =
-  {
-    '/a1' : '',
-    '/a1/b1/c1' : '',
-    '/a1/b1/c2' : '',
-    '/a1/b1/c3' : '',
-    '/a1/b1/c4/d1/e1/f1' : '',
-    '/a2' : '',
-    '/a2/b1/c1' : '',
-    '/a2/b1/c1/d1/e1/f1' : '',
-    '/a2/b1/c2' : '',
-  }
-  var expected = [ '/a1', '/a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'revers order';
-  var filePath =
-  {
-    '/a2/b1/c2' : '',
-    '/a2/b1/c1/d1/e1/f1' : '',
-    '/a2/b1/c1' : '',
-    '/a2' : '',
-    '/a1/b1/c4/d1/e1/f1' : '',
-    '/a1/b1/c3' : '',
-    '/a1/b1/c2' : '',
-    '/a1/b1/c1' : '',
-    '/a1' : '',
-  }
-  var expected = [ '/a1', '/a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'no order, simpler';
-  var filePath =
-  {
-    '/a2/b1/c1/d1/e1/f1' : '',
-    '/a2' : '',
-    '/a2/b1/c1' : '',
-    '/a2/b1/c2' : '',
-  }
-  var expected = [ '/a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.case = 'no order';
-  var filePath =
-  {
-    '/a1/b1/c3' : '',
-    '/a1' : '',
-    '/a1/b1/c1' : '',
-    '/a1/b1/c2' : '',
-    '/a1/b1/c4/d1/e1/f1' : '',
-    '/a2/b1/c1/d1/e1/f1' : '',
-    '/a2' : '',
-    '/a2/b1/c1' : '',
-    '/a2/b1/c2' : '',
-  }
-  var expected = [ '/a1', '/a2' ];
-  var got = path.setOptimize( filePath );
-  test.identical( got, expected );
-
-  test.close( 'gap in levels, absolute' );
-
-  /* - */
-
-} /* end of mapOptimize */
+// function setOptimize( test )
+// {
+//   let path = _.path;
+//
+//   /* - */
+//
+//   test.open( 'all levels, relative' );
+//
+//   test.case = 'direct order';
+//   var filePath =
+//   {
+//     "module1" : `.`,
+//     "module1/ami" : `.`,
+//     "module1/amid" : `.`,
+//     "module1/amid/dir" : `.`,
+//     "module1/amid/dir/terminal" : `.`,
+//     "module1/amid/dir2" : `.`,
+//     "module2" : `.`,
+//     "module2/amid" : `.`,
+//   }
+//   var expected = [ 'module1', 'module2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'revers order';
+//   var filePath =
+//   {
+//     "module2/amid" : `.`,
+//     "module2" : `.`,
+//     "module1/amid/dir2" : `.`,
+//     "module1/amid/dir/terminal" : `.`,
+//     "module1/amid/dir" : `.`,
+//     "module1/amid" : `.`,
+//     "module1/ami" : `.`,
+//     "module1" : `.`,
+//   }
+//   var expected = [ 'module1', 'module2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'no order';
+//   var filePath =
+//   {
+//     "module2/amid" : `.`,
+//     "module2" : `.`,
+//     "module1/amid" : `.`,
+//     "module1/amid/dir2" : `.`,
+//     "module1/amid/dir" : `.`,
+//     "module1/amid/dir/terminal" : `.`,
+//     "module1/ami" : `.`,
+//     "module1" : `.`,
+//   }
+//   var expected = [ 'module1', 'module2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.close( 'all levels, relative' );
+//
+//   /* - */
+//
+//   test.open( 'gap in levels, relative' );
+//
+//   test.case = 'direct order';
+//   var filePath =
+//   {
+//     'a1' : '',
+//     'a1/b1/c1' : '',
+//     'a1/b1/c2' : '',
+//     'a1/b1/c3' : '',
+//     'a1/b1/c4/d1/e1/f1' : '',
+//     'a2' : '',
+//     'a2/b1/c1' : '',
+//     'a2/b1/c1/d1/e1/f1' : '',
+//     'a2/b1/c2' : '',
+//   }
+//   var expected = [ 'a1', 'a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'revers order';
+//   var filePath =
+//   {
+//     'a1/b1/c4/d1/e1/f1' : '',
+//     'a1/b1/c3' : '',
+//     'a1/b1/c2' : '',
+//     'a1/b1/c1' : '',
+//     'a1' : '',
+//     'a2/b1/c2' : '',
+//     'a2/b1/c1/d1/e1/f1' : '',
+//     'a2/b1/c1' : '',
+//     'a2' : '',
+//   }
+//   var expected = [ 'a1', 'a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'no order, simpler';
+//   var filePath =
+//   {
+//     'a2/b1/c1/d1/e1/f1' : '',
+//     'a2' : '',
+//     'a2/b1/c1' : '',
+//     'a2/b1/c2' : '',
+//   }
+//   var expected = [ 'a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'no order';
+//   var filePath =
+//   {
+//     'a1/b1/c3' : '',
+//     'a1' : '',
+//     'a1/b1/c1' : '',
+//     'a1/b1/c2' : '',
+//     'a1/b1/c4/d1/e1/f1' : '',
+//     'a2/b1/c1/d1/e1/f1' : '',
+//     'a2' : '',
+//     'a2/b1/c1' : '',
+//     'a2/b1/c2' : '',
+//   }
+//   var expected = [ 'a1', 'a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.close( 'gap in levels, relative' );
+//
+//   /* - */
+//
+//   test.open( 'all levels, absolute' );
+//
+//   test.case = 'direct order';
+//   var filePath =
+//   {
+//     "/module1" : `.`,
+//     "/module1/ami" : `.`,
+//     "/module1/amid" : `.`,
+//     "/module1/amid/dir" : `.`,
+//     "/module1/amid/dir/terminal" : `.`,
+//     "/module1/amid/dir2" : `.`,
+//     "/module2" : `.`,
+//     "/module2/amid" : `.`,
+//   }
+//   var expected = [ '/module1', '/module2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'revers order';
+//   var filePath =
+//   {
+//     "/module2/amid" : `.`,
+//     "/module2" : `.`,
+//     "/module1/amid/dir2" : `.`,
+//     "/module1/amid/dir/terminal" : `.`,
+//     "/module1/amid/dir" : `.`,
+//     "/module1/amid" : `.`,
+//     "/module1/ami" : `.`,
+//     "/module1" : `.`,
+//   }
+//   var expected = [ '/module1', '/module2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'no order';
+//   var filePath =
+//   {
+//     "/module2/amid" : `.`,
+//     "/module2" : `.`,
+//     "/module1/amid" : `.`,
+//     "/module1/amid/dir2" : `.`,
+//     "/module1/amid/dir" : `.`,
+//     "/module1/amid/dir/terminal" : `.`,
+//     "/module1/ami" : `.`,
+//     "/module1" : `.`,
+//   }
+//   var expected = [ '/module1', '/module2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.close( 'all levels, absolute' );
+//
+//   /* - */
+//
+//   test.open( 'gap in levels, absolute' );
+//
+//   test.case = 'direct order';
+//   var filePath =
+//   {
+//     '/a1' : '',
+//     '/a1/b1/c1' : '',
+//     '/a1/b1/c2' : '',
+//     '/a1/b1/c3' : '',
+//     '/a1/b1/c4/d1/e1/f1' : '',
+//     '/a2' : '',
+//     '/a2/b1/c1' : '',
+//     '/a2/b1/c1/d1/e1/f1' : '',
+//     '/a2/b1/c2' : '',
+//   }
+//   var expected = [ '/a1', '/a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'revers order';
+//   var filePath =
+//   {
+//     '/a2/b1/c2' : '',
+//     '/a2/b1/c1/d1/e1/f1' : '',
+//     '/a2/b1/c1' : '',
+//     '/a2' : '',
+//     '/a1/b1/c4/d1/e1/f1' : '',
+//     '/a1/b1/c3' : '',
+//     '/a1/b1/c2' : '',
+//     '/a1/b1/c1' : '',
+//     '/a1' : '',
+//   }
+//   var expected = [ '/a1', '/a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'no order, simpler';
+//   var filePath =
+//   {
+//     '/a2/b1/c1/d1/e1/f1' : '',
+//     '/a2' : '',
+//     '/a2/b1/c1' : '',
+//     '/a2/b1/c2' : '',
+//   }
+//   var expected = [ '/a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.case = 'no order';
+//   var filePath =
+//   {
+//     '/a1/b1/c3' : '',
+//     '/a1' : '',
+//     '/a1/b1/c1' : '',
+//     '/a1/b1/c2' : '',
+//     '/a1/b1/c4/d1/e1/f1' : '',
+//     '/a2/b1/c1/d1/e1/f1' : '',
+//     '/a2' : '',
+//     '/a2/b1/c1' : '',
+//     '/a2/b1/c2' : '',
+//   }
+//   var expected = [ '/a1', '/a2' ];
+//   var got = path.setOptimize( filePath );
+//   test.identical( got, expected );
+//
+//   test.close( 'gap in levels, absolute' );
+//
+//   /* - */
+//
+// } /* end of mapOptimize */
 
 //
 
@@ -44815,6 +44814,22 @@ function mapOptimize( test )
   var filePath = '/path/path';
   var got = path.mapOptimize( filePath );
   var expected = { '/path/path' : '' };
+  test.identical( got, expected );
+
+  /* qqq : extend such test group */
+
+  test.case = 'only booleans';
+  var filePath =
+  {
+    '/t1/t2' : true,
+    '/t1/t2/t2' : true,
+    '/t1' : true,
+    '/f1/f2' : false,
+    '/f1/f2/f3' : false,
+    '/f1' : false,
+  };
+  var got = path.mapOptimize( filePath );
+  var expected = { '/t1' : true, '/f1' : false };
   test.identical( got, expected );
 
   /* - */
@@ -44903,9 +44918,9 @@ function mapOptimize( test )
   {
     "module1" : true,
     "module1/ami" : false,
-    "module1/amid" : true,
+    // "module1/amid" : true,
     "module1/amid/dir" : false,
-    "module1/amid/dir/terminal" : true,
+    // "module1/amid/dir/terminal" : true,
     "module1/amid/dir2" : false,
     "module2" : true,
     "module2/amid" : false
@@ -44930,9 +44945,9 @@ function mapOptimize( test )
     "module2/amid" : true,
     "module2" : false,
     "module1/amid/dir2" : true,
-    "module1/amid/dir/terminal" : false,
+    // "module1/amid/dir/terminal" : false,
     "module1/amid/dir" : true,
-    "module1/amid" : false,
+    // "module1/amid" : false,
     "module1/ami" : true,
     "module1" : false
   };
@@ -44942,12 +44957,12 @@ function mapOptimize( test )
   test.case = 'no order';
   var filePath =
   {
-    "module1/amid/dir/terminal" : false,
+    // "module1/amid/dir/terminal" : false,
     "module2/amid" : true,
     "module1/amid/dir2" : true,
     "module1/amid/dir" : true,
     "module2" : false,
-    "module1/amid" : false,
+    // "module1/amid" : false,
     "module1" : false,
     "module1/ami" : true,
   };
@@ -44956,9 +44971,9 @@ function mapOptimize( test )
     "module2/amid" : true,
     "module2" : false,
     "module1/amid/dir2" : true,
-    "module1/amid/dir/terminal" : false,
+    // "module1/amid/dir/terminal" : false,
     "module1/amid/dir" : true,
-    "module1/amid" : false,
+    // "module1/amid" : false,
     "module1/ami" : true,
     "module1" : false
   };
@@ -45537,6 +45552,7 @@ var Self =
 
   name : 'Tools.base.l5.path.tools',
   silencing : 1,
+  routineTimeOut : 30000,
 
   tests :
   {
@@ -45603,7 +45619,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     traceToRoot,
     group,
     mapGroupByDst,
-    setOptimize,
+    // setOptimize,
     mapOptimize,
 
   },
