@@ -44299,73 +44299,73 @@ function traceToRoot( test )
   test.case = 'root';
   var src = '/';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [] );
+  test.identical( got, [ '/' ] );
 
   /* */
 
   test.case = 'one dir';
   var src = '/tmp';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ '/tmp' ] );
+  test.identical( got, [ '/', '/tmp' ] );
 
   test.case = 'one dir, slash';
   var src = '/tmp/';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ '/tmp' ] );
+  test.identical( got, [ '/', '/tmp/' ] );
 
   test.case = 'three dirs';
   var src = '/tmp/tmp/tmp';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ '/tmp', '/tmp/tmp', '/tmp/tmp/tmp' ] );
+  test.identical( got, [ '/', '/tmp', '/tmp/tmp', '/tmp/tmp/tmp' ] );
 
   test.case = 'three dirs, slash';
   var src = '/tmp/tmp/tmp/';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ '/tmp', '/tmp/tmp', '/tmp/tmp/tmp' ] );
+  test.identical( got, [ '/', '/tmp', '/tmp/tmp', '/tmp/tmp/tmp/' ] );
 
   /* */
 
   test.case = 'one dir, dotted';
   var src = '/tmp/..';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [] );
+  test.identical( got, [ '/' ] );
 
   test.case = 'one dir, dotted, slash';
   var src = '/tmp/../';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [] );
+  test.identical( got, [ '/' ] );
 
   test.case = 'six dirs, dotted';
   var src = '/tmp/../tmp/../tmp/tmp';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ '/tmp', '/tmp/tmp' ] );
+  test.identical( got, [ '/', '/tmp', '/tmp/tmp' ] );
 
   test.case = 'six dirs, dotted, slash';
   var src = '/tmp/../tmp/../tmp/tmp/';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ '/tmp', '/tmp/tmp' ] );
+  test.identical( got, [ '/', '/tmp', '/tmp/tmp/' ] );
 
   /* */
 
   test.case = 'one dir, dotted';
   var src = './tmp/..';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [] );
+  test.identical( got, [ '.' ] );
 
   test.case = 'one dir, dotted, slash';
   var src = './tmp/../';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [] );
+  test.identical( got, [ './' ] );
 
   test.case = 'six dirs, dotted';
   var src = './tmp/../tmp/../tmp/tmp';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ 'tmp', 'tmp/tmp' ] );
+  test.identical( got, [ '.', 'tmp', 'tmp/tmp' ] );
 
   test.case = 'six dirs, dotted, slash';
   var src = './tmp/../tmp/../tmp/tmp/';
   var got = _.path.traceToRoot( src );
-  test.identical( got, [ 'tmp', 'tmp/tmp' ] );
+  test.identical( got, [ '.', 'tmp', 'tmp/tmp/' ] );
 }
 
 //
