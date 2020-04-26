@@ -19,7 +19,7 @@ module:
       description: >-
         Collection of routines to operate paths reliably and consistently.
         Implements routines for manipulating paths maps and globing. Extends
-        module PathBasic.
+        module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
       interpreters:
@@ -180,7 +180,7 @@ module:
         path: 'npm:///wTools'
         autoExporting: 0
         enabled: 0
-      wPathBasic:
+      wModuleForTesting2:
         path: 'npm:///wpathbasic'
         autoExporting: 0
         enabled: 0
@@ -837,7 +837,7 @@ module:
       description: >-
         Collection of routines to operate paths reliably and consistently.
         Implements routines for manipulating paths maps and globing. Extends
-        module PathBasic.
+        module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
       interpreters:
@@ -974,7 +974,7 @@ module:
         path: 'npm:///wTools'
         autoExporting: 0
         enabled: 0
-      wPathBasic:
+      wModuleForTesting2:
         path: 'npm:///wpathbasic'
         autoExporting: 0
         enabled: 0

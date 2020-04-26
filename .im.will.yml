@@ -4,7 +4,7 @@ submodule :
   wTools :
     path : npm:///wTools
     enabled : 0 # submodule
-  wPathBasic :
+  wModuleForTesting2 :
     path : npm:///wpathbasic
     enabled : 0 # submodule
   wArraySorted :
