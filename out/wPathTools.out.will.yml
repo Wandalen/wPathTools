@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - wPathTools.out
 consistency:
-  wPathTools.out.will.yml: &ref_0
-    hash: 9908c67c4e8f205485b05e2e55b5ab81
-    size: 39123
-  ../.ex.will.yml: &ref_1
-    hash: 71cac02773dc9953906b8e6fb55c9ffd
-    size: 1950
-  ../.im.will.yml: &ref_2
-    hash: 2f9c0c49bd8b007224475ef3f7e3fb97
-    size: 5189
+  ../.ex.will.yml: &ref_0
+    hash: c4255431a023cf69d4543f10a60221a5
+    size: 1958
+  ../.im.will.yml: &ref_1
+    hash: c42003a610010c5bb9a5e339c326465a
+    size: 5197
 module:
   wPathTools.out:
     about:
@@ -22,11 +19,11 @@ module:
         module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - wPath
         - path
@@ -35,12 +32,12 @@ module:
         - file
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@willbe.so>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
         - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
       npm.name: wpathtools
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -721,24 +718,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          reflector: 'reflector::exported.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          reflector: 'reflector::exported.files.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -827,9 +806,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wPathTools.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wPathTools
@@ -840,27 +818,13 @@ module:
         module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters:
-        - njs >= 8.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - wPath
-        - path
-        - url
-        - uri
-        - file
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@willbe.so>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
-        - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
+      contributors: *ref_4
       npm.name: wpathtools
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -1541,9 +1505,8 @@ module:
           - 'build::npm'
     consistency:
       ../.ex.will.yml:
-        hash: 71cac02773dc9953906b8e6fb55c9ffd
-        size: 1950
+        hash: c4255431a023cf69d4543f10a60221a5
+        size: 1958
       ../.im.will.yml:
-        hash: 2f9c0c49bd8b007224475ef3f7e3fb97
-        size: 5189
-      wPathTools.out.will.yml: *ref_0
+        hash: c42003a610010c5bb9a5e339c326465a
+        size: 5197
