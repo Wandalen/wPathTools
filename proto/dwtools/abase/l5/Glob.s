@@ -319,7 +319,7 @@ function globFit_body( o )
 
   if( this.isGlob( o.selector ) )
   {
-    let regexp = this.globsShortToRegexps( o.selector );
+    let regexp = this.globSplitsToRegexps( o.selector );
     result = regexp.test( o.src );
   }
   else
@@ -372,7 +372,7 @@ function globFilter_body( o )
 
   if( this.isGlob( o.selector ) )
   {
-    let regexp = this.globsShortToRegexps( o.selector );
+    let regexp = this.globSplitsToRegexps( o.selector );
     result = _.filter( o.src, ( e, k ) =>
     {
       return regexp.test( o.onEvaluate( e, k, o.src ) ) ? e : undefined;
@@ -1758,7 +1758,7 @@ let Routines =
   // short filter
 
   globSplitToRegexp,
-  globsShortToRegexps : _vectorize( globSplitToRegexp ),
+  globSplitsToRegexps : _vectorize( globSplitToRegexp ),
   globFit,
   globFilter,
   globFilterVals,
