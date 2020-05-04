@@ -154,7 +154,10 @@ let _globSplitToRegexpSource = (function functor()
 
   /* */
 
-  return function _globSplitToRegexpSource( src )
+  _globSplitToRegexpSource.functor = functor;
+  return _globSplitToRegexpSource;
+
+  function _globSplitToRegexpSource( src )
   {
     self = this;
 
