@@ -675,7 +675,7 @@ function globShortFit( test )
   test.identical( _.path.globShortFit( 'a/b/c/d/e.js', '**/*.js' ), true );
 
   test.case = 'f.js - **/**.js';
-  test.identical( _.path.globShortFit( 'f.js', '**/**.js' ), false ); /* xxx : change */
+  test.identical( _.path.globShortFit( 'f.js', '**/**.js' ), false ); /* xxx : implement */
 
   test.case = 'a/f.js - **/**.js';
   test.identical( _.path.globShortFit( 'a/f.js', '**/**.js' ), true );
@@ -688,6 +688,8 @@ function globShortFit( test )
 
 function globLongFit( test )
 {
+
+  test.open( 'relative' );
 
   test.case = 'abc - abc';
   test.identical( _.path.globLongFit( 'abc', 'abc' ), true );
@@ -728,8 +730,7 @@ function globLongFit( test )
   test.case = 'a/f.js - **/**.js';
   test.identical( _.path.globLongFit( 'a/f.js', '**/**.js' ), true );
 
-  // test.case = '/a/b/c - **/c';
-  // test.identical( _.path.globLongFit( '/a/b/c', '**/c' ), true );
+  test.close( 'relative' );
 
 }
 
