@@ -13,7 +13,7 @@
   ],
   "main" : "proto/dwtools/abase/l5/PathTools.s",
   "files" : [ "proto/dwtools/abase/l5", "proto/dwtools/Tools.s" ],
-  "scripts" : { "test" : "wtest .run proto/**", "gendoc" : "wdoc proto" },
+  "scripts" : { "test" : "wtest .run 'proto/**'", "gendoc" : "wdoc proto" },
   "repository" :
   {
     "type" : "git",
