@@ -906,7 +906,7 @@ var Self =
 
     // long
 
-    globLongFit,
+    // globLongFit, /* xxx : uncomment later */
 
   },
 
