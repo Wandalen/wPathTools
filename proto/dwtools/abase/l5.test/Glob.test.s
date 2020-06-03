@@ -734,25 +734,23 @@ function globLongFit( test )
 
   /* - */
 
-  // test.case = 'abc - abc';
-  // test.identical( _.path.globLongFit( 'abc', 'abc' ), true );
-  // test.identical( _.path.globLongFit( 'abc', '/abc' ), false );
-  // test.identical( _.path.globLongFit( '/abc', 'abc' ), false );
-  // test.identical( _.path.globLongFit( '/abc', '/abc' ), true );
-  //
-  // test.case = 'abc - abd';
-  // test.identical( _.path.globLongFit( 'abc', 'abd' ), false );
-  // test.identical( _.path.globLongFit( 'abc', '/abd' ), false );
-  // test.identical( _.path.globLongFit( '/abc', 'abd' ), false );
-  // test.identical( _.path.globLongFit( '/abc', '/abd' ), false );
+  test.case = 'abc - abc';
+  test.identical( _.path.globLongFit( 'abc', 'abc' ), true );
+  test.identical( _.path.globLongFit( 'abc', '/abc' ), false );
+  test.identical( _.path.globLongFit( '/abc', 'abc' ), false );
+  test.identical( _.path.globLongFit( '/abc', '/abc' ), true );
+
+  test.case = 'abc - abd';
+  test.identical( _.path.globLongFit( 'abc', 'abd' ), false );
+  test.identical( _.path.globLongFit( 'abc', '/abd' ), false );
+  test.identical( _.path.globLongFit( '/abc', 'abd' ), false );
+  test.identical( _.path.globLongFit( '/abc', '/abd' ), false );
 
   test.case = 'abc - ab*';
-  // test.identical( _.path.globLongFit( 'abc', 'ab*' ), true );
-  // test.identical( _.path.globLongFit( 'abc', '/ab*' ), false );
-  // test.identical( _.path.globLongFit( '/abc', 'ab*' ), false );
+  test.identical( _.path.globLongFit( 'abc', 'ab*' ), true );
+  test.identical( _.path.globLongFit( 'abc', '/ab*' ), false );
+  test.identical( _.path.globLongFit( '/abc', 'ab*' ), false );
   test.identical( _.path.globLongFit( '/abc', '/ab*' ), true );
-
-  debugger; return; xxx
 
   test.case = 'adc - ab*';
   test.identical( _.path.globLongFit( 'adc', 'ab*' ), false );
@@ -787,7 +785,7 @@ function globLongFit( test )
   test.case = 'a/b/c - */*/c';
   test.identical( _.path.globLongFit( 'a/b/c', '*/*/c' ), true );
   test.identical( _.path.globLongFit( 'a/b/c', '/*/*/c' ), false );
-  test.identical( _.path.globLongFit( '/a/b/c', '*/*/c' ), false );
+  test.identical( _.path.globLongFit( '/a/b/c', '*/*/c' ), true );
   test.identical( _.path.globLongFit( '/a/b/c', '/*/*/c' ), true );
 
   test.case = 'a/b/c - **/c';
