@@ -40,7 +40,7 @@ function filterPairs( test )
   var got = _.path.filterPairs( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( src, src2 );
@@ -2110,9 +2110,9 @@ function filterPairs( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -2214,7 +2214,7 @@ function filterDstPairs( test )
   var got = _.path.filterDstPairs( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' :obj
   };
   test.identical( src, src2 );
@@ -4284,9 +4284,9 @@ function filterDstPairs( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -4387,7 +4387,7 @@ function filterPairsInplace( test )
   var got = _.path.filterPairsInplace( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -6250,9 +6250,9 @@ function filterPairsInplace( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -6352,7 +6352,7 @@ function filterDstPairsInplace( test )
   var got = _.path.filterDstPairsInplace( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -8233,9 +8233,9 @@ function filterDstPairsInplace( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -8335,7 +8335,7 @@ function filterPairs_( test )
   var got = _.path.filterPairs_( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -10239,9 +10239,9 @@ function filterPairs_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -10342,7 +10342,7 @@ function filterDstPairs_( test )
   var got = _.path.filterDstPairs_( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -12232,9 +12232,9 @@ function filterDstPairs_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -12335,7 +12335,7 @@ function filterPairsInplace_( test )
   var got = _.path.filterPairs_( src, src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -14198,9 +14198,9 @@ function filterPairsInplace_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -14301,7 +14301,7 @@ function filterDstPairsInplace_( test )
   var got = _.path.filterDstPairs_( src, src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -16164,9 +16164,9 @@ function filterDstPairsInplace_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -18615,9 +18615,9 @@ function filterPairsWithDst_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -18718,7 +18718,7 @@ function filterDstPairsWithDst_( test )
   var dst = [];
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( dst, src, double );
-  var expected = [ '[object Object][object Object]', obj ];
+  var expected = [ obj ];
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -21067,9 +21067,9 @@ function filterDstPairsWithDst_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -22211,7 +22211,7 @@ function filterInplace( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -23309,7 +23309,7 @@ function filterDstInplace( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -24416,9 +24416,9 @@ function filterInplaceExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -25553,9 +25553,9 @@ function filterDstInplaceExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -26728,7 +26728,7 @@ function filter( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -27840,9 +27840,9 @@ function filterExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -29001,7 +29001,7 @@ function filterDst( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -30113,9 +30113,9 @@ function filterDstExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -31092,9 +31092,9 @@ function filter_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -32047,9 +32047,9 @@ function filterDst_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -33008,9 +33008,9 @@ function filterInplace_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -33979,9 +33979,9 @@ function filterDstInplace_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -35015,9 +35015,9 @@ function filterWithDst_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -36051,9 +36051,9 @@ function filterDstWithDst_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -44038,10 +44038,11 @@ function mapDstFromDst( test )
     return this;
   };
   Constr.prototype.b = '';
-  var exp = [ new Constr() ];
+  var exp = '/str';
   var src = new Constr();
-  var got = _.path.mapDstFromDst( src );
-  test.identical( got, exp );
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got[ 0 ].a, exp );
+  test.identical( got.length, 1 );
   test.is( got !== src );
 
   test.case = 'empty map';
@@ -44141,10 +44142,11 @@ function mapSrcFromSrc( test )
     return this;
   };
   Constr.prototype.b = '';
-  var exp = [ new Constr() ];
+  var exp = '/str';
   var src = new Constr();
   var got = _.path.mapSrcFromSrc( src );
-  test.identical( got, exp );
+  test.identical( got[ 0 ].a, exp );
+  test.identical( got.length, 1 );
   test.is( got !== src );
 
   test.case = 'empty map';
