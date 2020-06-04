@@ -897,6 +897,7 @@ function _globRegexpSourceSplitsConcatWithSlashes( globRegexpSourceSplits )
   */
 
   let isPrevTriAsterisk = false;
+  let isPrevRoot = false;
   for( let s = 0 ; s < globRegexpSourceSplits.length ; s++ )
   {
     let split = globRegexpSourceSplits[ s ];
@@ -904,21 +905,31 @@ function _globRegexpSourceSplitsConcatWithSlashes( globRegexpSourceSplits )
     let isTriAsterisk = split === '(?:.*)'; /* *** */
     let isDualAsterisk = split === '.*'; /* ** */
     let isAsterisk = split === '[^\/]*'; /* * */
+    let isRoot = split === '/'; /* / */
+    let prefix = isPrevRoot ? '(?:)' : '(?:^|/)';
+    prefix = '(?:^|/)'; /* xxx : comment out later */
 
     if( isTriAsterisk )
-    split = '(?:(?:^|/)' + split + ')?';
+    {
+      split = `(?:${prefix}` + split + ')?';
+    }
     else if( isDualAsterisk )
-      split = '(?:(?:^|/)' + split + ')?';
+    {
+      split = `(?:${prefix}` + split + ')?';
+    }
     else if( isAsterisk )
-      split = '(?:(?:^|/)' + split + ')?';
+    {
+      split = `(?:${prefix}` + split + ')?';
+    }
     else if( s > 0 )
     {
       if( isPrevTriAsterisk )
-      split = '(?:^|/)?' + split;
+      split = `${prefix}?` + split;
       else
-      split = '(?:^|/)' + split;
+      split = prefix + split;
     }
 
+    isPrevRoot = isRoot;
     isPrevTriAsterisk = isTriAsterisk;
     result[ s ] = split;
   }

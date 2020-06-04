@@ -41,7 +41,7 @@ function filterPairs( test )
   var got = _.path.filterPairs( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( src, src2 );
@@ -2111,9 +2111,9 @@ function filterPairs( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -2215,7 +2215,7 @@ function filterDstPairs( test )
   var got = _.path.filterDstPairs( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( src, src2 );
@@ -4285,9 +4285,9 @@ function filterDstPairs( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -4388,7 +4388,7 @@ function filterPairsInplace( test )
   var got = _.path.filterPairsInplace( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -6253,9 +6253,9 @@ function filterPairsInplace( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -6355,7 +6355,7 @@ function filterDstPairsInplace( test )
   var got = _.path.filterDstPairsInplace( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -8238,9 +8238,9 @@ function filterDstPairsInplace( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -8340,7 +8340,7 @@ function filterPairs_( test )
   var got = _.path.filterPairs_( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -10244,9 +10244,9 @@ function filterPairs_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -10347,7 +10347,7 @@ function filterDstPairs_( test )
   var got = _.path.filterDstPairs_( src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -12237,9 +12237,9 @@ function filterDstPairs_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -12340,7 +12340,7 @@ function filterPairsInplace_( test )
   var got = _.path.filterPairs_( src, src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -14205,9 +14205,9 @@ function filterPairsInplace_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -14308,7 +14308,7 @@ function filterDstPairsInplace_( test )
   var got = _.path.filterDstPairs_( src, src, double );
   var expected =
   {
-    '/path/path' : '[object Object][object Object]',
+    '/path/path' : obj,
     '/path' : obj
   };
   test.identical( got, expected );
@@ -16173,9 +16173,9 @@ function filterDstPairsInplace_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -18626,9 +18626,9 @@ function filterPairsWithDst_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -18729,7 +18729,7 @@ function filterDstPairsWithDst_( test )
   var dst = [];
   var src = { '/path' : obj };
   var got = _.path.filterDstPairs_( dst, src, double );
-  var expected = [ '[object Object][object Object]', obj ];
+  var expected = [ obj ];
   test.identical( got, expected );
   test.is( got !== src );
   test.is( got === dst );
@@ -21080,9 +21080,9 @@ function filterDstPairsWithDst_( test )
     if( it.src === null )
     _.assert( 0 );
     if( it.src === '' )
-    return { [ it.src ] : [ it.dst + it.dst, it.dst ] }
+    return { [ it.src ] : [ it.dst + it.dst, it.dst ] };
     else
-    return { [ it.src + it.src ] : it.dst + it.dst, [ it.src ] : it.dst }
+    return { [ it.src + it.src ] : _.strIs( it.dst ) ? it.dst + it.dst : it.dst, [ it.src ] : it.dst };
   }
 
   function srcOnly1( it )
@@ -22222,7 +22222,7 @@ function filterInplace( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -23318,7 +23318,7 @@ function filterDstInplace( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -24423,9 +24423,9 @@ function filterInplaceExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -25558,9 +25558,9 @@ function filterDstInplaceExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -26731,7 +26731,7 @@ function filter( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -27841,9 +27841,9 @@ function filterExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -29000,7 +29000,7 @@ function filterDst( test )
     if( filePath === null )
     _.assert( 0 );
     if( filePath )
-    return filePath + filePath;
+    return _.strIs( filePath ) ? filePath + filePath : filePath;
     else
     return '';
   }
@@ -30110,9 +30110,9 @@ function filterDstExtendedCallbacks( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' && it.src !== '' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath;
     return '';
@@ -31087,9 +31087,9 @@ function filter_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -32040,9 +32040,9 @@ function filterDst_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -32999,9 +32999,9 @@ function filterInplace_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -33968,9 +33968,9 @@ function filterDstInplace_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -35002,9 +35002,9 @@ function filterWithDst_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -36036,9 +36036,9 @@ function filterDstWithDst_( test )
     _.assert( 0 );
 
     if( it.side === 'src' )
-    return it.src + it.src;
+    return _.strIs( it.src ) ? it.src + it.src : it.src;
     if( it.side === 'dst' )
-    return it.dst + it.dst;
+    return _.strIs( it.dst ) ? it.dst + it.dst : it.dst;
     if( filePath )
     return filePath + filePath;
     return '';
@@ -40719,8 +40719,8 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ obj1, '/dir1' ], '/String2' : [ obj1, '/dir2' ], '/Array' : [ obj1, '/dir1', '/dir2' ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, false );
   test.identical( got, exp );
@@ -41023,7 +41023,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3', obj1 ], '/String1' : [ '/dir2', '/dir3', '/dir1' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3', '/dir1' ], '/Object' : [ '/dir2', '/dir3', obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3', obj2 ], '/String1' : [ '/dir2', '/dir3', '/dir1' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3', '/dir1' ], '/Object' : [ '/dir2', '/dir3', obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, obj2 );
@@ -41031,8 +41031,8 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, obj1 ], '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, obj2 ], '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, obj2 );
   test.identical( got, exp );
@@ -42343,8 +42343,8 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ '/dir1', obj1 ], '/String2' : [ '/dir2', obj1 ], '/Array' : [ '/dir1', '/dir2', obj1 ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, false );
   test.identical( got, exp );
@@ -42644,7 +42644,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ obj1, '/dir2', '/dir3' ], '/String1' : [ '/dir1', '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir1', '/dir2', '/dir3' ], '/Object' : [ obj1, '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ obj2, '/dir2', '/dir3' ], '/String1' : [ '/dir1', '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir1', '/dir2', '/dir3' ], '/Object' : [ obj1, '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, obj2 );
@@ -42652,8 +42652,8 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, obj1 ], '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj2, obj0 ], '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, obj2 );
   test.identical( got, exp );
@@ -42832,6 +42832,10 @@ function simplify( test )
 
   test.case = 'number';
   var got = _.path.simplify( 2 );
+  test.identical( got, 2 );
+
+  test.case = 'number - boolLike';
+  var got = _.path.simplify( 1 );
   test.identical( got, true );
 
   test.case = 'undefined';
@@ -42997,6 +43001,10 @@ function simplifyDst( test )
 
   test.case = 'number';
   var got = _.path.simplifyDst( 2 );
+  test.identical( got, 2 );
+
+  test.case = 'number - boolLike';
+  var got = _.path.simplifyDst( 1 );
   test.identical( got, true );
 
   test.case = 'undefined';
@@ -43162,6 +43170,10 @@ function simplifyInplace( test )
 
   test.case = 'number';
   var got = _.path.simplifyInplace( 2 );
+  test.identical( got, 2 );
+
+  test.case = 'number - boolLike';
+  var got = _.path.simplifyInplace( 1 );
   test.identical( got, true );
 
   test.case = 'undefined';
@@ -43337,6 +43349,10 @@ function simplify_( test )
 
   test.case = 'number';
   var got = _.path.simplify_( 2 );
+  test.identical( got, 2 );
+
+  test.case = 'number - boolLike';
+  var got = _.path.simplify_( 1 );
   test.identical( got, true );
 
   test.case = 'undefined';
@@ -43472,6 +43488,7 @@ function simplify_( test )
     '/emptyString' : '',
     '' : '',
     '/number' : 10,
+    '/number/boolLike' : 1,
     '/array' : [ '', '/', '/dir' ],
     '/emptyArray' : [],
     '/emptyMap' : {},
@@ -43487,7 +43504,8 @@ function simplify_( test )
     '/null' : '',
     '/string' : '/dir',
     '/emptyString' : '',
-    '/number' : true,
+    '/number' : 10,
+    '/number/boolLike' : true,
     '/array' : [ '/', '/dir' ],
     '/emptyArray' : '',
     '/emptyMap' : '',
@@ -43517,6 +43535,11 @@ function simplifyInplace_( test )
 
   test.case = 'number';
   var src = 2;
+  var got = _.path.simplify_( src, src );
+  test.identical( got, 2 );
+
+  test.case = 'number - boolLike';
+  var src = 1;
   var got = _.path.simplify_( src, src );
   test.identical( got, true );
 
@@ -43692,6 +43715,13 @@ function simplifyWithDst_( test )
   test.case = 'number';
   var dst = null;
   var src = 2;
+  var got = _.path.simplify_( dst, src );
+  test.identical( got, 2 );
+  test.is( got !== dst );
+
+  test.case = 'number - boolLike';
+  var dst = null;
+  var src = 1;
   var got = _.path.simplify_( dst, src );
   test.identical( got, true );
   test.is( got !== dst );
@@ -43894,6 +43924,7 @@ function simplifyWithDst_( test )
     '/emptyString' : '',
     '' : '',
     '/number' : 10,
+    '/number/boolLike' : 1,
     '/array' : [ '', '/', '/dir' ],
     '/emptyArray' : [],
     '/emptyMap' : {},
@@ -43909,7 +43940,8 @@ function simplifyWithDst_( test )
     '/null' : '',
     '/string' : '/dir',
     '/emptyString' : '',
-    '/number' : true,
+    '/number' : 10,
+    '/number/boolLike' : true,
     '/array' : [ '/', '/dir' ],
     '/emptyArray' : '',
     '/emptyMap' : '',
@@ -44074,10 +44106,11 @@ function mapDstFromDst( test )
     return this;
   };
   Constr.prototype.b = '';
-  var exp = [ new Constr() ];
+  var exp = '/str';
   var src = new Constr();
-  var got = _.path.mapDstFromDst( src );
-  test.identical( got, exp );
+  var got = _.path.mapSrcFromSrc( src );
+  test.identical( got[ 0 ].a, exp );
+  test.identical( got.length, 1 );
   test.is( got !== src );
 
   test.case = 'empty map';
@@ -44177,10 +44210,11 @@ function mapSrcFromSrc( test )
     return this;
   };
   Constr.prototype.b = '';
-  var exp = [ new Constr() ];
+  var exp = '/str';
   var src = new Constr();
   var got = _.path.mapSrcFromSrc( src );
-  test.identical( got, exp );
+  test.identical( got[ 0 ].a, exp );
+  test.identical( got.length, 1 );
   test.is( got !== src );
 
   test.case = 'empty map';
