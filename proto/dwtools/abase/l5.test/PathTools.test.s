@@ -1,4 +1,5 @@
-( function _PathTools_test_s_( ) {
+( function _PathTools_test_s_()
+{
 
 'use strict';
 
@@ -27,7 +28,7 @@ function filterPairs( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor ( val )
   {
     this.value = val;
     return this;
@@ -1804,10 +1805,8 @@ function filterPairs( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -1817,8 +1816,10 @@ function filterPairs( test )
   var got = _.path.filterPairs( src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -1969,7 +1970,7 @@ function filterPairs( test )
   test.identical( got, expected );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var src2 = _.entityMake( src );
   var got = _.path.filterPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
@@ -2077,12 +2078,12 @@ function filterPairs( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -2201,7 +2202,7 @@ function filterDstPairs( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor ( val )
   {
     this.value = val;
     return this;
@@ -2215,7 +2216,7 @@ function filterDstPairs( test )
   var expected =
   {
     '/path/path' : '[object Object][object Object]',
-    '/path' :obj
+    '/path' : obj
   };
   test.identical( src, src2 );
   test.identical( got, expected );
@@ -3978,10 +3979,8 @@ function filterDstPairs( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -3991,8 +3990,10 @@ function filterDstPairs( test )
   var got = _.path.filterDstPairs( src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -4143,7 +4144,7 @@ function filterDstPairs( test )
   test.identical( got, expected );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var src2 = _.entityMake( src );
   var got = _.path.filterDstPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
@@ -4251,12 +4252,12 @@ function filterDstPairs( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -4375,7 +4376,7 @@ function filterPairsInplace( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor( val )
   {
     this.value = val;
     return this;
@@ -5956,7 +5957,7 @@ function filterPairsInplace( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
     '' : [ '/dir1', '/dir2', '', null ],
     '/emptyArray' : [],
@@ -5967,15 +5968,17 @@ function filterPairsInplace( test )
   var got = _.path.filterPairsInplace( src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
     '/string2' : '',
     '/null/null' : '',
     '/null' : '',
-     '' : [ '/dir1/dir1', '/dir1', '/dir2/dir2', '/dir2' ],
+    '' : [ '/dir1/dir1', '/dir1', '/dir2/dir2', '/dir2' ],
     'nullnull' : '/dir3/dir3',
     'null' : '/dir3',
     '/array/array' : [ '/dir1/dir1', '/dir2/dir2' ],
@@ -6123,7 +6126,7 @@ function filterPairsInplace( test )
   test.is( got === src );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterPairsInplace( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -6217,12 +6220,12 @@ function filterPairsInplace( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -6340,7 +6343,7 @@ function filterDstPairsInplace( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor( val )
   {
     this.value = val;
     return this;
@@ -7921,7 +7924,7 @@ function filterDstPairsInplace( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
     '' : [ '/dir1', '/dir2', '', null ],
     '/emptyArray' : [],
@@ -7932,15 +7935,17 @@ function filterDstPairsInplace( test )
   var got = _.path.filterDstPairsInplace( src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
     '/string2' : '',
     '/null/null' : '',
     '/null' : '',
-     '' : [ '/dir1/dir1', '/dir1', '/dir2/dir2', '/dir2' ],
+    '' : [ '/dir1/dir1', '/dir1', '/dir2/dir2', '/dir2' ],
     'nullnull' : '/dir3/dir3',
     'null' : '/dir3',
     '/array/array' : [ '/dir1/dir1', '/dir2/dir2' ],
@@ -8106,7 +8111,7 @@ function filterDstPairsInplace( test )
   test.is( got === src );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterDstPairsInplace( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -8200,12 +8205,12 @@ function filterDstPairsInplace( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -8323,7 +8328,7 @@ function filterPairs_( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor( val )
   {
     this.value = val;
     return this;
@@ -9937,10 +9942,8 @@ function filterPairs_( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -9950,8 +9953,10 @@ function filterPairs_( test )
   var got = _.path.filterPairs_( src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -10107,7 +10112,7 @@ function filterPairs_( test )
   test.is( got === src );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterPairs_( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -10206,12 +10211,12 @@ function filterPairs_( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -10330,7 +10335,7 @@ function filterDstPairs_( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor( val )
   {
     this.value = val;
     return this;
@@ -11930,10 +11935,8 @@ function filterDstPairs_( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -11943,8 +11946,10 @@ function filterDstPairs_( test )
   var got = _.path.filterDstPairs_( src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -11971,7 +11976,7 @@ function filterDstPairs_( test )
     '/string1' : '',
     '/string2' : '',
     '/null' : '',
-    null : '',
+    'null' : '',
     '/array' : '',
     '/emptyArray' : ''
   };
@@ -12100,7 +12105,7 @@ function filterDstPairs_( test )
   test.is( got === src );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterDstPairs_( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -12199,12 +12204,12 @@ function filterDstPairs_( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -12323,7 +12328,7 @@ function filterPairsInplace_( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor( val )
   {
     this.value = val;
     return this;
@@ -13904,7 +13909,7 @@ function filterPairsInplace_( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
     '' : [ '/dir1', '/dir2', '', null ],
     '/emptyArray' : [],
@@ -13915,8 +13920,10 @@ function filterPairsInplace_( test )
   var got = _.path.filterPairs_( src, src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -14071,7 +14078,7 @@ function filterPairsInplace_( test )
   test.is( got === src );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterPairs_( src, src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -14165,12 +14172,12 @@ function filterPairsInplace_( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -14289,7 +14296,7 @@ function filterDstPairsInplace_( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor( val )
   {
     this.value = val;
     return this;
@@ -15870,7 +15877,7 @@ function filterDstPairsInplace_( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
     '' : [ '/dir1', '/dir2', '', null ],
     '/emptyArray' : [],
@@ -15881,8 +15888,10 @@ function filterDstPairsInplace_( test )
   var got = _.path.filterDstPairs_( src, src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -16037,7 +16046,7 @@ function filterDstPairsInplace_( test )
   test.is( got === src );
 
   test.case = 'duplicates in map';
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterDstPairs_( src, src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -16131,12 +16140,12 @@ function filterDstPairsInplace_( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -16255,7 +16264,7 @@ function filterPairsWithDst_( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor ( val )
   {
     this.value = val;
     return this;
@@ -18273,7 +18282,7 @@ function filterPairsWithDst_( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
     '' : [ '/dir1', '/dir2', '', null ],
     '/emptyArray' : [],
@@ -18285,8 +18294,10 @@ function filterPairsWithDst_( test )
   var got = _.path.filterPairs_( dst, src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -18471,7 +18482,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'duplicates in map';
   var dst = {};
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterPairs_( dst, src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -18582,12 +18593,12 @@ function filterPairsWithDst_( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -18707,7 +18718,7 @@ function filterDstPairsWithDst_( test )
 {
   test.open( 'instance' );
 
-  var constructor = function ( val )
+  function constructor ( val )
   {
     this.value = val;
     return this;
@@ -20725,7 +20736,7 @@ function filterDstPairsWithDst_( test )
     '/string1' : '/dir1',
     '/string2' : '',
     '/null' : null,
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
     '' : [ '/dir1', '/dir2', '', null ],
     '/emptyArray' : [],
@@ -20737,8 +20748,10 @@ function filterDstPairsWithDst_( test )
   var got = _.path.filterDstPairs_( dst, src, double );
   var expected =
   {
-    '/true/true' : true, '/true' : true,
-    '/false/false' : false, '/false' : false,
+    '/true/true' : true,
+    '/true' : true,
+    '/false/false' : false,
+    '/false' : false,
     '/string1/string1' : '/dir1/dir1',
     '/string1' : '/dir1',
     '/string2/string2' : '',
@@ -20923,7 +20936,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'duplicates in map';
   var dst = {};
-  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '',  '/null' : null };
+  var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
   var got = _.path.filterDstPairs_( dst, src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( got, expected );
@@ -21034,12 +21047,12 @@ function filterDstPairsWithDst_( test )
 
   function duplicates2( it )
   {
-    return [ it.src, it.src, it.src + 1, '', '', null, ];
+    return [ it.src, it.src, it.src + 1, '', '', null ];
   }
 
   function duplicates( it )
   {
-    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null, ] };
+    return { [ it.src ] : [ it.dst, it.dst, it.dst, '', '', null ] };
   }
 
   function bool( it )
@@ -21282,7 +21295,7 @@ function filterInplace( test )
   test.case = 'map filter';
   var src = { '/a' : [ '/b', 'c', null, undefined ] };
   var got = _.path.filterInplace( src, onEachStructure );
-  var expected = { '/src/a' : [ '/dst/b','/dst/c', '/dst' ] };
+  var expected = { '/src/a' : [ '/dst/b', '/dst/c', '/dst' ] };
   test.identical( got, expected );
   test.identical( src, expected );
 
@@ -22109,10 +22122,8 @@ function filterInplace( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -22388,7 +22399,7 @@ function filterDstInplace( test )
   test.case = 'map filter';
   var src = { '/a' : [ '/b', 'c', null, undefined ] };
   var got = _.path.filterDstInplace( src, onEachStructure );
-  var expected = { '/src/a' : [ '/dst/b','/dst/c', '/dst' ] };
+  var expected = { '/src/a' : [ '/dst/b', '/dst/c', '/dst' ] };
   test.identical( got, expected );
   test.identical( src, expected );
 
@@ -23207,10 +23218,8 @@ function filterDstInplace( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -23486,7 +23495,7 @@ function filterInplaceExtendedCallbacks( test )
   test.case = 'map filter';
   var src = { '/a' : [ '/b', 'c', null, undefined ] };
   var got = _.path.filterInplace( src, onEachStructure );
-  var expected = { '/src/a' : [ '/dst/b','/dst/c', '/dst' ] };
+  var expected = { '/src/a' : [ '/dst/b', '/dst/c', '/dst' ] };
   test.identical( got, expected );
   test.identical( src, expected );
 
@@ -24313,10 +24322,8 @@ function filterInplaceExtendedCallbacks( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -24501,7 +24508,7 @@ function filterInplaceExtendedCallbacks( test )
     if( it.side === 'src' )
     it.src = [ it.src, it.src + 1 ];
     else if( it.side === 'dst' )
-    it.dst = [ it.dst, it.dst + 1 ];
+      it.dst = [ it.dst, it.dst + 1 ];
 
     return it;
   }
@@ -24637,7 +24644,7 @@ function filterDstInplaceExtendedCallbacks( test )
   test.case = 'map filter';
   var src = { '/a' : [ '/b', 'c', null, undefined ] };
   var got = _.path.filterDstInplace( src, onEachStructure );
-  var expected = { '/src/a' : [ '/dst/b','/dst/c', '/dst' ] };
+  var expected = { '/src/a' : [ '/dst/b', '/dst/c', '/dst' ] };
   test.identical( got, expected );
   test.identical( src, expected );
 
@@ -25450,10 +25457,8 @@ function filterDstInplaceExtendedCallbacks( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -25638,7 +25643,7 @@ function filterDstInplaceExtendedCallbacks( test )
     if( it.side === 'src' )
     it.src = [ it.src, it.src + 1 ];
     else if( it.side === 'dst' )
-    it.dst = [ it.dst, it.dst + 1 ];
+      it.dst = [ it.dst, it.dst + 1 ];
 
     return it;
   }
@@ -25767,7 +25772,7 @@ function filter( test )
   var got = _.path.filter( src, onEachStructure );
   var expected =
   {
-    '/src/a' : [ '/dst/b','/dst/c', '/dst' ]
+    '/src/a' : [ '/dst/b', '/dst/c', '/dst' ]
   }
   test.identical( got, expected );
   test.is( got !== src );
@@ -26634,10 +26639,8 @@ function filter( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -26894,7 +26897,7 @@ function filterExtendedCallbacks( test )
   var got = _.path.filter( src, onEachStructure );
   var expected =
   {
-    '/src/a' : [ '/dst/b','/dst/c', '/dst' ]
+    '/src/a' : [ '/dst/b', '/dst/c', '/dst' ]
   }
   test.identical( got, expected );
   test.is( got !== src );
@@ -27737,10 +27740,8 @@ function filterExtendedCallbacks( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -27768,14 +27769,14 @@ function filterExtendedCallbacks( test )
   var expected =
   {
     '/true' : '',
-		'/false' : '',
-		'/null' : '',
-		'/string1' : '',
-		'/string2' : '',
-		'null' : '',
-		'/array' : '',
-		'/emptyArray' : ''
-	};
+    '/false' : '',
+    '/null' : '',
+    '/string1' : '',
+    '/string2' : '',
+    'null' : '',
+    '/array' : '',
+    '/emptyArray' : ''
+  };
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -27785,14 +27786,14 @@ function filterExtendedCallbacks( test )
   var expected =
   {
     '/true' : '',
-		'/false' : '',
-		'/null' : '',
-		'/string1' : '',
-		'/string2' : '',
-		'null' : '',
-		'/array' : '',
-		'/emptyArray' : ''
-	};
+    '/false' : '',
+    '/null' : '',
+    '/string1' : '',
+    '/string2' : '',
+    'null' : '',
+    '/array' : '',
+    '/emptyArray' : ''
+  };
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -28040,7 +28041,7 @@ function filterDst( test )
   var got = _.path.filterDst( src, onEachStructure );
   var expected =
   {
-    '/src/a' : [ '/dst/b','/dst/c', '/dst' ]
+    '/src/a' : [ '/dst/b', '/dst/c', '/dst' ]
   }
   test.identical( got, expected );
   test.is( got !== src );
@@ -28907,10 +28908,8 @@ function filterDst( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -29167,7 +29166,7 @@ function filterDstExtendedCallbacks( test )
   var got = _.path.filterDst( src, onEachStructure );
   var expected =
   {
-    '/src/a' : [ '/dst/b','/dst/c', '/dst' ]
+    '/src/a' : [ '/dst/b', '/dst/c', '/dst' ]
   }
   test.identical( got, expected );
   test.is( got !== src );
@@ -30010,10 +30009,8 @@ function filterDstExtendedCallbacks( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -30041,14 +30038,14 @@ function filterDstExtendedCallbacks( test )
   var expected =
   {
     '/true' : '',
-		'/false' : '',
-		'/null' : '',
-		'/string1' : '',
-		'/string2' : '',
-		'null' : '',
-		'/array' : '',
-		'/emptyArray' : ''
-	};
+    '/false' : '',
+    '/null' : '',
+    '/string1' : '',
+    '/string2' : '',
+    'null' : '',
+    '/array' : '',
+    '/emptyArray' : ''
+  };
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -30057,15 +30054,15 @@ function filterDstExtendedCallbacks( test )
   var got = _.path.filterDst( src, srcOnly2 );
   var expected =
   {
-		'/true' : '',
-		'/false' : '',
-		'/null' : '',
-		'/string1' : '',
-		'/string2' : '',
-		'null' : '',
-		'/array' : '',
-		'/emptyArray' : ''
-	};
+    '/true' : '',
+    '/false' : '',
+    '/null' : '',
+    '/string1' : '',
+    '/string2' : '',
+    'null' : '',
+    '/array' : '',
+    '/emptyArray' : ''
+  };
   test.identical( src, src2 );
   test.identical( got, expected );
 
@@ -30987,10 +30984,8 @@ function filter_( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -31942,10 +31937,8 @@ function filterDst_( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -32925,10 +32918,8 @@ function filterInplace_( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -33896,10 +33887,8 @@ function filterDstInplace_( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -34928,10 +34917,8 @@ function filterWithDst_( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -35964,10 +35951,8 @@ function filterDstWithDst_( test )
     '/null' : null,
     '/string1' : '/dir1',
     '/string2' : '',
-    '' : '/dir2',
-    null : '/dir3',
+    'null' : '/dir3',
     '/array' : [ '/dir1', '/dir2' ],
-    '' : [ '/dir1', '/dir2' ],
     '' : [ '' ],
     '/emptyArray' : [],
   };
@@ -36215,7 +36200,7 @@ function isEmpty( test )
   test.case = 'wrong type of src';
   test.shouldThrowErrorSync( () => _.path.isEmpty( new Set() ) );
   test.shouldThrowErrorSync( () => _.path.isEmpty( _.argumentsArrayMake( [] ) ) );
-  var Constr = function(){ this.a = ''; return this };
+  function Constr (){ this.a = ''; return this };
   test.shouldThrowErrorSync( () => _.path.isEmpty( new Constr() ) );
 }
 
@@ -36612,8 +36597,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-  var expected = { "" : "/dst2" };
-  var dstMap = { "" : "/dst2" };
+  var expected = { '' : '/dst2' };
+  var dstMap = { '' : '/dst2' };
   var srcMap = null;
   var dstPath = '/dst2';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36621,8 +36606,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = null;
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36630,8 +36615,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36639,8 +36624,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=null';
-  var expected = { "/src" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36648,8 +36633,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=array, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [ '/src1', '/src2' ];
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36657,8 +36642,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty array, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [];
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36666,8 +36651,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = {};
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36675,8 +36660,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36684,8 +36669,8 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = '';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36693,17 +36678,17 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36711,26 +36696,26 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = '';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=empty str';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = '';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36738,35 +36723,35 @@ function mapExtend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=empty str';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str';
-  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dstx';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str, same as in dst map';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dst';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { "" : "/dst", "/src1" : "/dst1", "/src2" : "/dst2" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst', '/src1' : '/dst1', '/src2' : '/dst2' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : '/dst1', '/src2' : '/dst2' };
   var dstPath = null;
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36786,7 +36771,7 @@ function mapExtend( test )
     '/Array' : [ '/dir1', '/dir2' ],
     '/Object' : obj1,
   }
-  var dstMap = { "" : "/dst" };
+  var dstMap = { '' : '/dst' };
   var srcMap =
   {
     '' : null,
@@ -36806,7 +36791,7 @@ function mapExtend( test )
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=string';
   var expected = { '' : '/dst', '/src' : '/dst2' };
-  var dstMap = { "" : "/dst" };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = '/dst2';
   var got = path.mapExtend( dstMap, srcMap, dstPath );
@@ -36950,7 +36935,7 @@ function mapExtend( test )
 
   test.case = 'src has orphan, no place for it';
   var expected = { '/One' : false, '' : '/dst' }
-  var dst = { '/One' : 1, }
+  var dst = { '/One' : 1 }
   var src = { '/One' : 0, '' : '/dst' }
   var got = path.mapExtend( dst, src );
   test.identical( got, expected );
@@ -36965,7 +36950,7 @@ function mapExtend( test )
   test.open( 'src:null' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapExtend( dst, null, dstPath );
@@ -36973,21 +36958,21 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, null, null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, null, '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapExtend( dst, null, dstPath );
@@ -36995,7 +36980,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapExtend( dst, null, dstPath );
@@ -37003,7 +36988,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapExtend( dst, null, dstPath );
@@ -37011,21 +36996,21 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:true';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, null, true );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:false';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, null, false );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:array';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '/a', '/b' ]
   var got = path.mapExtend( dst, null, dstPath );
@@ -37039,7 +37024,7 @@ function mapExtend( test )
   test.open( 'src:empty str' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapExtend( dst, '', dstPath );
@@ -37047,21 +37032,21 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, '', null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, '', '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapExtend( dst, '', dstPath );
@@ -37069,7 +37054,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapExtend( dst, '', dstPath );
@@ -37077,7 +37062,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapExtend( dst, '', dstPath );
@@ -37293,7 +37278,7 @@ function mapExtend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : true, '/Zero' : false, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true }
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, true );
@@ -37341,7 +37326,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : true, '/False' : false, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true, }
+  var exp = { '/True' : true, '/False' : false, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true }
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ 'dst1', 'dst2' ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, true );
@@ -37435,7 +37420,7 @@ function mapExtend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, false );
@@ -37443,7 +37428,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, false );
@@ -37451,7 +37436,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapExtend( dst, src, false );
@@ -37483,7 +37468,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/One' : true, '/Zero' : false, '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/One' : true, '/Zero' : false, '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, false );
@@ -37491,8 +37476,8 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : ['/dir1', '/dir2' ], '/Object' : obj1, '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var exp = { '/True' : true, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, false );
   test.identical( got, exp );
@@ -37593,7 +37578,7 @@ function mapExtend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
@@ -37601,7 +37586,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
@@ -37609,7 +37594,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
@@ -37617,15 +37602,15 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is 0';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : 0, '/False' : 0, '/Null' : 0, '/String1' : 0, '/String2' : 0, '/Array' : 0, '/Object' : 0 }
-  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
   test.is( got === dst );
 
   test.case = 'dst is null';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : null, '/False' : null, '/Null' : null, '/String1' : null, '/String2' : null, '/Array' : null, '/Object' : null }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
@@ -37633,7 +37618,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is string';
-  var exp = { '/True' : true, '/False' : false, '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : true, '/False' : false, '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : '/dir2', '/False' : '/dir2', '/Null' : '/dir2', '/String1' : '/dir2', '/String2' : '/dir2', '/Array' : '/dir2', '/Object' : '/dir2' }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
@@ -37641,7 +37626,7 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : true, '/False' : false, '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : true, '/False' : false, '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
@@ -37649,8 +37634,8 @@ function mapExtend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1',  '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ],'/Object' : obj1, '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var exp = { '/True' : true, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
@@ -37744,7 +37729,7 @@ function mapExtend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : obj2, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : obj2, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 }
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, obj2 );
@@ -37801,7 +37786,7 @@ function mapExtend( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : true, '/False' : false, '/Null' : obj2, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 }
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapExtend( dst, src, obj2 );
   test.identical( got, exp );
@@ -37809,7 +37794,7 @@ function mapExtend( test )
 
   test.case = 'dst is the same object';
   var exp = { '/True' : true, '/False' : false, '/Null' : obj0, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj0 }
-  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj0 }
   var got = path.mapExtend( dst, src, obj0 );
   test.identical( got, exp );
@@ -38239,8 +38224,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = null;
   var dstPath = '/dst2';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38248,8 +38233,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = null;
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38257,8 +38242,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38266,8 +38251,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=null';
-  var expected = { "/src" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38275,8 +38260,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=array, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [ '/src1', '/src2' ];
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38284,8 +38269,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty array, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [];
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38293,8 +38278,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = {};
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38302,8 +38287,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38311,8 +38296,8 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = '';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38320,17 +38305,17 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38338,26 +38323,26 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = '';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=empty str';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = '';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38365,35 +38350,35 @@ function mapSupplement( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=empty str';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str';
-  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dstx';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str, same as in dst map';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dst';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { "" : "/dst", "/src1" : "/dst1", "/src2" : "/dst2" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst', '/src1' : '/dst1', '/src2' : '/dst2' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : '/dst1', '/src2' : '/dst2' };
   var dstPath = null;
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38413,7 +38398,7 @@ function mapSupplement( test )
     '/Array' : [ '/dir1', '/dir2' ],
     '/Object' : obj1,
   }
-  var dstMap = { "" : "/dst" };
+  var dstMap = { '' : '/dst' };
   var srcMap =
   {
     '' : null,
@@ -38433,7 +38418,7 @@ function mapSupplement( test )
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=string';
   var expected = { '' : '/dst', '/src' : '/dst2' };
-  var dstMap = { "" : "/dst" };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = '/dst2';
   var got = path.mapSupplement( dstMap, srcMap, dstPath );
@@ -38577,7 +38562,7 @@ function mapSupplement( test )
 
   test.case = 'src has orphan, no place for it';
   var expected = { '/One' : true, '' : '/dst' }
-  var dst = { '/One' : 1, }
+  var dst = { '/One' : 1 }
   var src = { '/One' : 0, '' : '/dst' }
   var got = path.mapSupplement( dst, src );
   test.identical( got, expected );
@@ -38592,7 +38577,7 @@ function mapSupplement( test )
   test.open( 'src:null' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapSupplement( dst, null, dstPath );
@@ -38600,21 +38585,21 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, null, null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, null, '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapSupplement( dst, null, dstPath );
@@ -38622,7 +38607,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapSupplement( dst, null, dstPath );
@@ -38630,7 +38615,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapSupplement( dst, null, dstPath );
@@ -38638,21 +38623,21 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:true';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, null, true );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:false';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, null, false );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:array';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '/a', '/b' ]
   var got = path.mapSupplement( dst, null, dstPath );
@@ -38666,7 +38651,7 @@ function mapSupplement( test )
   test.open( 'src:empty str' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapSupplement( dst, '', dstPath );
@@ -38674,21 +38659,21 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, '', null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, '', '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapSupplement( dst, '', dstPath );
@@ -38696,7 +38681,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapSupplement( dst, '', dstPath );
@@ -38704,7 +38689,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapSupplement( dst, '', dstPath );
@@ -38961,7 +38946,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ 'dst1', 'dst2' ], '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true, }
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ 'dst1', 'dst2' ], '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true }
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ 'dst1', 'dst2' ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, true );
@@ -39055,7 +39040,7 @@ function mapSupplement( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [], '/EmptyArray2' : [], '/EmptyArray3' : [], }
+  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [], '/EmptyArray2' : [], '/EmptyArray3' : [] }
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, false );
@@ -39063,7 +39048,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, false );
@@ -39071,7 +39056,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapSupplement( dst, src, false );
@@ -39103,7 +39088,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Object' : [ '/dir2', '/dir3' ], '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Object' : [ '/dir2', '/dir3' ], '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, false );
@@ -39111,8 +39096,8 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, false );
   test.identical( got, exp );
@@ -39221,7 +39206,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, [ '/dir1', '/dir2' ] );
@@ -39229,7 +39214,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapSupplement( dst, src, [ '/dir1', '/dir2' ] );
@@ -39237,15 +39222,15 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is 0';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : 0, '/False' : 0, '/Null' : 0, '/String1' : 0, '/String2' : 0, '/Array' : 0, '/Object' : 0 }
-  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var got = path.mapSupplement( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
   test.is( got === dst );
 
   test.case = 'dst is null';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : [ '/dir1', '/dir2' ], '/False' : [ '/dir1', '/dir2' ], '/Null' : [ '/dir1', '/dir2' ], '/String1' : [ '/dir1', '/dir2' ], '/String2' : [ '/dir1', '/dir2' ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : [ '/dir1', '/dir2' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : [ '/dir1', '/dir2' ], '/False' : [ '/dir1', '/dir2' ], '/Null' : [ '/dir1', '/dir2' ], '/String1' : [ '/dir1', '/dir2' ], '/String2' : [ '/dir1', '/dir2' ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : [ '/dir1', '/dir2' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : null, '/False' : null, '/Null' : null, '/String1' : null, '/String2' : null, '/Array' : null, '/Object' : null }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapSupplement( dst, src, [ '/dir1', '/dir2' ] );
@@ -39253,7 +39238,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is string';
-  var exp = { '/True' : '/dir2', '/False' : '/dir2', '/One' : true, '/Zero' : false, '/Null' : '/dir2', '/String1' : '/dir2', '/String2' : '/dir2', '/Array' : '/dir2', '/Object' : '/dir2', '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : '/dir2', '/False' : '/dir2', '/One' : true, '/Zero' : false, '/Null' : '/dir2', '/String1' : '/dir2', '/String2' : '/dir2', '/Array' : '/dir2', '/Object' : '/dir2', '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : '/dir2', '/False' : '/dir2', '/Null' : '/dir2', '/String1' : '/dir2', '/String2' : '/dir2', '/Array' : '/dir2', '/Object' : '/dir2' }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapSupplement( dst, src, [ '/dir1', '/dir2' ] );
@@ -39261,7 +39246,7 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapSupplement( dst, src, [ '/dir1', '/dir2' ] );
@@ -39269,8 +39254,8 @@ function mapSupplement( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0,  '/String2' : obj0, '/Array' : obj0,'/Object' : obj0, '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
@@ -39421,7 +39406,7 @@ function mapSupplement( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 }
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapSupplement( dst, src, obj2 );
   test.identical( got, exp );
@@ -39429,7 +39414,7 @@ function mapSupplement( test )
 
   test.case = 'dst is the same object';
   var exp = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
-  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj0 }
   var got = path.mapSupplement( dst, src, obj0 );
   test.identical( got, exp );
@@ -39833,7 +39818,7 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map, srcMap=str, dstPath=str, rewrite';
-  var expected = { '/src1' : [ '/dst1', '/dst2'], '/src2' : '/dst1' };
+  var expected = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var dstMap = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var srcMap = '/src1';
   var dstPath = '/dst2';
@@ -39842,7 +39827,7 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map, srcMap=src, dstPath=str, rewrite';
-  var expected = { '/src1' : [ '/dst1', '/dst2'], '/src2' : [ '/dst1' ] };
+  var expected = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : [ '/dst1' ] };
   var dstMap = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var srcMap = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var dstPath = '/dst2';
@@ -39878,8 +39863,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-  var expected = { "" : "/dst2" };
-  var dstMap = { "" : "/dst2" };
+  var expected = { '' : '/dst2' };
+  var dstMap = { '' : '/dst2' };
   var srcMap = null;
   var dstPath = '/dst2';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39887,8 +39872,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = null;
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39896,8 +39881,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39905,8 +39890,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=null';
-  var expected = { "/src" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39914,8 +39899,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=array, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [ '/src1', '/src2' ];
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39923,8 +39908,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty array, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [];
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39932,8 +39917,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = {};
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39941,8 +39926,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39950,8 +39935,8 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = '';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39959,17 +39944,17 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -39977,26 +39962,26 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = '';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=empty str';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = '';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -40004,35 +39989,35 @@ function mapAppend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=empty str';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str';
-  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dstx';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str, same as in dst map';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dst';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { "" : "/dst", "/src1" : "/dst1", "/src2" : "/dst2" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst', '/src1' : '/dst1', '/src2' : '/dst2' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : '/dst1', '/src2' : '/dst2' };
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -40049,7 +40034,7 @@ function mapAppend( test )
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=string';
   var expected = { '' : '/dst', '/src' : '/dst2' };
-  var dstMap = { "" : "/dst" };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = '/dst2';
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -40193,7 +40178,7 @@ function mapAppend( test )
 
   test.case = 'src has orphan, no place for it';
   var expected = { '/One' : true, '' : '/dst' }
-  var dst = { '/One' : 1, }
+  var dst = { '/One' : 1 }
   var src = { '/One' : 0, '' : '/dst' }
   var got = path.mapAppend( dst, src );
   test.identical( got, expected );
@@ -40208,7 +40193,7 @@ function mapAppend( test )
   test.open( 'src:null' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapAppend( dst, null, dstPath );
@@ -40216,21 +40201,21 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, null, null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, null, '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapAppend( dst, null, dstPath );
@@ -40238,7 +40223,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapAppend( dst, null, dstPath );
@@ -40246,7 +40231,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapAppend( dst, null, dstPath );
@@ -40254,21 +40239,21 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:true';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, null, true );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:false';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, null, false );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:array';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '/a', '/b' ]
   var got = path.mapAppend( dst, null, dstPath );
@@ -40282,7 +40267,7 @@ function mapAppend( test )
   test.open( 'src:empty str' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapAppend( dst, '', dstPath );
@@ -40290,21 +40275,21 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, '', null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, '', '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapAppend( dst, '', dstPath );
@@ -40312,7 +40297,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapAppend( dst, '', dstPath );
@@ -40320,7 +40305,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapAppend( dst, '', dstPath );
@@ -40536,7 +40521,7 @@ function mapAppend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : false, '/Zero' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [], '/EmptyArray2' : [], '/EmptyArray3' : [] }
+  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [], '/EmptyArray2' : [], '/EmptyArray3' : [] }
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, src, true );
@@ -40576,7 +40561,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is string';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : '/dir2', '/False' : '/dir2', '/Null' : '/dir2', '/String1' : [ '/dir2', '/dir1'], '/String2' : [ '/dir2' ], '/Array' : [ '/dir2', '/dir1'], '/Object' : [ '/dir2', obj1 ], '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true };
+  var exp = { '/One' : true, '/Zero' : false, '/True' : '/dir2', '/False' : '/dir2', '/Null' : '/dir2', '/String1' : [ '/dir2', '/dir1' ], '/String2' : [ '/dir2' ], '/Array' : [ '/dir2', '/dir1' ], '/Object' : [ '/dir2', obj1 ], '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true };
   var dst = { '/True' : '/dir2', '/False' : '/dir2', '/Null' : '/dir2', '/String1' : '/dir2', '/String2' : '/dir2', '/Array' : '/dir2', '/Object' : '/dir2' };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, true );
@@ -40584,7 +40569,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3', '/dir1' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3', '/dir1'], '/Object' : [ 'dst1', 'dst2', obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true, };
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3', '/dir1' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3', '/dir1' ], '/Object' : [ 'dst1', 'dst2', obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ 'dst1', 'dst2' ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, true );
@@ -40686,7 +40671,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, src, false );
@@ -40694,7 +40679,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, false );
@@ -40726,7 +40711,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3', '/dir1'], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3', '/dir1' ], '/One' : true, '/Zero' : false, '/Object' : [ '/dir2', '/dir3', obj1 ], '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, };
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3', '/dir1' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3', '/dir1' ], '/One' : true, '/Zero' : false, '/Object' : [ '/dir2', '/dir3', obj1 ], '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, false );
@@ -40734,8 +40719,8 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ obj1, '/dir1' ], '/String2' : [ obj1, '/dir2' ], '/Array' : [ obj1, '/dir1', '/dir2' ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ obj1, '/dir1' ], '/String2' : [ obj1, '/dir2' ], '/Array' : [ obj1, '/dir1', '/dir2' ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, false );
   test.identical( got, exp );
@@ -40836,7 +40821,7 @@ function mapAppend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
@@ -40844,7 +40829,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
@@ -40852,7 +40837,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
@@ -40860,15 +40845,18 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is 0';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : 0, '/False' : 0, '/Null' : 0, '/String1' : 0, '/String2' : 0, '/Array' : 0, '/Object' : 0 }
-  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
   test.is( got === dst );
 
   // test.case = 'dst is null';
-  // var exp = { '/True' : [ '/dir1', '/dir2' ], '/False' : [ '/dir1', '/dir2' ], '/Null' : [ '/dir1', '/dir2' ], '/String1' : [ '/dir1', '/dir2' ], '/String2' : [ '/dir1', '/dir2' ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : [ '/dir1', '/dir2', obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
+  // var exp = { '/True' : [ '/dir1', '/dir2' ], '/False' : [ '/dir1', '/dir2' ],
+  //  '/Null' : [ '/dir1', '/dir2' ], '/String1' : [ '/dir1', '/dir2' ],
+  //  '/String2' : [ '/dir1', '/dir2' ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : [ '/dir1', '/dir2', obj1 ],
+  //  '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   // var dst = { '/True' : null, '/False' : null, '/Null' : null, '/String1' : null, '/String2' : null, '/Array' : null, '/Object' : null };
   // var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   // var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
@@ -40876,7 +40864,7 @@ function mapAppend( test )
   // test.is( got === dst );
 
   test.case = 'dst is string';
-  var exp = { '/True' : '/dir2', '/False' : '/dir2', '/One' : true, '/Zero' : false, '/Null' : [ '/dir2', '/dir1' ], '/String1' : [ '/dir2', '/dir1' ], '/String2' : [ '/dir2' ], '/Array' : [ '/dir2', '/dir1' ], '/Object' : [ '/dir2', obj1 ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : '/dir2', '/False' : '/dir2', '/One' : true, '/Zero' : false, '/Null' : [ '/dir2', '/dir1' ], '/String1' : [ '/dir2', '/dir1' ], '/String2' : [ '/dir2' ], '/Array' : [ '/dir2', '/dir1' ], '/Object' : [ '/dir2', obj1 ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : '/dir2', '/False' : '/dir2', '/Null' : '/dir2', '/String1' : '/dir2', '/String2' : '/dir2', '/Array' : '/dir2', '/Object' : '/dir2' }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
@@ -40884,7 +40872,7 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Null' : [ '/dir2', '/dir3', '/dir1' ], '/String1' :  [ '/dir2', '/dir3', '/dir1' ], '/String2' :  [ '/dir2', '/dir3' ], '/Array' :  [ '/dir2', '/dir3', '/dir1' ], '/Object' :  [ '/dir2', '/dir3', obj1 ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Null' : [ '/dir2', '/dir3', '/dir1' ], '/String1' :  [ '/dir2', '/dir3', '/dir1' ], '/String2' :  [ '/dir2', '/dir3' ], '/Array' :  [ '/dir2', '/dir3', '/dir1' ], '/Object' :  [ '/dir2', '/dir3', obj1 ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
@@ -40892,8 +40880,8 @@ function mapAppend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, '/dir1', '/dir2' ], '/String1' : [ obj0, '/dir1' ],  '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ],'/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, '/dir1', '/dir2' ], '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
@@ -41044,15 +41032,15 @@ function mapAppend( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, obj1 ], '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, obj2 );
   test.identical( got, exp );
   test.is( got === dst );
 
   test.case = 'dst is the same object';
-  var exp = { '/True' : true, '/False' : obj0, '/Null' : [ obj0 ], '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1',   '/dir2' ], '/Object' : [ obj0 ] };
-  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var exp = { '/True' : true, '/False' : obj0, '/Null' : [ obj0 ], '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0 ] };
+  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj0 };
   var got = path.mapAppend( dst, src, obj0 );
   test.identical( got, exp );
@@ -41092,8 +41080,8 @@ function mapAppendExperiment( test )
   //
 
   test.case = 'dstMap=map with empty src, srcMap=complex map, dstPath=null';
-  var expected = { "" : "/dst", '/True' : '',  };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst', '/True' : '' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '' : null, '/True' : null };
   var dstPath = null;
   var got = path.mapAppend( dstMap, srcMap, dstPath );
@@ -41452,7 +41440,7 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map, srcMap=str, dstPath=str, rewrite';
-  var expected = { '/src1' : [ '/dst1', '/dst2'], '/src2' : '/dst1' };
+  var expected = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var dstMap = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var srcMap = '/src1';
   var dstPath = '/dst2';
@@ -41461,7 +41449,7 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map, srcMap=src, dstPath=str, rewrite';
-  var expected = { '/src1' : [ '/dst1', '/dst2'], '/src2' : [ '/dst1' ] };
+  var expected = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : [ '/dst1' ] };
   var dstMap = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var srcMap = { '/src1' : [ '/dst1', '/dst2' ], '/src2' : '/dst1' };
   var dstPath = '/dst2';
@@ -41497,8 +41485,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-  var expected = { "" : "/dst2" };
-  var dstMap = { "" : "/dst2" };
+  var expected = { '' : '/dst2' };
+  var dstMap = { '' : '/dst2' };
   var srcMap = null;
   var dstPath = '/dst2';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41506,8 +41494,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=null, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = null;
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41515,8 +41503,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41524,8 +41512,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=null';
-  var expected = { "/src" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41533,8 +41521,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=array, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [ '/src1', '/src2' ];
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41542,8 +41530,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty array, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = [];
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41551,8 +41539,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = {};
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41560,8 +41548,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41569,8 +41557,8 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=empty str, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = '';
   var dstPath = '';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41578,17 +41566,17 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=null';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=null';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41596,26 +41584,26 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=not normal empty map, dstPath=empty str';
-  var expected = { "" : "/dst" };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { "" : "" };
+  var expected = { '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '' : '' };
   var dstPath = '';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map with only src, dstPath=empty str';
-  var expected = { "/src1" : "/dst", "/src2" : "/dst" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '/src1' : '/dst', '/src2' : '/dst' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : null, '/src2' : null };
   var dstPath = '';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41623,35 +41611,35 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=empty str';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str';
-  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dstx', '/str' : '/dst2', '/empty1' : '/dstx', '/empty2' : '/dstx', '/true' : true, '/false' : false, '' : '/dst' };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dstx';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=str, same as in dst map';
-  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
-  var dstMap = { "" : "/dst" };
-  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [], '/empty2' : [ '' ], '/true' : true, '/false' : false };
+  var expected = { '/null' : '/dst', '/str' : '/dst2', '/empty1' : '/dst', '/empty2' : '/dst', '/true' : true, '/false' : false };
+  var dstMap = { '' : '/dst' };
+  var srcMap = { '/null' : null, '/str' : '/dst2', '/empty1' : '', '/empty2' : [ '' ], '/true' : true, '/false' : false };
   var dstPath = '/dst';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
   test.identical( got, expected );
   test.is( got === dstMap );
 
   test.case = 'dstMap=map with empty src, srcMap=map, dstPath=null';
-  var expected = { "" : "/dst", "/src1" : "/dst1", "/src2" : "/dst2" };
-  var dstMap = { "" : "/dst" };
+  var expected = { '' : '/dst', '/src1' : '/dst1', '/src2' : '/dst2' };
+  var dstMap = { '' : '/dst' };
   var srcMap = { '/src1' : '/dst1', '/src2' : '/dst2' };
   var dstPath = null;
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41659,16 +41647,18 @@ function mapPrepend( test )
   test.is( got === dstMap );
 
   // test.case = 'dstMap=map with empty src, srcMap=complex map, dstPath=null';
-  // var expected = { "" : "/dst", '/True' : true, '/False' : false, '/Zero' : false, '/One' : true, '/Null' : '/dst', '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
+  // var expected = { "" : "/dst", '/True' : true, '/False' : false, '/Zero' : false, '/One' : true,
+  //  '/Null' : '/dst', '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   // var dstMap = { "" : "/dst" };
-  // var srcMap = { '' : null, '/True' : true, '/False' : false, '/Zero' : 0, '/One' : 1, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
+  // var srcMap = { '' : null, '/True' : true, '/False' : false, '/Zero' : 0, '/One' : 1,
+  //  '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   // var dstPath = null;
   // var got = path.mapPrepend( dstMap, srcMap, dstPath );
   // test.identical( got, expected );
 
   test.case = 'dstMap=map with empty src, srcMap=string, dstPath=string';
   var expected = { '' : '/dst', '/src' : '/dst2' };
-  var dstMap = { "" : "/dst" };
+  var dstMap = { '' : '/dst' };
   var srcMap = '/src';
   var dstPath = '/dst2';
   var got = path.mapPrepend( dstMap, srcMap, dstPath );
@@ -41812,7 +41802,7 @@ function mapPrepend( test )
 
   test.case = 'src has orphan, no place for it';
   var expected = { '/One' : true, '' : '/dst' }
-  var dst = { '/One' : 1, }
+  var dst = { '/One' : 1 }
   var src = { '/One' : 0, '' : '/dst' }
   var got = path.mapPrepend( dst, src );
   test.identical( got, expected );
@@ -41827,7 +41817,7 @@ function mapPrepend( test )
   test.open( 'src:null' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapPrepend( dst, null, dstPath );
@@ -41835,21 +41825,21 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, null, null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, null, '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapPrepend( dst, null, dstPath );
@@ -41857,7 +41847,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapPrepend( dst, null, dstPath );
@@ -41865,7 +41855,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapPrepend( dst, null, dstPath );
@@ -41873,21 +41863,21 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:true';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, null, true );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:false';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, null, false );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:array';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : [ '/a', '/b' ], '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '/a', '/b' ]
   var got = path.mapPrepend( dst, null, dstPath );
@@ -41901,7 +41891,7 @@ function mapPrepend( test )
   test.open( 'src:empty str' )
 
   test.case = 'src:null, dstPath:str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '/dstx', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = '/dstx'
   var got = path.mapPrepend( dst, '', dstPath );
@@ -41909,21 +41899,21 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:null';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, '', null );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty str';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, '', '' );
   test.identical( got, expected );
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 1';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [];
   var got = path.mapPrepend( dst, '', dstPath );
@@ -41931,7 +41921,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ '', '' ];
   var got = path.mapPrepend( dst, '', dstPath );
@@ -41939,7 +41929,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'src:null, dstPath:empty array 2';
-  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : '', '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
+  var expected = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : false, '/Null' : '', '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dst = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var dstPath = [ null, null ];
   var got = path.mapPrepend( dst, '', dstPath );
@@ -42155,7 +42145,7 @@ function mapPrepend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : false, '/Zero' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [], '/EmptyArray2' : [], '/EmptyArray3' : [] }
+  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [], '/EmptyArray2' : [], '/EmptyArray3' : [] }
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, true );
@@ -42203,7 +42193,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir1', '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir1', '/dir2', '/dir3' ], '/Object' : [ obj1, 'dst1', 'dst2' ], '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true, }
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir1', '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir1', '/dir2', '/dir3' ], '/Object' : [ obj1, 'dst1', 'dst2' ], '/One' : true, '/Zero' : false, '/EmptyArray1' : true, '/EmptyArray2' : true, '/EmptyArray3' : true }
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ 'dst1', 'dst2' ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, true );
@@ -42305,7 +42295,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : false, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, false );
@@ -42313,7 +42303,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : true, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, false );
@@ -42345,7 +42335,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir1', '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir1', '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Object' : [ obj1, '/dir2', '/dir3' ], '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir1', '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir1', '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Object' : [ obj1, '/dir2', '/dir3' ], '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, false );
@@ -42353,8 +42343,8 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ '/dir1', obj1 ], '/String2' : [ '/dir2', obj1 ], '/Array' : [ '/dir1', '/dir2', obj1 ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false, }
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ '/dir1', obj1 ], '/String2' : [ '/dir2', obj1 ], '/Array' : [ '/dir1', '/dir2', obj1 ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, false );
   test.identical( got, exp );
@@ -42455,7 +42445,7 @@ function mapPrepend( test )
   test.open( 'dst:map, collision' );
 
   test.case = 'dst is true';
-  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/One' : false, '/Zero' : true, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/One' : 0, '/Zero' : 1, '/True' : true, '/False' : true, '/Null' : true, '/String1' : true, '/String2' : true, '/Array' : true, '/Object' : true, '/EmptyArray1' : [ '' ], '/EmptyArray2' : [], '/EmptyArray3' : [ null ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, [ '/dir1', '/dir2' ] );
@@ -42463,7 +42453,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is false';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : false, '/False' : false, '/Null' : false, '/String1' : false, '/String2' : false, '/Array' : false, '/Object' : false }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, [ '/dir1', '/dir2' ] );
@@ -42471,7 +42461,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is 1';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var exp = { '/One' : true, '/Zero' : false, '/True' : true, '/False' : true, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var dst = { '/True' : 1, '/False' : 1, '/Null' : 1, '/String1' : 1, '/String2' : 1, '/Array' : 1, '/Object' : 1 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, [ '/dir1', '/dir2' ] );
@@ -42479,9 +42469,9 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is 0';
-  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/One' : true, '/Zero' : false, '/True' : false, '/False' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : 0, '/False' : 0, '/Null' : 0, '/String1' : 0, '/String2' : 0, '/Array' : 0, '/Object' : 0 }
-  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], }
+  var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] }
   var got = path.mapPrepend( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
   test.is( got === dst );
@@ -42495,7 +42485,7 @@ function mapPrepend( test )
   // test.is( got === dst );
 
   test.case = 'dst is string';
-  var exp = { '/True' : '/dir2', '/False' : '/dir2', '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : [ '/dir1', '/dir2' ], '/String2' : [ '/dir2' ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : [ obj1, '/dir2' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : '/dir2', '/False' : '/dir2', '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2' ], '/String1' : [ '/dir1', '/dir2' ], '/String2' : [ '/dir2' ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : [ obj1, '/dir2' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : '/dir2', '/False' : '/dir2', '/Null' : '/dir2', '/String1' : '/dir2', '/String2' : '/dir2', '/Array' : '/dir2', '/Object' : '/dir2' }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, [ '/dir1', '/dir2' ] );
@@ -42503,7 +42493,7 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is array';
-  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2', '/dir3' ], '/String1' :  [ '/dir1', '/dir2', '/dir3' ], '/String2' :  [ '/dir2', '/dir3' ], '/Array' :  [ '/dir1', '/dir2', '/dir3' ], '/Object' :  [ obj1, '/dir2', '/dir3' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ], };
+  var exp = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/One' : true, '/Zero' : false, '/Null' : [ '/dir1', '/dir2', '/dir3' ], '/String1' :  [ '/dir1', '/dir2', '/dir3' ], '/String2' :  [ '/dir2', '/dir3' ], '/Array' :  [ '/dir1', '/dir2', '/dir3' ], '/Object' :  [ obj1, '/dir2', '/dir3' ], '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
   var dst = { '/True' : [ '/dir2', '/dir3' ], '/False' : [ '/dir2', '/dir3' ], '/Null' : [ '/dir2', '/dir3' ], '/String1' : [ '/dir2', '/dir3' ], '/String2' : [ '/dir2', '/dir3' ], '/Array' : [ '/dir2', '/dir3' ], '/Object' : [ '/dir2', '/dir3' ] };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, [ '/dir1', '/dir2' ] );
@@ -42511,8 +42501,8 @@ function mapPrepend( test )
   test.is( got === dst );
 
   test.case = 'dst is object';
-  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ '/dir1', '/dir2', obj0 ], '/String1' : [ '/dir1', obj0 ],  '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ],'/Object' : [ obj1, obj0, ], '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ '/dir1', '/dir2', obj0 ], '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : [ '/dir1', '/dir2' ], '/EmptyArray2' : [ '/dir1', '/dir2' ], '/EmptyArray3' : [ '/dir1', '/dir2' ] };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, [ '/dir1', '/dir2' ] );
   test.identical( got, exp );
@@ -42663,15 +42653,15 @@ function mapPrepend( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, obj1 ], '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, obj2 );
   test.identical( got, exp );
   test.is( got === dst );
 
   test.case = 'dst is the same object';
-  var exp = { '/True' : true, '/False' : obj0, '/Null' : [ obj0 ], '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1',   '/dir2', obj0 ], '/Object' : [ obj0 ] };
-  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var exp = { '/True' : true, '/False' : obj0, '/Null' : [ obj0 ], '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj0 ] };
+  var dst = { '/True' : true, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj0 };
   var got = path.mapPrepend( dst, src, obj0 );
   test.identical( got, exp );
@@ -42705,7 +42695,7 @@ function mapsPair( test )
   test.case = 'dst=map with src=string, dst=string and src=string';
   var exp = { '/src' : '/dst' }
   var dst = { '/src' : '/dst' }
-  var src = "/src";
+  var src = '/src';
   var got = path.mapsPair( dst, src );
   test.identical( got, exp );
   test.is( got !== dst );
@@ -42825,8 +42815,8 @@ function mapsPair( test )
 
   test.case = 'dst=map with src=string, dst=empty and dst=string';
   var exp = { '/src' : '/dst' }
-  var dst = { "" : "/dst" }
-  var src = "/src";
+  var dst = { '' : '/dst' }
+  var src = '/src';
   var got = path.mapsPair( dst, src );
   test.identical( got, exp );
   test.is( got !== dst );
@@ -42969,12 +42959,18 @@ function simplify( test )
   var obj = new constr( '/dir' );
   var src =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : null,
-    '/string' : '/dir', '/emptyString' : '', '' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
+    '' : '',
     '/number' : 10,
-    '/array' : [ '', '/', '/dir' ], '/emptyArray' : [],
-    '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
+    '/array' : [ '', '/', '/dir' ],
+    '/emptyArray' : [],
+    '/emptyMap' : {},
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   var got = _.path.simplify( src );
@@ -43128,12 +43124,18 @@ function simplifyDst( test )
   var obj = new constr( '/dir' );
   var src =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : null,
-    '/string' : '/dir', '/emptyString' : '', '' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
+    '' : '',
     '/number' : 10,
-    '/array' : [ '', '/', '/dir' ], '/emptyArray' : [],
-    '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
+    '/array' : [ '', '/', '/dir' ],
+    '/emptyArray' : [],
+    '/emptyMap' : {},
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   var got = _.path.simplifyDst( src );
@@ -43297,12 +43299,18 @@ function simplifyInplace( test )
   var obj = new constr( '/dir' );
   var src =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : null,
-    '/string' : '/dir', '/emptyString' : '', '' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
+    '' : '',
     '/number' : 10,
-    '/array' : [ '', '/', '/dir' ], '/emptyArray' : [],
-    '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
+    '/array' : [ '', '/', '/dir' ],
+    '/emptyArray' : [],
+    '/emptyMap' : {},
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   var got = _.path.simplifyInplace( src );
@@ -43456,23 +43464,34 @@ function simplify_( test )
   var obj = new constr( '/dir' );
   var src =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : null,
-    '/string' : '/dir', '/emptyString' : '', '' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
+    '' : '',
     '/number' : 10,
-    '/array' : [ '', '/', '/dir' ], '/emptyArray' : [],
-    '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
+    '/array' : [ '', '/', '/dir' ],
+    '/emptyArray' : [],
+    '/emptyMap' : {},
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   var got = _.path.simplify_( src );
   var exp =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : '',
-    '/string' : '/dir', '/emptyString' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
     '/number' : true,
-    '/array' : [ '/', '/dir' ], '/emptyArray' : '',
-    '/emptyMap' : '', '/map' : { '/str' : '/dir2' },
+    '/array' : [ '/', '/dir' ],
+    '/emptyArray' : '',
+    '/emptyMap' : '',
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   test.identical( got, exp );
@@ -43644,12 +43663,18 @@ function simplifyInplace_( test )
   var obj = new constr( '/dir' );
   var src =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : null,
-    '/string' : '/dir', '/emptyString' : '', '' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
+    '' : '',
     '/number' : 10,
-    '/array' : [ '', '/', '/dir' ], '/emptyArray' : [],
-    '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
+    '/array' : [ '', '/', '/dir' ],
+    '/emptyArray' : [],
+    '/emptyMap' : {},
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   var got = _.path.simplify_( src, src );
@@ -43861,23 +43886,34 @@ function simplifyWithDst_( test )
   var dst = {};
   var src =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : null,
-    '/string' : '/dir', '/emptyString' : '', '' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
+    '' : '',
     '/number' : 10,
-    '/array' : [ '', '/', '/dir' ], '/emptyArray' : [],
-    '/emptyMap' : {}, '/map' : { '/str' : '/dir2' },
+    '/array' : [ '', '/', '/dir' ],
+    '/emptyArray' : [],
+    '/emptyMap' : {},
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   var got = _.path.simplify_( dst, src );
   var exp =
   {
-    '/false' : false, '/true' : true, '/undefined' : undefined,
+    '/false' : false,
+    '/true' : true,
+    '/undefined' : undefined,
     '/null' : '',
-    '/string' : '/dir', '/emptyString' : '',
+    '/string' : '/dir',
+    '/emptyString' : '',
     '/number' : true,
-    '/array' : [ '/', '/dir' ], '/emptyArray' : '',
-    '/emptyMap' : '', '/map' : { '/str' : '/dir2' },
+    '/array' : [ '/', '/dir' ],
+    '/emptyArray' : '',
+    '/emptyMap' : '',
+    '/map' : { '/str' : '/dir2' },
     '/instance' : obj,
   };
   test.identical( got, exp );
@@ -43933,7 +43969,7 @@ function mapDstFromSrc( test )
   test.is( got !== src );
 
   test.case = 'constructor, has not own properties';
-  var Constr = function()
+  function Constr()
   {
     this.a = '/str';
     return this;
@@ -44032,7 +44068,7 @@ function mapDstFromDst( test )
   test.is( got !== src );
 
   test.case = 'constructor, has not own properties';
-  var Constr = function()
+  function Constr()
   {
     this.a = '/str';
     return this;
@@ -44135,7 +44171,7 @@ function mapSrcFromSrc( test )
   test.is( got !== src );
 
   test.case = 'constructor, has not own properties';
-  var Constr = function()
+  function Constr()
   {
     this.a = '/str';
     return this;
@@ -44238,7 +44274,7 @@ function mapSrcFromDst( test )
   test.is( got !== src );
 
   test.case = 'constructor, has not own properties';
-  var Constr = function()
+  function Constr()
   {
     this.a = '/str';
     return this;
@@ -44492,7 +44528,7 @@ function group( test )
   if( !Config.debug )
   return;
 
-  test.shouldThrowErrorSync( () => _.path.group({ vals : '/val', keys : '/' }))
+  test.shouldThrowErrorSync( () => _.path.group( { vals : '/val', keys : '/' } ) )
 }
 
 //
@@ -44839,14 +44875,14 @@ function mapOptimize( test )
   test.case = 'direct order';
   var filePath =
   {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
+    'module1' : `.`,
+    'module1/ami' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module2' : `.`,
+    'module2/amid' : `.`,
   }
   var expected =
   {
@@ -44859,14 +44895,14 @@ function mapOptimize( test )
   test.case = 'revers order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   }
   var expected =
   {
@@ -44879,14 +44915,14 @@ function mapOptimize( test )
   test.case = 'no order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   }
   var expected =
   {
@@ -44905,25 +44941,25 @@ function mapOptimize( test )
   test.case = 'direct order';
   var filePath =
   {
-    "module1" : true,
-    "module1/ami" : false,
-    "module1/amid" : true,
-    "module1/amid/dir" : false,
-    "module1/amid/dir/terminal" : true,
-    "module1/amid/dir2" : false,
-    "module2" : true,
-    "module2/amid" : false
+    'module1' : true,
+    'module1/ami' : false,
+    'module1/amid' : true,
+    'module1/amid/dir' : false,
+    'module1/amid/dir/terminal' : true,
+    'module1/amid/dir2' : false,
+    'module2' : true,
+    'module2/amid' : false
   }
   var expected =
   {
-    "module1" : true,
-    "module1/ami" : false,
+    'module1' : true,
+    'module1/ami' : false,
     // "module1/amid" : true,
-    "module1/amid/dir" : false,
+    'module1/amid/dir' : false,
     // "module1/amid/dir/terminal" : true,
-    "module1/amid/dir2" : false,
-    "module2" : true,
-    "module2/amid" : false
+    'module1/amid/dir2' : false,
+    'module2' : true,
+    'module2/amid' : false
   };
   var got = path.mapOptimize( filePath );
   test.identical( got, expected );
@@ -44931,25 +44967,25 @@ function mapOptimize( test )
   test.case = 'revers order';
   var filePath =
   {
-    "module2/amid" : true,
-    "module2" : false,
-    "module1/amid/dir2" : true,
-    "module1/amid/dir/terminal" : false,
-    "module1/amid/dir" : true,
-    "module1/amid" : false,
-    "module1/ami" : true,
-    "module1" : false
+    'module2/amid' : true,
+    'module2' : false,
+    'module1/amid/dir2' : true,
+    'module1/amid/dir/terminal' : false,
+    'module1/amid/dir' : true,
+    'module1/amid' : false,
+    'module1/ami' : true,
+    'module1' : false
   }
   var expected =
   {
-    "module2/amid" : true,
-    "module2" : false,
-    "module1/amid/dir2" : true,
+    'module2/amid' : true,
+    'module2' : false,
+    'module1/amid/dir2' : true,
     // "module1/amid/dir/terminal" : false,
-    "module1/amid/dir" : true,
+    'module1/amid/dir' : true,
     // "module1/amid" : false,
-    "module1/ami" : true,
-    "module1" : false
+    'module1/ami' : true,
+    'module1' : false
   };
   var got = path.mapOptimize( filePath );
   test.identical( got, expected );
@@ -44958,24 +44994,24 @@ function mapOptimize( test )
   var filePath =
   {
     // "module1/amid/dir/terminal" : false,
-    "module2/amid" : true,
-    "module1/amid/dir2" : true,
-    "module1/amid/dir" : true,
-    "module2" : false,
+    'module2/amid' : true,
+    'module1/amid/dir2' : true,
+    'module1/amid/dir' : true,
+    'module2' : false,
     // "module1/amid" : false,
-    "module1" : false,
-    "module1/ami" : true,
+    'module1' : false,
+    'module1/ami' : true,
   };
   var expected =
   {
-    "module2/amid" : true,
-    "module2" : false,
-    "module1/amid/dir2" : true,
+    'module2/amid' : true,
+    'module2' : false,
+    'module1/amid/dir2' : true,
     // "module1/amid/dir/terminal" : false,
-    "module1/amid/dir" : true,
+    'module1/amid/dir' : true,
     // "module1/amid" : false,
-    "module1/ami" : true,
-    "module1" : false
+    'module1/ami' : true,
+    'module1' : false
   };
   var got = path.mapOptimize( filePath );
   test.identical( got, expected );
@@ -45073,14 +45109,14 @@ function mapOptimize( test )
   test.case = 'direct order';
   var filePath =
   {
-    "/module1" : `.`,
-    "/module1/ami" : `.`,
-    "/module1/amid" : `.`,
-    "/module1/amid/dir" : `.`,
-    "/module1/amid/dir/terminal" : `.`,
-    "/module1/amid/dir2" : `.`,
-    "/module2" : `.`,
-    "/module2/amid" : `.`,
+    '/module1' : `.`,
+    '/module1/ami' : `.`,
+    '/module1/amid' : `.`,
+    '/module1/amid/dir' : `.`,
+    '/module1/amid/dir/terminal' : `.`,
+    '/module1/amid/dir2' : `.`,
+    '/module2' : `.`,
+    '/module2/amid' : `.`,
   }
   var expected =
   {
@@ -45093,14 +45129,14 @@ function mapOptimize( test )
   test.case = 'revers order';
   var filePath =
   {
-    "/module2/amid" : `.`,
-    "/module2" : `.`,
-    "/module1/amid/dir2" : `.`,
-    "/module1/amid/dir/terminal" : `.`,
-    "/module1/amid/dir" : `.`,
-    "/module1/amid" : `.`,
-    "/module1/ami" : `.`,
-    "/module1" : `.`,
+    '/module2/amid' : `.`,
+    '/module2' : `.`,
+    '/module1/amid/dir2' : `.`,
+    '/module1/amid/dir/terminal' : `.`,
+    '/module1/amid/dir' : `.`,
+    '/module1/amid' : `.`,
+    '/module1/ami' : `.`,
+    '/module1' : `.`,
   }
   var expected =
   {
@@ -45113,14 +45149,14 @@ function mapOptimize( test )
   test.case = 'no order';
   var filePath =
   {
-    "/module2/amid" : `.`,
-    "/module2" : `.`,
-    "/module1/amid" : `.`,
-    "/module1/amid/dir2" : `.`,
-    "/module1/amid/dir" : `.`,
-    "/module1/amid/dir/terminal" : `.`,
-    "/module1/ami" : `.`,
-    "/module1" : `.`,
+    '/module2/amid' : `.`,
+    '/module2' : `.`,
+    '/module1/amid' : `.`,
+    '/module1/amid/dir2' : `.`,
+    '/module1/amid/dir' : `.`,
+    '/module1/amid/dir/terminal' : `.`,
+    '/module1/ami' : `.`,
+    '/module1' : `.`,
   }
   var expected =
   {
@@ -45223,25 +45259,25 @@ function mapOptimize( test )
   test.case = 'direct order';
   var filePath =
   {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
+    'module1' : `.`,
+    'module1/ami' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module2' : `.`,
+    'module2/amid' : `.`,
   };
   var basePath =
   {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
+    'module1' : `.`,
+    'module1/ami' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module2' : `.`,
+    'module2/amid' : `.`,
   };
   var expected =
   {
@@ -45255,25 +45291,25 @@ function mapOptimize( test )
   test.case = 'revers order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   }
   var basePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   };
   var expected =
   {
@@ -45287,25 +45323,25 @@ function mapOptimize( test )
   test.case = 'no order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   };
   var basePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   };
   var expected =
   {
@@ -45325,25 +45361,25 @@ function mapOptimize( test )
   test.case = 'direct order';
   var filePath =
   {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
+    'module1' : `.`,
+    'module1/ami' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module2' : `.`,
+    'module2/amid' : `.`,
   };
   var basePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   };
   var expected =
   {
@@ -45357,25 +45393,25 @@ function mapOptimize( test )
   test.case = 'revers order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   }
   var basePath =
   {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
+    'module1' : `.`,
+    'module1/ami' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module2' : `.`,
+    'module2/amid' : `.`,
   };
   var expected =
   {
@@ -45389,25 +45425,25 @@ function mapOptimize( test )
   test.case = 'no order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   };
   var basePath =
   {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
+    'module1' : `.`,
+    'module1/ami' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module2' : `.`,
+    'module2/amid' : `.`,
   };
   var expected =
   {
@@ -45427,25 +45463,25 @@ function mapOptimize( test )
   test.case = 'direct order';
   var filePath =
   {
-    "module1" : `.`,
-    "module1/ami" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module2" : `.`,
-    "module2/amid" : `.`,
+    'module1' : `.`,
+    'module1/ami' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module2' : `.`,
+    'module2/amid' : `.`,
   };
   var basePath =
   {
-    "module4/amid" : `.`,
-    "module4" : `.`,
-    "module3/amid/dir2" : `.`,
-    "module3/amid/dir/terminal" : `.`,
-    "module3/amid/dir" : `.`,
-    "module3/amid" : `.`,
-    "module3/ami" : `.`,
-    "module3" : `.`,
+    'module4/amid' : `.`,
+    'module4' : `.`,
+    'module3/amid/dir2' : `.`,
+    'module3/amid/dir/terminal' : `.`,
+    'module3/amid/dir' : `.`,
+    'module3/amid' : `.`,
+    'module3/ami' : `.`,
+    'module3' : `.`,
   };
   var expected =
   {
@@ -45460,25 +45496,25 @@ function mapOptimize( test )
   test.case = 'revers order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   }
   var basePath =
   {
-    "module3" : `.`,
-    "module3/ami" : `.`,
-    "module3/amid" : `.`,
-    "module3/amid/dir" : `.`,
-    "module3/amid/dir/terminal" : `.`,
-    "module3/amid/dir2" : `.`,
-    "module4" : `.`,
-    "module4/amid" : `.`,
+    'module3' : `.`,
+    'module3/ami' : `.`,
+    'module3/amid' : `.`,
+    'module3/amid/dir' : `.`,
+    'module3/amid/dir/terminal' : `.`,
+    'module3/amid/dir2' : `.`,
+    'module4' : `.`,
+    'module4/amid' : `.`,
   };
   var expected =
   {
@@ -45493,25 +45529,25 @@ function mapOptimize( test )
   test.case = 'no order';
   var filePath =
   {
-    "module2/amid" : `.`,
-    "module2" : `.`,
-    "module1/amid" : `.`,
-    "module1/amid/dir2" : `.`,
-    "module1/amid/dir" : `.`,
-    "module1/amid/dir/terminal" : `.`,
-    "module1/ami" : `.`,
-    "module1" : `.`,
+    'module2/amid' : `.`,
+    'module2' : `.`,
+    'module1/amid' : `.`,
+    'module1/amid/dir2' : `.`,
+    'module1/amid/dir' : `.`,
+    'module1/amid/dir/terminal' : `.`,
+    'module1/ami' : `.`,
+    'module1' : `.`,
   };
   var basePath =
   {
-    "module3" : `.`,
-    "module3/ami" : `.`,
-    "module3/amid" : `.`,
-    "module3/amid/dir/terminal" : `.`,
-    "module3/amid/dir" : `.`,
-    "module3/amid/dir2" : `.`,
-    "module4" : `.`,
-    "module4/amid" : `.`,
+    'module3' : `.`,
+    'module3/ami' : `.`,
+    'module3/amid' : `.`,
+    'module3/amid/dir/terminal' : `.`,
+    'module3/amid/dir' : `.`,
+    'module3/amid/dir2' : `.`,
+    'module4' : `.`,
+    'module4/amid' : `.`,
   };
   var expected =
   {
@@ -45559,7 +45595,7 @@ var Self =
 
     /* path map */
 
-/*
+    /*
 qqq : similar test routines ( for example filterPairs and filterPairsInplace )
       should have exactly the same test cases
       in the same order
@@ -45630,4 +45666,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-})();
+} )();
