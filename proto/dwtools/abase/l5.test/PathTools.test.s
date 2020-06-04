@@ -40720,7 +40720,7 @@ function mapAppend( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, false );
   test.identical( got, exp );
@@ -41032,7 +41032,7 @@ function mapAppend( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj0, obj2 ], '/String1' : [ obj0, '/dir1' ], '/String2' : [ obj0, '/dir2' ], '/Array' : [ obj0, '/dir1', '/dir2' ], '/Object' : [ obj0, obj1 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapAppend( dst, src, obj2 );
   test.identical( got, exp );
@@ -42344,7 +42344,7 @@ function mapPrepend( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : false, '/EmptyArray2' : false, '/EmptyArray3' : false }
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 }
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 }
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 }
   var got = path.mapPrepend( dst, src, false );
   test.identical( got, exp );
@@ -42653,7 +42653,7 @@ function mapPrepend( test )
 
   test.case = 'dst is object';
   var exp = { '/True' : obj0, '/False' : obj0, '/Null' : [ obj2, obj0 ], '/String1' : [ '/dir1', obj0 ], '/String2' : [ '/dir2', obj0 ], '/Array' : [ '/dir1', '/dir2', obj0 ], '/Object' : [ obj1, obj0 ], '/One' : true, '/Zero' : false, '/EmptyArray1' : obj2, '/EmptyArray2' : obj2, '/EmptyArray3' : obj2 };
-  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0, '/Object' : obj0 };
+  var dst = { '/True' : obj0, '/False' : obj0, '/Null' : obj0, '/String1' : obj0, '/String2' : obj0, '/Array' : obj0, '/Object' : obj0 };
   var src = { '/One' : 1, '/Zero' : 0, '/True' : true, '/False' : false, '/Null' : null, '/String1' : '/dir1', '/String2' : '/dir2', '/EmptyArray1' : [], '/EmptyArray2' : [ '', '' ], '/EmptyArray3' : [ null, null ], '/Array' : [ '/dir1', '/dir2' ], '/Object' : obj1 };
   var got = path.mapPrepend( dst, src, obj2 );
   test.identical( got, exp );
@@ -42847,12 +42847,12 @@ function simplify( test )
   test.identical( got, true );
 
   test.case = 'instance of constructor';
-  var constr = function( val )
+  function constr1( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr1( '/dir' );
   var got = _.path.simplify( obj );
   test.identical( got, obj );
   test.is( got === obj );
@@ -42955,12 +42955,12 @@ function simplify( test )
   test.is( got === src );
 
   test.case = 'complex map of paths';
-  var constr = function( val )
+  function constr2( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr2( '/dir' );
   var src =
   {
     '/false' : false,
@@ -43016,12 +43016,12 @@ function simplifyDst( test )
   test.identical( got, true );
 
   test.case = 'instance of constructor';
-  var constr = function( val )
+  function constr1( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr1( '/dir' );
   var got = _.path.simplifyDst( obj );
   test.identical( got, obj );
   test.is( got === obj );
@@ -43124,12 +43124,12 @@ function simplifyDst( test )
   test.is( got === src );
 
   test.case = 'complex map of paths';
-  var constr = function( val )
+  function constr2( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr2( '/dir' );
   var src =
   {
     '/false' : false,
@@ -43185,12 +43185,12 @@ function simplifyInplace( test )
   test.identical( got, true );
 
   test.case = 'instance of constructor';
-  var constr = function( val )
+  function constr1( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr1( '/dir' );
   var got = _.path.simplifyInplace( obj );
   test.identical( got, obj );
   test.is( got === obj );
@@ -43303,12 +43303,12 @@ function simplifyInplace( test )
   test.is( got === src );
 
   test.case = 'complex map of paths';
-  var constr = function( val )
+  function constr2( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr2( '/dir' );
   var src =
   {
     '/false' : false,
@@ -43364,12 +43364,12 @@ function simplify_( test )
   test.identical( got, true );
 
   test.case = 'instance of constructor';
-  var constr = function( val )
+  function constr1( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr1( '/dir' );
   var got = _.path.simplify_( obj );
   test.identical( got, obj );
   test.is( got === obj );
@@ -43472,12 +43472,12 @@ function simplify_( test )
   test.is( got !== src );
 
   test.case = 'complex map of paths';
-  var constr = function( val )
+  function constr2( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr2( '/dir' );
   var src =
   {
     '/false' : false,
@@ -43554,12 +43554,12 @@ function simplifyInplace_( test )
   test.identical( got, true );
 
   test.case = 'instance of constructor';
-  var constr = function( val )
+  function constr1( val )
   {
     this.value = val;
     return this;
   }
-  var src = new constr( '/dir' );
+  var src = new constr1( '/dir' );
   var got = _.path.simplify_( src, src );
   test.identical( got, src );
   test.is( got === src );
@@ -43678,12 +43678,12 @@ function simplifyInplace_( test )
   test.is( got === src );
 
   test.case = 'complex map of paths';
-  var constr = function( val )
+  function constr2( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr2( '/dir' );
   var src =
   {
     '/false' : false,
@@ -43742,12 +43742,12 @@ function simplifyWithDst_( test )
 
   test.case = 'instance of constructor';
   var dst = false;
-  var constr = function( val )
+  function constr1( val )
   {
     this.value = val;
     return this;
   }
-  var src = new constr( '/dir' );
+  var src = new constr1( '/dir' );
   var got = _.path.simplify_( dst, src );
   test.identical( got, src );
   test.is( got === src );
@@ -43907,12 +43907,12 @@ function simplifyWithDst_( test )
   test.is( got === dst );
 
   test.case = 'complex map of paths';
-  var constr = function( val )
+  function constr2( val )
   {
     this.value = val;
     return this;
   }
-  var obj = new constr( '/dir' );
+  var obj = new constr2( '/dir' );
   var dst = {};
   var src =
   {
