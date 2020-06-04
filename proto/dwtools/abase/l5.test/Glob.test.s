@@ -814,67 +814,6 @@ function globLongFit( test )
 
   /* - */
 
-  // test.case = 'abc - abc';
-  // test.identical( _.path.globLongFit( 'abc', 'abc' ), true );
-  // test.identical( _.path.globLongFit( 'abc', '/abc' ), false );
-  // test.identical( _.path.globLongFit( '/abc', 'abc' ), false );
-  // test.identical( _.path.globLongFit( '/abc', '/abc' ), true );
-  //
-  // test.case = 'abc - abd';
-  // test.identical( _.path.globLongFit( 'abc', 'abd' ), false );
-  // test.identical( _.path.globLongFit( 'abc', '/abd' ), false );
-  // test.identical( _.path.globLongFit( '/abc', 'abd' ), false );
-  // test.identical( _.path.globLongFit( '/abc', '/abd' ), false );
-  //
-  // test.case = 'abc - ab*';
-  // test.identical( _.path.globLongFit( 'abc', 'ab*' ), true );
-  // test.identical( _.path.globLongFit( '/abc', '/ab*' ), true );
-  //
-  // test.case = 'adc - ab*';
-  // test.identical( _.path.globLongFit( 'adc', 'ab*' ), false );
-  // test.identical( _.path.globLongFit( '/adc', '/ab*' ), false );
-  //
-  // test.case = 'abc - *abc';
-  // test.identical( _.path.globLongFit( 'abc', '*abc' ), true );
-  // test.identical( _.path.globLongFit( '/abc', '/*abc' ), true );
-  //
-  // test.case = 'abc - *ab';
-  // test.identical( _.path.globLongFit( 'abc', '*ab' ), false );
-  // test.identical( _.path.globLongFit( '/abc', '/*ab' ), false );
-  //
-  // test.case = 'abc - a*c';
-  // test.identical( _.path.globLongFit( 'abc', 'a*c' ), true );
-  // test.identical( _.path.globLongFit( '/abc', '/a*c' ), true );
-  //
-  // test.case = 'a/b/c - */c';
-  // test.identical( _.path.globLongFit( 'a/b/c', '*/c' ), false );
-  // test.identical( _.path.globLongFit( '/a/b/c', '/*/c' ), false );
-  //
-  // test.case = 'a/b/c - */*/c';
-  // test.identical( _.path.globLongFit( 'a/b/c', '*/*/c' ), true );
-  // test.identical( _.path.globLongFit( '/a/b/c', '/*/*/c' ), true );
-  //
-  // test.case = 'a/b/c - **/c';
-  // test.identical( _.path.globLongFit( 'a/b/c', '**/c' ), true );
-  // test.identical( _.path.globLongFit( '/a/b/c', '/**/c' ), true );
-  //
-  // test.case = 'a/b/c/d/e.js - **/*.js';
-  // test.identical( _.path.globLongFit( 'a/b/c/d/e.js', '**/*.js' ), true );
-  // test.identical( _.path.globLongFit( '/a/b/c/d/e.js', '/**/*.js' ), true );
-  //
-  // test.case = 'f.js - **/**/**.js';
-  // test.identical( _.path.globLongFit( 'f.js', '**/**/**.js' ), true );
-  // test.identical( _.path.globLongFit( '/f.js', '/**/**/**.js' ), true );
-  //
-  // test.case = 'a/f.js - **/**.js';
-  // test.identical( _.path.globLongFit( 'a/f.js', '**/**.js' ), true );
-  // test.identical( _.path.globLongFit( '/a/f.js', '/**/**.js' ), true );
-  //
-  // test.shouldThrowErrorSync( () => _.path.globLongFit( 'abc', '/ab*' ) );
-  // test.shouldThrowErrorSync( () => _.path.globLongFit( '/abc', 'ab*' ) );
-
-  /* - */
-
 }
 
 // --
