@@ -1,4 +1,5 @@
-( function _PathTools_s_() {
+( function _PathTools_s_()
+{
 
 'use strict';
 
@@ -246,7 +247,7 @@ function _filterPairs( o )
     else if( _.arrayIs( result[ src ] ) )
     {
       if( dst !== '' && !_.boolLike( dst ) )
-      result[ src ] =  _.scalarAppendOnce( result[ src ], dst );
+      result[ src ] = _.scalarAppendOnce( result[ src ], dst );
     }
     else if( _.strIs( result[ src ] ) || _.instanceIs( result[ src ] ) )
     {
@@ -255,7 +256,7 @@ function _filterPairs( o )
       else if( result[ src ] !== '' && dst !== '' )
       {
         if( dst !== true )
-        result[ src ] =  _.scalarAppendOnce( result[ src ], dst );
+        result[ src ] = _.scalarAppendOnce( result[ src ], dst );
       }
     }
     else
@@ -285,7 +286,7 @@ function _filterPairs( o )
       if( !hasDst )
       return '';
       else if( !o.isSrc && !_.mapIs( o.filePath ) )
-      return _.mapVals( result )[ 0 ];
+        return _.mapVals( result )[ 0 ];
       return result;
     }
     else if( !hasDst )
@@ -307,7 +308,7 @@ function _filterPairs( o )
     if( r.length === 1 )
     r = r[ 0 ]
     else if( r.length === 0 )
-    r = '';
+      r = '';
 
     _.assert( _.strIs( r ) || _.arrayIs( r ) )
     return r;
@@ -329,11 +330,11 @@ function filterPairs( filePath, onEach )
   _.assert( arguments.length === 2 )
 
   return this._filterPairs
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -344,11 +345,11 @@ function filterSrcPairs( filePath, onEach )
   _.assert( arguments.length === 2 )
 
   return this._filterPairs
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -359,11 +360,11 @@ function filterDstPairs( filePath, onEach )
   _.assert( arguments.length === 2 )
 
   return this._filterPairs
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : false,
-  });
+  } );
 }
 
 // function filterPairs( filePath, onEach )
@@ -630,14 +631,14 @@ function _filterPairsInplace( o )
       if( vals.length === 1 && ( vals[ 0 ] === '' || vals[ 0 ] === null ) )
       return keys[ 0 ];
       else if( vals.length === 0 )
-      return '';
+        return '';
     }
     else
     {
       if( keys.length === 1 && keys[ 0 ] === '' )
       return o.filePath[ '' ];
       else if( keys.length === 0 )
-      return '';
+        return '';
     }
 
   }
@@ -809,7 +810,8 @@ function _filterPairsInplace( o )
     dst = '';
     _.assert( container[ src ] === undefined || container[ src ] === dst );
     _.assert( _.strIs( src ) );
-    // _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) ); // Dmytro : it has no sense, this assertions check dst above
+    // _.assert( _.strIs( dst ) || _.arrayIs( dst ) || _.boolLike( dst ) );
+    // Dmytro : it has no sense, this assertions check dst above
     container[ src ] = dst;
   }
 
@@ -858,7 +860,7 @@ function _filterPairsInplace( o )
     else if( _.arrayIs( filePath[ src ] ) )
     {
       if( dst !== '' && !_.boolLike( dst ) )
-      filePath[ src ] =  _.scalarAppendOnce( filePath[ src ], dst );
+      filePath[ src ] = _.scalarAppendOnce( filePath[ src ], dst );
     }
     else if( _.strIs( filePath[ src ] ) || _.instanceIs( filePath[ src ] ) )
     {
@@ -867,7 +869,7 @@ function _filterPairsInplace( o )
       else if( filePath[ src ] !== '' && dst !== '' )
       {
         if( dst !== true )
-        filePath[ src ] =  _.scalarAppendOnce( filePath[ src ], dst );
+        filePath[ src ] = _.scalarAppendOnce( filePath[ src ], dst );
       }
     }
     else
@@ -901,11 +903,11 @@ function filterPairsInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filterPairsInplace
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -915,11 +917,11 @@ function filterSrcPairsInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filterPairsInplace
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -929,11 +931,11 @@ function filterDstPairsInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filterPairsInplace
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : false,
-  });
+  } );
 }
 
 //
@@ -958,11 +960,11 @@ function filterPairs_pre( routine, args )
       if( args[ 0 ] === null )
       o.dst = true;
       else if( args[ 0 ] === o.filePath )
-      o.dst = false;
-      else if(  _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) )
-      o.dst = args[ 0 ];
+        o.dst = false;
+      else if( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) )
+        o.dst = args[ 0 ];
       else
-      _.assert( 0 );
+        _.assert( 0 );
     }
     else if( args.length === 2 )
     {
@@ -971,7 +973,7 @@ function filterPairs_pre( routine, args )
       o.dst = false;
     }
     else
-    _.assert( 0 );
+      _.assert( 0 );
   }
 
   _.routineOptions( routine, o );
@@ -1126,7 +1128,7 @@ function filterPairs_body( o )
     else if( _.mapIs( elements ) )
     {
       for( let src in elements )
-      elementWrite( filePath, src, elements[ src ] );
+        elementWrite( filePath, src, elements[ src ] );
       return filePath;
     }
 
@@ -1190,7 +1192,7 @@ function filterPairs_body( o )
     else if( _.arrayIs( filePath[ src ] ) )
     {
       if( dst !== '' && !_.boolLike( dst ) )
-      filePath[ src ] =  _.scalarAppendOnce( filePath[ src ], dst );
+      filePath[ src ] = _.scalarAppendOnce( filePath[ src ], dst );
     }
     else if( _.strIs( filePath[ src ] ) || _.instanceIs( filePath[ src ] ) )
     {
@@ -1199,7 +1201,7 @@ function filterPairs_body( o )
       else if( filePath[ src ] !== '' && dst !== '' )
       {
         if( dst !== true )
-        filePath[ src ] =  _.scalarAppendOnce( filePath[ src ], dst );
+        filePath[ src ] = _.scalarAppendOnce( filePath[ src ], dst );
       }
     }
     else
@@ -1224,10 +1226,10 @@ function filterPairs_body( o )
       if( !hasDst )
       result = '';
       else if( !o.isSrc && !_.mapIs( o.filePath ) )
-      result = _.mapVals( result )[ 0 ];
+        result = _.mapVals( result )[ 0 ];
     }
     else if( !hasDst && o.isSrc )
-    result = _.mapKeys( result );
+      result = _.mapKeys( result );
 
     if( o.dst === false )
     {
@@ -1252,17 +1254,17 @@ function filterPairs_body( o )
       else if( _.mapIs( o.filePath ) )
       {
         for( let k in o.filePath )
-        delete o.filePath[ k ];
+          delete o.filePath[ k ];
 
         if( _.mapIs( result ) )
         for( let k in result )
-        o.filePath[ k ] = result[ k ];
+          o.filePath[ k ] = result[ k ];
 
         else if( _.arrayIs( result ) )
-        for( let i = 0; i < result.length; i++ )
-        o.filePath[ result[ i ] ] = '';
+          for( let i = 0; i < result.length; i++ )
+            o.filePath[ result[ i ] ] = '';
         else
-        o.filePath[ result ] = '';
+          o.filePath[ result ] = '';
 
         result = o.filePath;
       }
@@ -1288,7 +1290,7 @@ function filterPairs_body( o )
           result = _.arrayAppendArraysOnce( o.dst, _.mapVals( result ) );
         }
         else
-        result = _.arrayAppendOnce( o.dst, result );
+          result = _.arrayAppendOnce( o.dst, result );
       }
       else if( _.mapIs( o.dst ) )
       {
@@ -1297,12 +1299,12 @@ function filterPairs_body( o )
           if( !o.isSrc && !_.mapIs( o.filePath ) )
           {
             for( let k in result )
-            o.dst[ '' ] = _.scalarAppendOnce( o.dst[ '' ], result[ k ] );
+              o.dst[ '' ] = _.scalarAppendOnce( o.dst[ '' ], result[ k ] );
           }
           else
           {
             for( let k in result )
-            o.dst[ k ] = result[ k ];
+              o.dst[ k ] = result[ k ];
           }
         }
 
@@ -1336,7 +1338,7 @@ function filterPairs_body( o )
       if( result.length === 1 )
       return result[ 0 ];
       else if( result.length === 0 )
-      return '';
+        return '';
 
       result = self.simplify_( null, result );
     }
@@ -1424,9 +1426,9 @@ function _filterInplace( o )
     if( r === undefined || r === null )
     return '';
     else if( _.strIs( r ) )
-    return r;
+      return r;
     else if( _.arrayIs( r ) )
-    r = write( it, r );
+      r = write( it, r );
 
     if( r.length === 0 )
     return '';
@@ -1604,7 +1606,7 @@ function _filterInplace( o )
     if( src === '' )
     dst = src;
     else if( _.boolLike( src ) )
-    dst = src;
+      dst = src;
     else
     {
       if( _.strIs( dst ) || _.arrayIs( dst ) )
@@ -1631,11 +1633,11 @@ function filterInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return _filterInplace
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -1646,11 +1648,11 @@ function filterSrcInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return _filterInplace
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -1661,11 +1663,11 @@ function filterDstInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return _filterInplace
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : false,
-  });
+  } );
 }
 
 //
@@ -1843,11 +1845,11 @@ function filter( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filter
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -1858,11 +1860,11 @@ function filterSrc( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filter
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : true,
-  });
+  } );
 }
 
 //
@@ -1873,11 +1875,11 @@ function filterDst( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filter
-  ({
+  ( {
     filePath,
     onEach,
     isSrc : false,
-  });
+  } );
 }
 
 //
@@ -1995,17 +1997,17 @@ function filter_pre( routine, args )
   {
     if( args.length === 3 )
     {
-			o.onEach = args[ 2 ];
-			o.filePath = args[ 1 ];
+      o.onEach = args[ 2 ];
+      o.filePath = args[ 1 ];
 
       if( args[ 0 ] === null )
       o.dst = true;
       else if( args[ 0 ] === args[ 1 ] )
-      o.dst = false;
+        o.dst = false;
       else if( _.arrayIs( args[ 0 ] ) || _.mapIs( args[ 0 ] ) )
-      o.dst = args[ 0 ];
+        o.dst = args[ 0 ];
       else
-      _.assert( 0 );
+        _.assert( 0 );
     }
     else if( args.length === 2 )
     {
@@ -2014,7 +2016,7 @@ function filter_pre( routine, args )
       o.dst = false;
     }
     else
-    _.assert( 0 );
+      _.assert( 0 );
 
 
   }
@@ -2038,37 +2040,37 @@ function filter_body( o )
   if( o.dst === true )
   result = new o.filePath.constructor();
   else if( o.dst === false )
-  result = o.filePath;
+    result = o.filePath;
   else
-  result = o.dst;
+    result = o.dst;
 
   if( _.strIs( o.filePath ) )
   {
     it.value = o.filePath;
-		if( o.isSrc )
-		{
-			it.src = o.filePath;
-			it.dst = '';
-			it.side = 'src';
-		}
-		else
-		{
-			it.src = '';
-			it.dst = o.filePath;
-			it.side = 'dst';
-		}
+    if( o.isSrc )
+    {
+      it.src = o.filePath;
+      it.dst = '';
+      it.side = 'src';
+    }
+    else
+    {
+      it.src = '';
+      it.dst = o.filePath;
+      it.side = 'dst';
+    }
 
     let r = o.onEach( it.value, it );
     if( r === undefined || r === null )
-		{
-			r = '';
-		}
+    {
+      r = '';
+    }
     else if( _.arrayIs( r ) )
     {
       if( r.length === 0 )
       r = '';
       else if( r.length === 1 )
-      r = r[ 0 ];
+        r = r[ 0 ];
     }
 
     if( _.arrayIs( result ) )
@@ -2089,34 +2091,34 @@ function filter_body( o )
   }
   else if( _.arrayIs( o.filePath ) )
   {
-		if( o.isSrc )
-		{
-			it.side = 'src';
-			for( let p = 0; p < o.filePath.length; p++ )
-			{
-				it.index = p;
-				it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
-				it.dst = '';
-				it.value = it.src;
+    if( o.isSrc )
+    {
+      it.side = 'src';
+      for( let p = 0; p < o.filePath.length; p++ )
+      {
+        it.index = p;
+        it.src = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+        it.dst = '';
+        it.value = it.src;
 
-				let r = o.onEach( it.value, it );
-				writeArrayResult( r, p, result );
-			}
-		}
-		else
-		{
-			it.side = 'dst';
-			for( let p = 0; p < o.filePath.length; p++ )
-			{
-				it.index = p;
-				it.src = '';
-				it.dst = o.filePath[ p ] === null ? '' : o.filePath[ p ];
-				it.value = it.dst;
+        let r = o.onEach( it.value, it );
+        writeArrayResult( r, p, result );
+      }
+    }
+    else
+    {
+      it.side = 'dst';
+      for( let p = 0; p < o.filePath.length; p++ )
+      {
+        it.index = p;
+        it.src = '';
+        it.dst = o.filePath[ p ] === null ? '' : o.filePath[ p ];
+        it.value = it.dst;
 
-				let r = o.onEach( it.value, it );
-				writeArrayResult( r, p, result );
-			}
-		}
+        let r = o.onEach( it.value, it );
+        writeArrayResult( r, p, result );
+      }
+    }
 
   }
   else if( _.mapIs( o.filePath ) )
@@ -2144,7 +2146,7 @@ function filter_body( o )
         }
         else
         {
-					dst = dst.slice();
+          dst = dst.slice();
           for( let d = 0; d < dst.length; d++ )
           {
             it.src = src;
@@ -2177,9 +2179,9 @@ function filter_body( o )
   else _.assert( 0 );
 
   if( o.dst === true )
-	{
-		result = this.simplify_( null, result );
-	}
+  {
+    result = this.simplify_( null, result );
+  }
   else
   {
     if( _.mapIs( result ) && result[ '' ] === '' )
@@ -2213,9 +2215,9 @@ function filter_body( o )
           pathMap[ src[ s ] ] = append( pathMap[ src[ s ] ], dst );
         }
         else if( _.strIs( src ) )
-        pathMap[ src ] = append( pathMap[ src ], dst );
+          pathMap[ src ] = append( pathMap[ src ], dst );
         else if( src !== undefined )
-        _.assert( 0 );
+          _.assert( 0 );
       }
       else
       {
@@ -2240,7 +2242,7 @@ function filter_body( o )
       if( src === '' )
       dst = src;
       else if( _.boolLike( src ) )
-      dst = src;
+        dst = src;
       else
       {
         if( _.strIs( dst ) || _.arrayIs( dst ) )
@@ -2265,24 +2267,24 @@ function filter_body( o )
       if( r.length === 0 )
       r = '';
       else if( r.length === 1 )
-      r = r[ 0 ];
+        r = r[ 0 ];
     }
 
     if( o.dst === false )
     result[ i ] = r;
     else if( _.arrayIs( result ) )
-    _.arrayAppendArraysOnce( result, r );
+      _.arrayAppendArraysOnce( result, r );
     else if( _.mapIs( result ) )
-    result[ r ] = '';
+      result[ r ] = '';
   }
 
 }
 filter_body.defaults =
 {
-	dst : null,
-	filePath : null,
-	onEach : null,
-	isSrc : true,
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : true,
 }
 
 //
@@ -2290,10 +2292,10 @@ filter_body.defaults =
 let filter_ = _.routineFromPreAndBody( filter_pre, filter_body );
 filter_.defaults =
 {
-	dst : null,
-	filePath : null,
-	onEach : null,
-	isSrc : true,
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : true,
 }
 
 //
@@ -2301,10 +2303,10 @@ filter_.defaults =
 let filterSrc_ = _.routineFromPreAndBody( filter_pre, filter_body );
 filterSrc_.defaults =
 {
-	dst : null,
-	filePath : null,
-	onEach : null,
-	isSrc : true,
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : true,
 }
 
 //
@@ -2312,10 +2314,10 @@ filterSrc_.defaults =
 let filterDst_ = _.routineFromPreAndBody( filter_pre, filter_body );
 filterDst_.defaults =
 {
-	dst : null,
-	filePath : null,
-	onEach : null,
-	isSrc : false,
+  dst : null,
+  filePath : null,
+  onEach : null,
+  isSrc : false,
 }
 
 //
@@ -2328,7 +2330,6 @@ function all( filePath, onEach )
   _.routineIs( onEach );
 
   let it = Object.create( null );
-
   if( filePath === null || _.strIs( filePath ) )
   {
     it.value = filePath;
@@ -2354,7 +2355,7 @@ function all( filePath, onEach )
     for( let src in filePath )
     {
       let dst = filePath[ src ];
-
+      var r;
       if( _.arrayIs( dst ) )
       {
         dst = dst.slice();
@@ -2364,12 +2365,12 @@ function all( filePath, onEach )
           it.dst = dst[ d ];
           it.value = it.src;
           it.side = 'src';
-          var r = onEach( it.value, it );
+          r = onEach( it.value, it );
           if( !r )
           return false;
           it.value = it.dst;
           it.side = 'dst';
-          var r = onEach( it.value, it );
+          r = onEach( it.value, it );
           if( !r )
           return false;
         }
@@ -2380,12 +2381,12 @@ function all( filePath, onEach )
         it.dst = dst;
         it.value = it.src;
         it.side = 'src';
-        var r = onEach( it.value, it );
+        r = onEach( it.value, it );
         if( !r )
         return false;
         it.value = it.dst;
         it.side = 'dst';
-        var r = onEach( it.value, it );
+        r = onEach( it.value, it );
         if( !r )
         return false;
       }
@@ -2433,7 +2434,7 @@ function any( filePath, onEach )
     for( let src in filePath )
     {
       let dst = filePath[ src ];
-
+      var r;
       if( _.arrayIs( dst ) )
       {
         dst = dst.slice();
@@ -2443,12 +2444,12 @@ function any( filePath, onEach )
           it.dst = dst[ d ];
           it.value = it.src;
           it.side = 'src';
-          var r = onEach( it.value, it );
+          r = onEach( it.value, it );
           if( r )
           return true;
           it.value = it.dst;
           it.side = 'dst';
-          var r = onEach( it.value, it );
+          r = onEach( it.value, it );
           if( r )
           return true;
         }
@@ -2459,12 +2460,12 @@ function any( filePath, onEach )
         it.dst = dst;
         it.value = it.src;
         it.side = 'src';
-        var r = onEach( it.value, it );
+        r = onEach( it.value, it );
         if( r )
         return true;
         it.value = it.dst;
         it.side = 'dst';
-        var r = onEach( it.value, it );
+        r = onEach( it.value, it );
         if( r )
         return true;
       }
@@ -2546,7 +2547,7 @@ function isEmpty( src )
     return true;
     if( src.length === 1 )
     if( src[ 0 ] === null || src[ 0 ] === '' || src[ 0 ] === '.' ) // qqq zzz : refactor to remove dot case | Dmytro : uncomment routine above, please
-    return true;
+      return true;
     return false;
   }
 
@@ -2554,7 +2555,7 @@ function isEmpty( src )
   return true;
   if( _.mapKeys( src ).length === 1 )
   if( src[ '.' ] === null || src[ '.' ] === '' || src[ '' ] === null || src[ '' ] === '' ) // qqq zzz : refactor to remove dot | Dmytro : uncomment routine above, please
-  return true;
+    return true;
 
   return false;
 }
@@ -2634,13 +2635,13 @@ function _mapExtend( o )
 
     if( o.dstPath === null || o.dstPath === '' )
     if( _.mapIs( o.dstPathMap ) )
-    if( o.dstPathMap[ '' ] !== undefined && o.dstPathMap[ '' ] !== null && o.dstPathMap[ '' ] !== '' )
-    if( o.srcPathMap !== '' )
-    if( o.dstPath !== o.dstPathMap[ '' ] )
-    {
-      o.dstPath = o.dstPathMap[ '' ];
-      used = false;
-    }
+      if( o.dstPathMap[ '' ] !== undefined && o.dstPathMap[ '' ] !== null && o.dstPathMap[ '' ] !== '' )
+        if( o.srcPathMap !== '' )
+          if( o.dstPath !== o.dstPathMap[ '' ] )
+          {
+            o.dstPath = o.dstPathMap[ '' ];
+            used = false;
+          }
 
   }
 
@@ -2651,12 +2652,12 @@ function _mapExtend( o )
 
     if( o.dstPath === null || o.dstPath === '' )
     if( _.mapIs( o.srcPathMap ) )
-    if( o.srcPathMap[ '' ] !== undefined && o.srcPathMap[ '' ] !== null && o.srcPathMap[ '' ] !== '' )
-    if( o.dstPath !== o.srcPathMap[ '' ] )
-    {
-      o.dstPath = o.srcPathMap[ '' ];
-      used = false;
-    }
+      if( o.srcPathMap[ '' ] !== undefined && o.srcPathMap[ '' ] !== null && o.srcPathMap[ '' ] !== '' )
+        if( o.dstPath !== o.srcPathMap[ '' ] )
+        {
+          o.dstPath = o.srcPathMap[ '' ];
+          used = false;
+        }
 
   }
 
@@ -2689,7 +2690,7 @@ function _mapExtend( o )
       {
         dstPathMap[ p ] = o.dstPath;
         used = true;
-      });
+      } );
     }
     else if( _.mapIs( dstPathMap ) )
     {
@@ -2956,13 +2957,13 @@ function mapExtend( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.assertInRange( arguments, [ 1, 4 ] );
   return self._mapExtend
-  ({
+  ( {
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'replace',
     supplementing : 0,
-  });
+  } );
 }
 
 //
@@ -2977,13 +2978,13 @@ function mapSupplement( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.assertInRange( arguments, [ 1, 4 ] );
   return self._mapExtend
-  ({
+  ( {
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'replace',
     supplementing : 1,
-  });
+  } );
 }
 
 //
@@ -2993,13 +2994,13 @@ function mapAppend( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.assertInRange( arguments, [ 1, 4 ] );
   return self._mapExtend
-  ({
+  ( {
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'append',
     supplementing : 1,
-  });
+  } );
 }
 
 //
@@ -3009,13 +3010,13 @@ function mapPrepend( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.assert( arguments.length === 2 || arguments.length === 3 );
   return self._mapExtend
-  ({
+  ( {
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'prepend',
     supplementing : 1,
-  });
+  } );
 }
 
 //
@@ -3078,9 +3079,9 @@ function mapsPair( dstFilePath, srcFilePath )
     if( self.isEmpty( dstFilePath ) )
     srcFilePath = dstFilePath = null;
     else if( _.mapIs( dstFilePath ) )
-    srcFilePath = dstFilePath = self.mapExtend( null, dstFilePath, null );
+      srcFilePath = dstFilePath = self.mapExtend( null, dstFilePath, null );
     else
-    srcFilePath = dstFilePath = self.mapExtend( null, { '' : dstFilePath }, dstFilePath ); // yyy
+      srcFilePath = dstFilePath = self.mapExtend( null, { '' : dstFilePath }, dstFilePath ); // yyy
   }
   else
   {
@@ -3112,9 +3113,9 @@ function mapsPair( dstFilePath, srcFilePath )
       let srcFilteredPath2 = srcPath2.filter( ( e ) => !_.boolLike( e ) && e !== null );
       _.assert
       (
-        srcFilteredPath1.length === 0 || srcFilteredPath2.length === 0 ||
-        self.isEmpty( srcFilteredPath1 ) || self.isEmpty( srcFilteredPath2 ) ||
-        _.arraySetIdentical( srcFilteredPath1, srcFilteredPath2 ),
+        srcFilteredPath1.length === 0 || srcFilteredPath2.length === 0
+        || self.isEmpty( srcFilteredPath1 ) || self.isEmpty( srcFilteredPath2 )
+        || _.arraySetIdentical( srcFilteredPath1, srcFilteredPath2 ),
         () => 'Source paths are inconsistent ' + _.toStr( srcFilteredPath1 ) + ' ' + _.toStr( srcFilteredPath2 )
       );
     }
@@ -3131,7 +3132,8 @@ function mapsPair( dstFilePath, srcFilePath )
   //     _.assert
   //     (
   //       dstFilteredPath1.length === 0 || dstFilteredPath2.length === 0 ||
-  //       _.arraySetIdentical( dstFilteredPath1, [ '.' ] ) || _.arraySetIdentical( dstFilteredPath2, [ '.' ] ) || _.arraySetIdentical( dstFilteredPath1, dstFilteredPath2 ),
+  //       _.arraySetIdentical( dstFilteredPath1, [ '.' ] ) || _.arraySetIdentical( dstFilteredPath2, [ '.' ] )
+  //        || _.arraySetIdentical( dstFilteredPath1, dstFilteredPath2 ),
   //       () => 'Destination paths are inconsistent ' + _.toStr( dstFilteredPath1 ) + ' ' + _.toStr( dstFilteredPath2 )
   //     );
   //   }
@@ -3174,9 +3176,9 @@ function simplify( src )
     if( src.length === 0 )
     return '';
     else if( src.length === 1 )
-    return src[ 0 ]
+      return src[ 0 ]
     else
-    return src;
+      return src;
   }
 
   if( !_.mapIs( src ) )
@@ -3200,9 +3202,9 @@ function simplify( src )
     if( keys.length === 1 && keys[ 0 ] === '' )
     return '';
     else if( keys.length === 1 )
-    return keys[ 0 ]
+      return keys[ 0 ]
     else
-    return src;
+      return src;
   }
 
   // for( let k in src )
@@ -3241,9 +3243,9 @@ function simplifyDst( src )
     if( src.length === 0 )
     return '';
     else if( src.length === 1 )
-    return src[ 0 ]
+      return src[ 0 ]
     else
-    return src;
+      return src;
   }
 
   if( !_.mapIs( src ) )
@@ -3325,7 +3327,7 @@ function simplify_( dst, src )
   if( dst === null )
   dst = true;
   else if( dst === src )
-  dst = false;
+    dst = false;
 
   if( src === null )
   {
@@ -3354,7 +3356,7 @@ function simplify_( dst, src )
       if( result.length === 0 )
       result = '';
       else if( result.length === 1 )
-      result = result[ 0 ];
+        result = result[ 0 ];
     }
   }
   else if( _.mapIs( src ) )
@@ -3364,7 +3366,7 @@ function simplify_( dst, src )
       result = Object.create( null );
 
       for( let k in src )
-      result[ k ] = self.simplify( src[ k ] );
+        result[ k ] = self.simplify( src[ k ] );
 
       let keys = _.mapKeys( result );
       if( keys.length > 0 )
@@ -3379,7 +3381,7 @@ function simplify_( dst, src )
           if( keys.length === 1 && keys[ 0 ] === '' )
           result = '';
           else if( keys.length === 1 )
-          result = keys[ 0 ];
+            result = keys[ 0 ];
         }
       }
       else
@@ -3388,7 +3390,7 @@ function simplify_( dst, src )
     else
     {
       for( let k in src )
-      src[ k ] = self.simplify( src[ k ] );
+        src[ k ] = self.simplify( src[ k ] );
       result = src;
     }
   }
@@ -3412,27 +3414,27 @@ function simplify_( dst, src )
         if( _.arrayIs( result ) )
         _.arrayAppendArrayOnce( dst, result );
         else if( _.mapIs( result ) )
-        _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
+          _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
         else if( result !== '' )
-        _.arrayAppendOnce( dst, result );
+          _.arrayAppendOnce( dst, result );
       }
       else if( _.mapIs( dst ) )
       {
         if( _.mapIs( result ) )
         {
           for( let k in result )
-          dst[ k ] = result[ k ];
+            dst[ k ] = result[ k ];
         }
         else if( _.arrayIs( result ) )
         {
           for( let i in result )
-          dst[ result[ i ] ] = '';
+            dst[ result[ i ] ] = '';
         }
         else
-        dst[ result ] = '';
+          dst[ result ] = '';
       }
       else
-      dst = result;
+        dst = result;
 
       result = self.simplify_( dst, dst );
     }
@@ -3611,7 +3613,7 @@ function mapSrcFromDst( pathMap )
   let result = [];
 
   for( let k in pathMap )
-  result.push( k );
+    result.push( k );
 
   return result;
 }
@@ -3750,7 +3752,7 @@ function group( o )
         if( a < b )
         return -1;
         return +1;
-      });
+      } );
       // _.arrayAppendOnce( res, val );
     }
 
@@ -3777,7 +3779,7 @@ function mapGroupByDst( pathMap )
   let path = this;
   let result = Object.create( null );
 
-  _.assert( arguments.length == 1 );
+  _.assert( arguments.length === 1 );
   _.assert( _.mapIs( pathMap ) );
 
   /* */
@@ -3815,7 +3817,7 @@ function mapGroupByDst( pathMap )
     for( var dst2 in result )
     {
 
-      for( var src2 in result[ dst2 ]  )
+      for( var src2 in result[ dst2 ] )
       {
         if( path.isRelative( src ) ^ path.isRelative( src2 ) )
         {
@@ -3946,9 +3948,9 @@ function mapOptimize( filePath, basePath )
     if( !_.boolLike( dst ) )
     trunk.push( src );
     else if( dst )
-    include.push( src );
+      include.push( src );
     else
-    exclude.push( src );
+      exclude.push( src );
   }
 
   optimize( include );
@@ -3972,7 +3974,7 @@ function mapOptimize( filePath, basePath )
         if( !self.begins( path2, path1 ) )
         break;
 
-        if( filePath[ path1 ] != filePath[ path2 ] )
+        if( filePath[ path1 ] !== filePath[ path2 ] )
         continue;
 
         if( basePath )
@@ -4070,42 +4072,42 @@ let Routines =
   simplify_, /* !!! : use instead of simplify, simplifyInplace */
 
   /*
-    | routine                | makes new dst container                               | saves dst container                                     |
-    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-    | filterPairs_           | _.path.filterPairs_( null, filePath, onEach )         | _.path.filterPairs_( filePath, onEach )                 |
-    |                        |                                                       | _.path.filterPairs_( filePath, filePath, onEach )       |
-    |                        |                                                       | _.path.filterPairs_( dst, filePath, onEach )            |
-    |                        |                                                       | dst should be array or map                              |
-    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-    | filterSrcPairs_        | _.path.filterSrcPairs_( null, filePath, onEach )      | _.path.filterSrcPairs_( filePath, onEach )              |
-    |                        |                                                       | _.path.filterSrcPairs_( filePath, filePath, onEach )    |
-    |                        |                                                       | _.path.filterSrcPairs_( dst, filePath, onEach )         |
-    |                        |                                                       | dst should be array or map                              |
-    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-    | filterDstPairs_        | _.path.filterDstPairs_( null, filePath, onEach )      | _.path.filterDstPairs_( filePath, onEach )              |
-    |                        |                                                       | _.path.filterDstPairs_( filePath, filePath, onEach )    |
-    |                        |                                                       | _.path.filterDstPairs_( dst, filePath, onEach )         |
-    |                        |                                                       | dst should be array or map                              |
-    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-    | filter_                | _.path.filter_( null, filePath, onEach )              | _.path.filter_( filePath, onEach )                      |
-    |                        |                                                       | _.path.filter_( filePath, filePath, onEach )            |
-    |                        |                                                       | _.path.filter_( dst, filePath, onEach )                 |
-    |                        |                                                       | dst should be array or map                              |
-    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-    | filterSrc_             | _.path.filterSrc_( null, filePath, onEach )           | _.path.filterSrc_( filePath, onEach )                   |
-    |                        |                                                       | _.path.filterSrc_( filePath, filePath, onEach )         |
-    |                        |                                                       | _.path.filterSrc_( dst, filePath, onEach )              |
-    |                        |                                                       | dst should be array or map                              |
-    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-    | filterDst_             | _.path.filterDst_( null, filePath, onEach )           | _.path.filterDst_( filePath, onEach )                   |
-    |                        |                                                       | _.path.filterDst_( filePath, filePath, onEach )         |
-    |                        |                                                       | _.path.filterDst_( dst, filePath, onEach )              |
-    |                        |                                                       | dst should be array or map                              |
-    | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-    | simplify_              | _.path.simplify_( filePath )                          | _.path.simplify_( filePath, filePath )                  |
-    |                        | _.path.simplify_( null, filePath )                    | _.path.simplify_( dst, filePath )                       |
-    |                        | _.path.simplify_( dst, filePath )                     |                                                         |
-    |                        | if dst is not resizable                               |                                                         |
+    | routine         | makes new dst container                          | saves dst container                                 |
+    | ----------------| -------------------------------------------------| ----------------------------------------------------|
+    | filterPairs_    | _.path.filterPairs_( null, filePath, onEach )    | _.path.filterPairs_( filePath, onEach )             |
+    |                 |                                                  | _.path.filterPairs_( filePath, filePath, onEach )   |
+    |                 |                                                  | _.path.filterPairs_( dst, filePath, onEach )        |
+    |                 |                                                  | dst should be array or map                          |
+    | ----------------| -------------------------------------------------| ----------------------------------------------------|
+    | filterSrcPairs_ | _.path.filterSrcPairs_( null, filePath, onEach ) | _.path.filterSrcPairs_( filePath, onEach )          |
+    |                 |                                                  | _.path.filterSrcPairs_( filePath, filePath, onEach )|
+    |                 |                                                  | _.path.filterSrcPairs_( dst, filePath, onEach )     |
+    |                 |                                                  | dst should be array or map                          |
+    | ----------------| -------------------------------------------------| ----------------------------------------------------|
+    | filterDstPairs_ | _.path.filterDstPairs_( null, filePath, onEach ) | _.path.filterDstPairs_( filePath, onEach )          |
+    |                 |                                                  | _.path.filterDstPairs_( filePath, filePath, onEach )|
+    |                 |                                                  | _.path.filterDstPairs_( dst, filePath, onEach )     |
+    |                 |                                                  | dst should be array or map                          |
+    | ----------------| -------------------------------------------------| ----------------------------------------------------|
+    | filter_         | _.path.filter_( null, filePath, onEach )         | _.path.filter_( filePath, onEach )                  |
+    |                 |                                                  | _.path.filter_( filePath, filePath, onEach )        |
+    |                 |                                                  | _.path.filter_( dst, filePath, onEach )             |
+    |                 |                                                  | dst should be array or map                          |
+    | --------------- | -------------------------------------------------| ----------------------------------------------------|
+    | filterSrc_      | _.path.filterSrc_( null, filePath, onEach )      | _.path.filterSrc_( filePath, onEach )               |
+    |                 |                                                  | _.path.filterSrc_( filePath, filePath, onEach )     |
+    |                 |                                                  | _.path.filterSrc_( dst, filePath, onEach )          |
+    |                 |                                                  | dst should be array or map                          |
+    | --------------- | -------------------------------------------------| ----------------------------------------------------|
+    | filterDst_      | _.path.filterDst_( null, filePath, onEach )      | _.path.filterDst_( filePath, onEach )               |
+    |                 |                                                  | _.path.filterDst_( filePath, filePath, onEach )     |
+    |                 |                                                  | _.path.filterDst_( dst, filePath, onEach )          |
+    |                 |                                                  | dst should be array or map                          |
+    | --------------- | -------------------------------------------------| ----------------------------------------------------|
+    | simplify_       | _.path.simplify_( filePath )                     | _.path.simplify_( filePath, filePath )              |
+    |                 | _.path.simplify_( null, filePath )               | _.path.simplify_( dst, filePath )                   |
+    |                 | _.path.simplify_( dst, filePath )                |                                                     |
+    |                 | if dst is not resizable                          |                                                     |
 
   */
 
@@ -4126,4 +4128,4 @@ if( typeof module !== 'undefined' )
   require( './Glob.s' );
 }
 
-})();
+} )();
