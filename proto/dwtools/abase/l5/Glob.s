@@ -1,4 +1,5 @@
-( function _Glob_s_() {
+( function _Glob_s_()
+{
 
 'use strict';
 
@@ -30,13 +31,13 @@ function _vectorize( routine, select )
   _.assert( arguments.length === 1 || arguments.length === 2 );
   select = select || 1;
   return _.routineVectorize_functor
-  ({
-    routine : routine,
+  ( {
+    routine,
     vectorizingArray : 1,
     vectorizingMapVals : 0,
     vectorizingMapKeys : 1,
     select,
-  });
+  } );
 }
 
 // --
@@ -111,7 +112,7 @@ function globNormalize( glob )
 
 //
 
-let _globShortSplitToRegexpSource = (function functor()
+let _globShortSplitToRegexpSource = ( function functor()
 {
 
   let self;
@@ -124,8 +125,8 @@ let _globShortSplitToRegexpSource = (function functor()
     [ /\./g, handlePass ], /* dot */
     [ /\(\)|\0/g, handlePass ], /* empty parentheses or zero */
     [ /([!?*@+]*)\((.*?(?:\|(.*?))*)\)/g, handlePass ], /* parentheses */
-    [ /\*\*\*/g, handlePass, ], /* triple asterix */
-    [ /\*\*/g, handlePass, ], /* dual asterix */
+    [ /\*\*\*/g, handlePass ], /* triple asterix */
+    [ /\*\*/g, handlePass ], /* dual asterix */
     [ /(\*)/g, handlePass ], /* single asterix */
     [ /(\?)/g, handlePass ], /* question mark */
   ]
@@ -143,8 +144,8 @@ let _globShortSplitToRegexpSource = (function functor()
     [ /\(\)|\0/g, '' ], /* empty parentheses or zero */
     [ /([!?*@+]?)\((.*?(?:\|(.*?))*)\)/g, hanleParentheses ], /* parentheses */
     // [ /\/\*\*/g, '(?:\/.*)?', ], /* slash + dual asterix */
-    [ /\*\*\*/g, '(?:.*)', ], /* triple asterix */
-    [ /\*\*/g, '.*', ], /* dual asterix */
+    [ /\*\*\*/g, '(?:.*)' ], /* triple asterix */
+    [ /\*\*/g, '.*' ], /* dual asterix */
     [ /(\*)/g, '[^\/]*' ], /* single asterix */
     [ /(\?)/g, '[^\/]' ], /* question mark */
   ]
@@ -184,12 +185,12 @@ let _globShortSplitToRegexpSource = (function functor()
     let result = src;
 
     result = _.strReplaceAll
-    ({
+    ( {
       src : result,
       dictionary : _transformation0,
       joining : 1,
       onUnknown : handleUnknown,
-    });
+    } );
 
     result = _.strReplaceAll( result, _transformation1 );
     result = _.strReplaceAll( result, _transformation2 );
@@ -254,9 +255,9 @@ let _globShortSplitToRegexpSource = (function functor()
     if( multiplicator === '@' )
     result = result;
     else if( multiplicator === '!' )
-    result = '(?:(?!(?:' + result + '|\/' + ')).)*?';
+      result = '(?:(?!(?:' + result + '|\/' + ')).)*?';
     else
-    result += multiplicator;
+      result += multiplicator;
 
     /* (?:(?!(?:abc)).)+ */
 
@@ -265,7 +266,7 @@ let _globShortSplitToRegexpSource = (function functor()
 
   /* */
 
-})();
+} )();
 
 // --
 // short filter
@@ -329,14 +330,14 @@ function globShortFilter_body( o )
     {
       let val = o.onEvaluate( e, k, o.src );
       return regexp.test( val ) ? e : undefined;
-    });
+    } );
   }
   else
   {
     result = _.filter( o.src, ( e, k ) =>
     {
       return o.onEvaluate( e, k, o.src ) === o.selector ? e : undefined;
-    });
+    } );
   }
 
   return result;
@@ -369,11 +370,11 @@ function globShortFit_body( o )
 {
   let self = this;
   let result = self.globShortFilter
-  ({
+  ( {
     src : [ o.src ],
     selector : o.selector,
     onEvaluate : o.onEvaluate,
-  });
+  } );
   return result.length === 1;
 }
 
@@ -513,14 +514,14 @@ function globLongFilter_body( o )
       debugger;
       val = self.canonize( val );
       return regexp.test( val ) ? e : undefined;
-    });
+    } );
   }
   else
   {
     result = _.filter( o.src, ( e, k ) =>
     {
       return o.onEvaluate( e, k, o.src ) === o.selector ? e : undefined;
-    });
+    } );
   }
 
   return result;
@@ -553,11 +554,11 @@ function globLongFit_body( o )
 {
   let self = this;
   let result = self.globLongFilter
-  ({
+  ( {
     src : [ o.src ],
     selector : o.selector,
     onEvaluate : o.onEvaluate,
-  });
+  } );
   return result.length === 1;
 }
 
@@ -597,7 +598,7 @@ function _globAnalogs1( glob )
     continue;
 
     counter += 1;
-    split = _.strSplitFast({ src : split, delimeter : [ '***', '**' ], preservingEmpty : 0 });
+    split = _.strSplitFast( { src : split, delimeter : [ '***', '**' ], preservingEmpty : 0 } );
 
     for( let e = split.length-1 ; e >= 0 ; e-- )
     {
@@ -1001,15 +1002,15 @@ function _globFullToRegexpSingle( glob, stemPath, basePath, isPositive )
   }
 
   result.transient = '(?:(?:' + result.transient.join( ')|(?:' ) + '))';
-  result.transient = _.regexpsJoin([ '^', result.transient, '$' ]);
+  result.transient = _.regexpsJoin( [ '^', result.transient, '$' ] );
 
   result.actual = '(?:(?:' + result.actual.join( ')|(?:' ) + '))';
-  result.actual = _.regexpsJoin([ '^', result.actual, '$' ]);
+  result.actual = _.regexpsJoin( [ '^', result.actual, '$' ] );
 
   if( result.certainly.length )
   {
     result.certainly = '(?:(?:' + result.certainly.join( ')|(?:' ) + '))';
-    result.certainly = _.regexpsJoin([ '^', result.certainly, '$' ]);
+    result.certainly = _.regexpsJoin( [ '^', result.certainly, '$' ] );
   }
   else
   {
@@ -1133,15 +1134,15 @@ function pathMapToRegexps( o )
     if( filePath === '***' )
     filePath = '.';
     else if( filePath === '**' )
-    filePath = '.';
+      filePath = '.';
     else if( filePath === '/***' )
-    filePath = '/';
+      filePath = '/';
     else if( filePath === '/**' )
-    filePath = '/';
+      filePath = '/';
     else if( _.strEnds( filePath, '/***' ) )
-    filePath = _.strRemoveEnd( filePath, '/**' )
+      filePath = _.strRemoveEnd( filePath, '/**' )
     else
-    filePath = _.strRemoveEnd( filePath, '/**' )
+      filePath = _.strRemoveEnd( filePath, '/**' )
 
     return filePath;
   }
@@ -1189,7 +1190,7 @@ function pathMapToRegexps( o )
       if( _.boolLike( value ) )
       logicPathArray.push( shortGlob );
       else
-      shortPathArray.push([ shortGlob, fileGlob ]);
+      shortPathArray.push( [ shortGlob, fileGlob ] );
 
     }
 
@@ -1198,10 +1199,10 @@ function pathMapToRegexps( o )
       if( a[ 0 ] === b[ 0 ] )
       return 0;
       else if( a[ 0 ] < b[ 0 ] )
-      return -1;
+        return -1;
       else if( a[ 0 ] > b[ 0 ] )
-      return +1;
-    });
+        return +1;
+    } );
 
     for( let s1 = 0 ; s1 < shortPathArray.length ; s1++ )
     {
@@ -1237,7 +1238,7 @@ function pathMapToRegexps( o )
 
       _.assert( self.isGlob( fileGlob ) );
 
-      let isPositive = ( _.boolLike( value ) && !value ) ? false : true;
+      let isPositive = !( ( _.boolLike( value ) && !value ) );
       let regexps = regexpsFor( fileGlob, stemPath, basePath, isPositive );
 
       if( regexps.certainly )
@@ -1294,8 +1295,8 @@ function pathMapToRegexps( o )
     _.assert
     (
       unglobedBasePath[ filePath ] === undefined || unglobedBasePath[ filePath ] === basePath,
-      () => 'The same file path ' + _.strQuote( filePath ) + ' has several different base paths:' +
-      '\n - ' + _.strQuote( unglobedBasePath[ filePath ] ),
+      () => 'The same file path ' + _.strQuote( filePath ) + ' has several different base paths:'
+      + '\n - ' + _.strQuote( unglobedBasePath[ filePath ] ),
       '\n - ' + _.strQuote( basePath )
     );
     unglobedBasePath[ filePath ] = basePath;
@@ -1587,4 +1588,4 @@ _.mapSupplement( Self, Routines );
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
-})();
+} )();

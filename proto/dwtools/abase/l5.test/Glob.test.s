@@ -1,4 +1,5 @@
-( function _Glob_test_s_( ) {
+( function _Glob_test_s_()
+{
 
 'use strict';
 
@@ -255,7 +256,7 @@ function _globAnalogs2( test )
     var basePath = '/src1Terminal';
     var got = _.path._globAnalogs2( globPath, filePath, basePath );
     test.identical( got, expected );
-  });
+  } );
 
   test.shouldThrowErrorSync( () =>
   {
@@ -265,14 +266,14 @@ function _globAnalogs2( test )
     var basePath = '/a/d/e';
     var got = _.path._globAnalogs2( globPath, filePath, basePath );
     test.identical( got, expected );
-  });
+  } );
 
   test.shouldThrowErrorSync( () =>
   {
     var got = _.path._globAnalogs2( '/src1Terminal', '/', '/src1Terminal' )
     var expected = [ '.' ];
     test.identical( got, expected );
-  });
+  } );
 
 }
 
@@ -404,7 +405,7 @@ function globShortFilter( test )
   // (...)
   test.case = 'empty char glob for a group of digits';
   var expected = [ ];
-  var src = [ 1, 2, 3, 4, 5, 123, 456, 123456, 7890];
+  var src = [ 1, 2, 3, 4, 5, 123, 456, 123456, 7890 ];
   var got = path.globShortFilter( src, '+([a-g])' );
   test.identical( got, expected );
 
@@ -415,13 +416,13 @@ function globShortFilter( test )
   test.identical( got, expected );
 
   test.case = 'glob range group of chars and must have more trailing';
-  var expected = [ 'abc', 'abcd', 'abcde', 'abcdef', 'abcdefg', 'abcdefghij'];
+  var expected = [ 'abc', 'abcd', 'abcde', 'abcdef', 'abcdefg', 'abcdefghij' ];
   var src = [ 'abc', 'abcd', 'abcde', 'abcdef', 'abcdefg', 'a', 1, 'xyz', 'abcdefghij' ];
   var got = path.globShortFilter( src, '+([a-g])+([a-z])' );
   test.identical( got, expected );
 
   test.case = 'glob range group of chars and may have more trailing';
-  var expected = [ 'abc', 'abcd', 'abcde', 'abcdef', 'abcdefg', 'a', 'abcdefghij'];
+  var expected = [ 'abc', 'abcd', 'abcde', 'abcdef', 'abcdefg', 'a', 'abcdefghij' ];
   var src = [ 'abc', 'abcd', 'abcde', 'abcdef', 'abcdefg', 'a', 1, 'xyz', 'abcdefghij' ];
   var got = path.globShortFilter( src, '+([a-g])*([a-z])' );
   test.identical( got, expected );
@@ -855,4 +856,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
-})();
+} )();
