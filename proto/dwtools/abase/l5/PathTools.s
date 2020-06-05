@@ -169,11 +169,11 @@ function _filterPairs( o )
     {
       return elementWrite( result, elements, it.dst );
     }
-    else if( _.arrayIs( elements ) )
-    {
-      elements.forEach( ( src ) => elementWrite( result, src, it.dst ) );
-      return result;
-    }
+    // else if( _.arrayIs( elements ) )
+    // {
+    //   elements.forEach( ( src ) => elementWrite( result, src, it.dst ) );
+    //   return result;
+    // }
     else if( _.mapIs( elements ) )
     {
       for( let src in elements )
@@ -2743,7 +2743,7 @@ function _mapExtend( o )
 
   /* */
 
-  function dstPathMapExtend( dstPathMap, srcPathMap, dstPath, wasUsed )
+  function dstPathMapExtend( dstPathMap, srcPathMap, dstPath )
   {
     let used = false;
 
