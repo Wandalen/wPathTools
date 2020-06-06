@@ -748,7 +748,6 @@ function _filterPairsInplace( o )
   function elementsWrite( filePath, it, elements )
   {
 
-    /* qqq : cover and implement for filterPairs, please | Dmytro : covered and implemented in filterPairs */
     if( elements === it )
     {
       _.assert( it.dst === null || _.strIs( it.dst ) || _.arrayIs( it.dst ) || _.boolLike( it.dst ) );
@@ -1457,8 +1456,6 @@ function _filterInplace( o )
         if( r !== undefined )
         _.arrayAppendArraysOnce( o.filePath, r );
       }
-      /* qqq : should be no simplify in the routine | Dmytro : routine use not simplify */
-      // return self.simplifyInplace( filePath );
       return write( it, o.filePath );
     }
     else
@@ -1535,8 +1532,6 @@ function _filterInplace( o )
 
     }
 
-    /* qqq : should be no simplify in the routine | Dmytro : routine use not simplify */
-    //return self.simplifyInplace( filePath );
   }
   else _.assert( 0 );
 
@@ -1562,16 +1557,6 @@ function _filterInplace( o )
     dst = !!dst;
 
     _.assert( src === undefined || _.strIs( src ) || _.arrayIs( src ) );
-
-    /*
-      qqq : general rule of path element merging should be applied here
-      - only non-empty strings could be in an array
-      - have 3 groups of elements which cant coexist:
-      -- non-empty str
-      -- boolean-like,
-      -- empty ( null or empty string )
-      Dmytro : all requirements applied
-    */
 
     if( dst !== undefined )
     {
@@ -2486,11 +2471,6 @@ function none( filePath, onEach )
 
 //
 
-/*
-qqq : implement good tests for routine isEmpty
-Dmytro : implemented good tests. Uncomment refactored routine below, and uncomment test cases in test routine, please
-*/
-
 // function isEmpty( src )
 // {
 //   let self = this;
@@ -2551,7 +2531,7 @@ function isEmpty( src )
     return false;
   }
 
-  if( _.mapKeys( src ).length === 0 ) // Dmytro : missed
+  if( _.mapKeys( src ).length === 0 )
   return true;
   if( _.mapKeys( src ).length === 1 )
   if( src[ '.' ] === null || src[ '.' ] === '' || src[ '' ] === null || src[ '' ] === '' ) // qqq zzz : refactor to remove dot | Dmytro : uncomment routine above, please
@@ -2562,12 +2542,6 @@ function isEmpty( src )
 
 //
 
-/*
-qqq kos : extend tests for routine mapExtend
-qqq kos : cover single argument cases for routine mapExtend
-Dmytro : coverage is extended, added test cases with single arguments
-*/
-
 function _mapExtend( o )
 {
   let self = this;
@@ -2577,9 +2551,6 @@ function _mapExtend( o )
   _.assert( o.dstPathMap === null || _.strIs( o.dstPathMap ) || _.arrayIs( o.dstPathMap ) || _.mapIs( o.dstPathMap ) );
   _.assert( !_.mapIs( o.dstPath ) );
   _.assert( _.longHas( [ 'replace', 'append', 'prepend' ], o.mode ) );
-
-  // let removing = o.srcPathMap === '' || o.srcPathMap === null;
-  // removing = false; /* off the feature */
 
   o.dstPath = dstPathNormalize( o.dstPath );
   o.srcPathMap = srcPathMapNormalize( o.srcPathMap );
@@ -2597,9 +2568,6 @@ function _mapExtend( o )
 
   [ o.dstPathMap, used ] = dstPathMapNormalize( o.dstPathMap );
 
-  // if( removing )
-  // dstPathMapRemove( o.dstPathMap, o.dstPath );
-  // else
   if( o.srcPathMap !== '' )
   used = dstPathMapExtend( o.dstPathMap, o.srcPathMap, o.dstPath ) || used;
 
@@ -2697,9 +2665,6 @@ function _mapExtend( o )
       for( let f in dstPathMap )
       {
         let val = dstPathMap[ f ];
-        // qqq : boolean should not override null neither ''
-        //       check all cases
-        // Dmytro : routine not override null and '' if it contains in dstMap
         if( ( val === null || val === '' ) && !_.boolLike( o.dstPath ) )
         {
           dstPathMap[ f ] = o.dstPath;
@@ -2885,71 +2850,6 @@ _mapExtend.defaults =
   supplementing : 0,
 }
 
-/*
-
-qqq : implement _.path.mapSupplement, _.path.mapAppend, _.path.mapPrepend
-Dmytro : implemented and covered
-
-test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-var expected = { "" : "/dst" };
-var dstMap = { "" : "/dst2" };
-var srcMap = null;
-var dstPath = '/dst2';
-var got = path.mapExtend( dstMap, srcMap, dstPath );
-test.identical( got, expected );
-test.is( got === dstMap );
-
-test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-var expected = { "" : "/dst" };
-var dstMap = { "" : "/dst" };
-var srcMap = null;
-var dstPath = '/dst2';
-var got = path.mapSupplement( dstMap, srcMap, dstPath );
-test.identical( got, expected );
-test.is( got === dstMap );
-
-test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-var expected = { "" : [ "/dst", "/dst2" ] };
-var dstMap = { "" : "/dst" };
-var srcMap = null;
-var dstPath = '/dst2';
-var got = path.mapAppend( dstMap, srcMap, dstPath );
-test.identical( got, expected );
-test.is( got === dstMap );
-
-test.case = 'dstMap=map with empty src, srcMap=null, dstPath=str';
-var expected = { "" : [ "/dst2", "/dst" ] };
-var dstMap = { "" : "/dst" };
-var srcMap = null;
-var dstPath = '/dst2';
-var got = path.mapPrepend( dstMap, srcMap, dstPath );
-test.identical( got, expected );
-test.is( got === dstMap );
-
-//
-
-var dst = { '/dir' : '/file' }
-var src = { '/dir' : false }
-var got = _.path.mapAppend( dst, src )
-var expected = { '/dir' : false }
-
-var dst = { '/dir' : false }
-var src = { '/dir' : '/file' }
-var got = _.path.mapAppend( dst, src )
-var expected = { '/dir' : '/file' }
-
-var dst = { '/dir' : '/file' }
-var src = { '/dir' : true }
-var got = _.path.mapAppend( dst, src )
-var expected = { '/dir' : '/file' }
-
-var dst = { '/dir' : true }
-var src = { '/dir' : '/file' }
-var got = _.path.mapAppend( dst, src )
-var expected = { '/dir' : '/file' }
-
-*/
-
 //
 
 function mapExtend( dstPathMap, srcPathMap, dstPath )
@@ -2967,11 +2867,6 @@ function mapExtend( dstPathMap, srcPathMap, dstPath )
 }
 
 //
-
-/*
-qqq : cover routine mapSupplement
-Dmytro : covered. Test cases is identical to mapExtend.
-*/
 
 function mapSupplement( dstPathMap, srcPathMap, dstPath )
 {
@@ -3121,34 +3016,9 @@ function mapsPair( dstFilePath, srcFilePath )
     }
   }
 
-  // /* */
-  //
-  // function dstVerify()
-  // {
-  //   if( dstFilePath && srcFilePath && Config.debug )
-  //   {
-  //     let dstFilteredPath1 = dstPath1.filter( ( e ) => !_.boolLike( e ) && e !== null );
-  //     let dstFilteredPath2 = dstPath2.filter( ( e ) => !_.boolLike( e ) && e !== null );
-  //     _.assert
-  //     (
-  //       dstFilteredPath1.length === 0 || dstFilteredPath2.length === 0 ||
-  //       _.arraySetIdentical( dstFilteredPath1, [ '.' ] ) || _.arraySetIdentical( dstFilteredPath2, [ '.' ] )
-  //        || _.arraySetIdentical( dstFilteredPath1, dstFilteredPath2 ),
-  //       () => 'Destination paths are inconsistent ' + _.toStr( dstFilteredPath1 ) + ' ' + _.toStr( dstFilteredPath2 )
-  //     );
-  //   }
-  // }
-
 }
 
 //
-
-/*
-qqq : cover routine simplify
-qqq : make sure routine simplify does not clone input data if possible to avoid it
-Dmytro : covered. Routine create new container every time if src is array with duplicates,
-         empty strings, nulls.
-*/
 
 function simplify( src )
 {
@@ -3162,10 +3032,8 @@ function simplify( src )
   if( _.strIs( src ) )
   return src;
 
-  // qqq
   if( _.boolLike( src ) )
   return !!src;
-  // qqq : was missing!
 
   if( _.arrayIs( src ) )
   {
@@ -3207,11 +3075,6 @@ function simplify( src )
       return src;
   }
 
-  // for( let k in src )
-  // {
-  //   src[ k ] = self.simplify( src[ k ] );
-  // }
-
   return src;
 }
 
@@ -3229,10 +3092,8 @@ function simplifyDst( src )
   if( _.strIs( src ) )
   return src;
 
-  // qqq
   if( _.boolLike( src ) )
   return !!src;
-  // qqq : was missing!
 
   if( _.arrayIs( src ) )
   {
@@ -3268,12 +3129,6 @@ function simplifyDst( src )
 
 //
 
-/*
-qqq : cover routine simplifyInplace
-qqq : make sure routine simplifyInplace never clone input data if possible to avoid it
-Dmytro : covered, routine not create new container
-*/
-
 function simplifyInplace( src )
 {
   let self = this;
@@ -3283,10 +3138,8 @@ function simplifyInplace( src )
   if( src === null )
   return '';
 
-  // qqq
   if( _.boolLike( src ) )
   return !!src;
-  // qqq : was missing!
 
   if( _.strIs( src ) )
   return src;
@@ -3444,11 +3297,6 @@ function simplify_( dst, src )
 
 //
 
-/*
-qqq : make pathMap*From* optimal and add tests
-Dmytro : improved, added tests
-*/
-
 function mapDstFromSrc( pathMap )
 {
   _.assert( arguments.length === 1 );
@@ -3473,36 +3321,6 @@ function mapDstFromSrc( pathMap )
 
   return result;
 }
-
-// function mapDstFromSrc( pathMap )
-// {
-//   _.assert( arguments.length === 1 );
-//
-//   // if( _.strIs( pathMap ) )
-//   // return [ null ];
-//
-//   // if( !_.mapIs( pathMap ) ) // yyy
-//   // return [ null ];
-//
-//   if( !_.mapIs( pathMap ) )
-//   if( pathMap === null )
-//   return [];
-//   else
-//   return [ null ];
-//
-//   let result = _.mapVals( pathMap );
-//
-//   result = _.filter( result, ( e ) =>
-//   {
-//     if( _.arrayIs( e ) )
-//     return _.unrollFrom( e );
-//     return e;
-//   });
-//
-//   result = _.arrayAppendArrayOnce( null, result );
-//
-//   return result;
-// }
 
 //
 
@@ -3531,30 +3349,6 @@ function mapDstFromDst( pathMap )
   return result;
 }
 
-// function mapDstFromDst( pathMap )
-// {
-//   _.assert( arguments.length === 1 );
-//
-//   if( !_.mapIs( pathMap ) )
-//   if( pathMap === null )
-//   return [];
-//   else
-//   return _.arrayAsShallowing( pathMap );
-//
-//   let result = _.mapVals( pathMap );
-//
-//   result = _.filter( result, ( e ) =>
-//   {
-//     if( _.arrayIs( e ) )
-//     return _.unrollFrom( e );
-//     return e;
-//   });
-//
-//   result = _.arrayAppendArrayOnce( null, result );
-//
-//   return result;
-// }
-
 //
 
 function mapSrcFromSrc( pathMap )
@@ -3578,24 +3372,6 @@ function mapSrcFromSrc( pathMap )
   return result;
 }
 
-// function mapSrcFromSrc( pathMap )
-// {
-//   _.assert( arguments.length === 1 );
-//
-//   if( !_.mapIs( pathMap ) )
-//   if( pathMap === null )
-//   return [];
-//   else
-//   return _.arrayAsShallowing( pathMap );
-//
-//   // if( !_.mapIs( pathMap ) )
-//   // return _.arrayAs( pathMap );
-//
-//   pathMap = this.mapExtend( null, pathMap );
-//
-//   return _.mapKeys( pathMap )
-// }
-
 //
 
 function mapSrcFromDst( pathMap )
@@ -3618,46 +3394,9 @@ function mapSrcFromDst( pathMap )
   return result;
 }
 
-// function mapSrcFromDst( pathMap )
-// {
-//   _.assert( arguments.length === 1 );
-//
-//   if( !_.mapIs( pathMap ) )
-//   {
-//     if( pathMap === null )
-//     return [];
-//     else
-//     return [ null ];
-//   }
-//
-//   return _.mapKeys( pathMap );
-// }
-
 // --
 // etc
 // --
-
-// function areBasePathsEquivalent( basePath1, basePath2 )
-// {
-//   let path = this;
-//
-//   let filePath1 = path.mapSrcFromDst( basePath1 );
-//   let filePath2 = path.mapSrcFromDst( basePath2 );
-//
-//   basePath1 = path.mapDstFromDst( basePath1 );
-//   basePath2 = path.mapDstFromDst( basePath2 );
-//
-//   // if( filePath1.length > 0 && filePath2.length > 0 )
-//   // if( !_.entityIdentical( basePath1, basePath2 ) )
-//   // return false;
-//
-//   if( !_.entityIdentical( basePath1, basePath2 ) )
-//   return false;
-//
-//   return true;
-// }
-
-//
 
 function traceToRoot( filePath )
 {
@@ -3852,80 +3591,6 @@ function mapGroupByDst( pathMap )
 }
 
 //
-// function setOptimize( filePath )
-// {
-//   let self = this;
-//   let topToBottom = Object.create( null );
-//   let bottomToTops = Object.create( null );
-//
-//   if( !_.mapIs( filePath ) )
-//   filePath = self.mapExtend( null, filePath );
-//
-//   for( let src in filePath )
-//   {
-//     let dst = filePath[ src ];
-//     if( _.boolLike( dst ) )
-//     continue;
-//
-//     if( topToBottom[ src ] && _.strBegins( topToBottom[ src ], src ) )
-//     {
-//       revisit( src );
-//     }
-//     else
-//     {
-//       let topPaths = self.traceToRoot( src );
-//       if( !isVisited( topPaths, src ) )
-//       visit( topPaths, src );
-//     }
-//
-//   }
-//
-//   let result = Object.keys( bottomToTops );
-//   result.sort();
-//   return result;
-//
-//   /* */
-//
-//   function isVisited( topPaths, src )
-//   {
-//     for( let d = 0 ; d < topPaths.length ; d++ )
-//     {
-//       if( topToBottom[ topPaths[ d ] ] )
-//       return true;
-//     }
-//     return false;
-//   }
-//
-//   /* */
-//
-//   function visit( topPaths, src )
-//   {
-//     _.assert( bottomToTops[ src ] === undefined );
-//     bottomToTops[ src ] = topPaths;
-//     for( let d = 0 ; d < topPaths.length ; d++ )
-//     {
-//       let dir = topPaths[ d ];
-//       topToBottom[ dir ] = src;
-//     }
-//   }
-//
-//   /* */
-//
-//   function revisit( src )
-//   {
-//     let topPaths = bottomToTops[ topToBottom[ src ] ];
-//     delete bottomToTops[ topToBottom[ src ] ];
-//     bottomToTops[ src ] = topPaths
-//     for( let d = 0 ; d < topPaths.length ; d++ )
-//     {
-//       let dir = topPaths[ d ]
-//       topToBottom[ dir ] = src;
-//     }
-//   }
-//
-// }
-
-//
 
 function mapOptimize( filePath, basePath )
 {
@@ -4044,7 +3709,7 @@ let Routines =
   mapsPair,
 
   simplify,
-  simplifyDst, /* qqq : cover simplifyDst | Dmytro : covered */
+  simplifyDst,
   simplifyInplace,
 
   mapDstFromSrc,
@@ -4054,15 +3719,14 @@ let Routines =
 
   // etc
 
-  // areBasePathsEquivalent,
-  traceToRoot, /* qqq : add basic test coverage | Dmytro : basic test coverage added */
+  traceToRoot,
   group,
   mapGroupByDst,
-  // setOptimize, /* xxx : deprecate maybe? */
-  mapOptimize, /* qqq : cover please | Dmytro : coverage is extended */
+  mapOptimize,
 
   // to replace
 
+  /* xxx : replace */
   filterPairs_, /* !!! : use instead of filterPairs, filterPairsInplace */
   filterSrcPairs_, /* !!! : use instead of filterSrcPairs, filterSrcPairsInplace */
   filterDstPairs_, /* !!! : use instead of filterDstPairs, filterDstPairsInplace */
@@ -4108,7 +3772,6 @@ let Routines =
     |                 | _.path.simplify_( null, filePath )               | _.path.simplify_( dst, filePath )                   |
     |                 | _.path.simplify_( dst, filePath )                |                                                     |
     |                 | if dst is not resizable                          |                                                     |
-
   */
 
 }

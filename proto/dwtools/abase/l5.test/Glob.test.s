@@ -817,6 +817,66 @@ function globLongFit( test )
 
 }
 
+//
+
+function pathMapToRegexps( test )
+{
+
+  /* */
+
+  test.case = 'abc - abc';
+  let expMap =
+  {
+    'filePath' : { '/abc' : '' },
+    'basePath' : { '/abc' : '/abc' },
+    'fileGlobToPathMap' : { '/abc' : '/abc' },
+    'filePathToGlobMap' :
+    {
+      '/abc' : [ '/abc' ]
+    },
+    'unglobedFilePath' : { '/abc' : '' },
+    'optimizedUnglobedFilePath' : { '/abc' : '' },
+    'unglobedBasePath' : { '/abc' : '/abc' },
+    'optimizedUnglobedBasePath' : { '/abc' : '/abc' },
+    'redundantArray' : [],
+    'groupsMap' : { '/abc' : {} },
+    'optimalGroupsMap' : { '/abc' : {} },
+    'optimalRegexpsMap' :
+    {
+      '/abc' :
+      {
+        'certainlyHash' : new HashMap(),
+        'transient' : [],
+        'actualAny' : [],
+        'actualAny2' : [],
+        'actualAll' : [],
+        'actualNone' : [],
+      }
+    },
+    'regexpsMap' :
+    {
+      '/abc' :
+      {
+        'certainlyHash' : new HashMap(),
+        'transient' : [],
+        'actualAny' : [],
+        'actualAny2' : [],
+        'actualAll' : [],
+        'actualNone' : [],
+      }
+    }
+  }
+  let filePath = { '/abc' : true }
+  let basePath = { '/abc' : '/abc' }
+  let gotMap = _.path.pathMapToRegexps( filePath, basePath );
+  test.identical( gotMap, expMap );
+
+  /* */
+
+  debugger;
+
+}
+
 // --
 // declare
 // --
@@ -847,6 +907,10 @@ var Self =
     // long
 
     // globLongFit, /* xxx : uncomment later */
+
+    //
+
+    pathMapToRegexps,
 
   },
 
