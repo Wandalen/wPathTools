@@ -854,7 +854,7 @@ function _globRegexpSourceSplitsConcatWithSlashes( globRegexpSourceSplits )
     let isAsterisk = split === '[^\/]*'; /* * */
     let isRoot = split === '/'; /* / */
     let prefix = isPrevRoot ? '(?:)' : '(?:^|/)';
-    prefix = '(?:^|/)'; /* xxx : comment out later */
+    // prefix = '(?:^|/)'; /* xxx : comment out later */
 
     if( isTriAsterisk )
     {
