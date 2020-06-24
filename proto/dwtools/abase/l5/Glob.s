@@ -78,7 +78,7 @@ function _fromGlob( glob )
   if( i >= 0 )
   {
 
-    while( i >= 0 && glob[ i ] !== self._upStr )
+    while( i >= 0 && glob[ i ] !== self.upToken )
     i -= 1;
 
     if( i === -1 )
@@ -86,7 +86,7 @@ function _fromGlob( glob )
     else
     result = glob.substr( 0, i+1 );
 
-    result = self.detrail( result || self._hereStr );
+    result = self.detrail( result || self.hereToken );
 
   }
   else
@@ -167,7 +167,7 @@ let _globShortSplitToRegexpSource = ( function functor()
     _.assert( arguments.length === 1, 'Expects single argument' );
     _.assert
     (
-      !_.strHas( src, /(^|\/)\.\.(\/|$)/ ) || src === self._downStr,
+      !_.strHas( src, /(^|\/)\.\.(\/|$)/ ) || src === self.downToken,
       'glob should not has splits with ".." combined with something'
     );
 
@@ -577,7 +577,7 @@ function _globAnalogs1( glob )
 
   /* concat */
 
-  let result = splits.join( self._upStr );
+  let result = splits.join( self.upToken );
 
   /* remove duplicates of dual asterisks */
 
@@ -586,7 +586,7 @@ function _globAnalogs1( glob )
     let res = result[ r ];
     do
     {
-      res = res.replace( _removeExtraDoubleAsterisk, self._upStr );
+      res = res.replace( _removeExtraDoubleAsterisk, self.upToken );
       if( res === result[ r ] )
       break;
       else
@@ -629,7 +629,7 @@ function _globAnalogs2( glob, stemPath, basePath )
   let stemRelativeGlobDir = self.relative( globDir, stemPath );
   let globRelativeGlobDir = self.relative( globDir, glob );
 
-  if( globDirRelativeBase === self._hereStr && stemRelativeBase === self._hereStr )
+  if( globDirRelativeBase === self.hereToken && stemRelativeBase === self.hereToken )
   {
 
     result.push( self.dot( globRelativeBase ) );
@@ -662,11 +662,11 @@ function _globAnalogs2( glob, stemPath, basePath )
     let globSplits = globRelativeGlobDir
 
     let glob3 = globSplits;
-    if( globDirRelativeStem !== self._hereStr )
-    glob3 = globDirRelativeStem + self._upStr + glob3;
-    if( stemRelativeGlobDir === self._hereStr )
+    if( globDirRelativeStem !== self.hereToken )
+    glob3 = globDirRelativeStem + self.upToken + glob3;
+    if( stemRelativeGlobDir === self.hereToken )
     {
-      glob3 = globDirRelativeBase + self._upStr + glob3;
+      glob3 = globDirRelativeBase + self.upToken + glob3;
     }
     else
     {
@@ -678,7 +678,7 @@ function _globAnalogs2( glob, stemPath, basePath )
     {
       let glob4 = globSplits;
       if( !isDotted( globDirRelativeBase ) )
-      glob4 = globDirRelativeBase + self._upStr + glob4;
+      glob4 = globDirRelativeBase + self.upToken + glob4;
       _.arrayAppendOnce( result, self.dot( glob4 ) );
     }
 
@@ -689,7 +689,7 @@ function _globAnalogs2( glob, stemPath, basePath )
   function handleOutside()
   {
 
-    let globSplits = globRelativeGlobDir.split( self._upStr );
+    let globSplits = globRelativeGlobDir.split( self.upToken );
     let globRegexpSourceSplits = globSplits.map( ( e, i ) => self._globShortSplitToRegexpSource( e ) );
 
     if( handleCertain( globSplits, globRegexpSourceSplits ) )
@@ -709,17 +709,17 @@ function _globAnalogs2( glob, stemPath, basePath )
       {
 
         let splits3 = firstAny < globSplits.length ? globSplits.slice( firstAny ) : globSplits.slice( s+1 );
-        if( stemRelativeBase !== self._hereStr )
+        if( stemRelativeBase !== self.hereToken )
         {
           if( isDotted( stemRelativeGlobDir ) )
           _.arrayPrependArray( splits3, self.split( baseRelativeStem ) );
           _.arrayPrependArray( splits3, self.split( stemRelativeBase ) );
-          let glob3 = splits3.join( self._upStr );
+          let glob3 = splits3.join( self.upToken );
           _.arrayAppendOnce( result, self.dot( glob3 ) );
         }
 
         let splits4 = firstAny < globSplits.length ? globSplits.slice( firstAny ) : globSplits.slice( s+1 );
-        let glob4 = splits4.join( self._upStr );
+        let glob4 = splits4.join( self.upToken );
         _.arrayAppendOnce( result, self.dot( glob4 ) );
 
       }
@@ -763,14 +763,14 @@ function _globAnalogs2( glob, stemPath, basePath )
 
   function isDotted( filePath )
   {
-    return filePath === self._hereStr || filePath === self._downStr || _.strBegins( filePath, self._downStr );
+    return filePath === self.hereToken || filePath === self.downToken || _.strBegins( filePath, self.downToken );
   }
 
   /* */
 
   function isUp( filePath )
   {
-    return filePath === self._downStr || _.strBegins( filePath, self._downStr );
+    return filePath === self.downToken || _.strBegins( filePath, self.downToken );
   }
 
   /* */
@@ -803,7 +803,7 @@ function globHas( superGlob, subGlob )
     let superGlob = superGlobs[ sp ];
     let superPath = self.fromGlob( superGlob );
 
-    let superGlobSplits = superGlob.split( self._upStr );
+    let superGlobSplits = superGlob.split( self.upToken );
     let lastSplit = superGlobSplits[ superGlobSplits.length-1 ];
 
     if( lastSplit !== '**' && lastSplit !== '***' )
