@@ -3416,7 +3416,7 @@ function traceToRoot( filePath )
 
   if( self.isAbsolute( filePath ) )
   {
-    while( filePath !== self._rootStr )
+    while( filePath !== self.rootToken )
     {
       result.unshift( filePath );
       filePath = self.detrail( self.dir( filePath ) );
