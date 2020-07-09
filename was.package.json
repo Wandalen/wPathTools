@@ -11,8 +11,8 @@
     { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" },
     { "name" : "Dmytro Kryvoruchko", "email" : "dm.vict.kr@gmail.com" }
   ],
-  "main" : "proto/dwtools/abase/l5/PathTools.s",
-  "files" : [ "proto/dwtools/abase/l5", "proto/dwtools/Tools.s" ],
+  "main" : "proto/wtools/abase/l5/PathTools.s",
+  "files" : [ "proto/wtools/abase/l5", "proto/wtools/Tools.s" ],
   "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "gendoc" : "wdoc proto" },
   "repository" :
   {
