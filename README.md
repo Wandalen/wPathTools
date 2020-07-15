@@ -5,7 +5,7 @@ Collection of routines to operate paths in the reliable and consistent way. Path
 ### Try out
 ```
 npm install
-node sample/Sample.js
+node sample/Sample.s
 ```
 
 
