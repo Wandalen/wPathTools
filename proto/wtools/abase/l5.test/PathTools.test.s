@@ -45620,7 +45620,7 @@ function mapOptimize( test )
 let Self =
 {
 
-  name : 'Tools.base.l5.path.tools',
+  name : 'Tools.l5.path.tools',
   silencing : 1,
   routineTimeOut : 30000,
 

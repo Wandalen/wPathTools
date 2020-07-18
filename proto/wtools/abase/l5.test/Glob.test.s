@@ -884,7 +884,7 @@ function pathMapToRegexps( test )
 let Self =
 {
 
-  name : 'Tools.base.l3.path.Glob',
+  name : 'Tools.l3.path.Glob',
   silencing : 1,
 
   tests :
