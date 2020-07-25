@@ -9,8 +9,7 @@
 */
 
 /**
- * @file Path.s.
- */
+ *  */
 
 /**
  * @summary Collection of routines to operate paths reliably and consistently.

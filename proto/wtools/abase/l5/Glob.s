@@ -4,8 +4,7 @@
 'use strict';
 
 /**
- * @file Glob.s.
- */
+ *  */
 
 if( typeof module !== 'undefined' )
 {
