@@ -44436,6 +44436,19 @@ function traceToRoot( test )
   var src = './tmp/../tmp/../tmp/tmp/';
   var got = _.path.traceToRoot( src );
   test.identical( got, [ '.', 'tmp', 'tmp/tmp/' ] );
+
+  /* */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'upper that the root';
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/temp/a/../../..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/../..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '../aa/a' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '..' ) );
+
 }
 
 //
