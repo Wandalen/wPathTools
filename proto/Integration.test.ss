@@ -1,4 +1,4 @@
-( function _Integration_test_s_()
+( function _Integration_test_ss_()
 {
 
 'use strict';
@@ -29,23 +29,28 @@ function samples( test )
   let sampleDir = path.join( __dirname, '../sample' );
 
   let appStartNonThrowing = _.process.starter
-  ( {
+  ({
     currentPath : sampleDir,
     outputCollecting : 1,
     outputGraying : 1,
     throwingExitCode : 0,
     ready,
     mode : 'fork'
-  } )
+  })
 
   let found = fileProvider.filesFind
-  ( {
-    filePath : path.join( sampleDir, '**/*.(s|js|ss)' ),
+  ({
+    // filePath : path.join( sampleDir, '**/*.(s|js|ss)' ),
+    filePath : path.join( sampleDir, '**/*.(s|ss)' ),
     withStem : 0,
     withDirs : 0,
+    filter :
+    {
+      maskTransientDirectory : { excludeAny : [ /asset/, /out/ ] }
+    },
     mode : 'distinct',
     mandatory : 0,
-  } );
+  });
 
   /* */
 
@@ -62,37 +67,37 @@ function samples( test )
       test.case = found[ i ].relative;
       startTime = _.time.now();
       return null;
-    } )
+    })
 
     if( _.longHas( found[ i ].exts, 'throwing' ) )
     {
-      appStartNonThrowing( { execPath : found[ i ].relative } )
-      .then( ( got ) =>
+      appStartNonThrowing({ execPath : found[ i ].relative })
+      .then( ( op ) =>
       {
         console.log( _.time.spent( startTime ) );
         test.description = 'nonzero exit code';
-        test.notIdentical( got.exitCode, 0 );
+        test.notIdentical( op.exitCode, 0 );
         return null;
-      } )
+      })
     }
     else
     {
-      appStartNonThrowing( { execPath : found[ i ].relative } )
-      .then( ( got ) =>
+      appStartNonThrowing({ execPath : found[ i ].relative })
+      .then( ( op ) =>
       {
         console.log( _.time.spent( startTime ) );
         test.description = 'good exit code';
-        test.identical( got.exitCode, 0 );
-        if( got.exitCode )
+        test.identical( op.exitCode, 0 );
+        if( op.exitCode )
         return null;
         test.description = 'have no uncaught errors';
-        test.identical( _.strCount( got.output, 'ncaught' ), 0 );
-        test.identical( _.strCount( got.output, 'rror' ), 0 );
+        test.identical( _.strCount( op.output, 'ncaught' ), 0 );
+        test.identical( _.strCount( op.output, 'uncaught error' ), 0 );
         test.description = 'have some output';
-        test.ge( got.output.split( '\n' ).length, 1 );
-        test.ge( got.output.length, 3 );
+        test.ge( op.output.split( '\n' ).length, 1 );
+        test.ge( op.output.length, 3 );
         return null;
-      } )
+      })
     }
   }
 
@@ -101,25 +106,34 @@ function samples( test )
   return ready;
 }
 
+samples.rapidity = -1;
+
 //
 
 function eslint( test )
 {
+  let context = this;
   let rootPath = path.join( __dirname, '..' );
   let eslint = process.platform === 'win32' ? 'node_modules/eslint/bin/eslint' : 'node_modules/.bin/eslint';
   eslint = path.join( rootPath, eslint );
   let sampleDir = path.join( rootPath, 'sample' );
-
   let ready = new _.Consequence().take( null );
 
+  // if( _.process.insideTestContainer() && process.platform !== 'linux' )
+  // return test.is( true );
+
+  if( process.platform !== 'linux' )
+  return test.is( true );
+
   let start = _.process.starter
-  ( {
+  ({
     execPath : eslint,
     mode : 'fork',
     currentPath : rootPath,
-    args : [ '-c', '.eslintrc.yml', '--ext', '.js,.s,.ss', '--ignore-pattern', '*.html', '--ignore-pattern', '*.txt' ],
-    throwingExitCode : 0
-  } )
+    args : [ '-c', '.eslintrc.yml', '--ext', '.js,.s,.ss', '--ignore-pattern', '*.html', '--ignore-pattern', '*.txt', '--ignore-pattern', '*.png', '--ignore-pattern', '*.json', '--ignore-pattern', '*.yml', '--ignore-pattern', '*.yaml', '--quiet' ],
+    throwingExitCode : 0,
+    outputCollecting : 1,
+  })
 
   /**/
 
@@ -127,12 +141,14 @@ function eslint( test )
   {
     test.case = 'eslint proto';
     return start( 'proto/**' );
-  } )
-  .then( ( got ) =>
+  })
+  .then( ( op ) =>
   {
-    test.identical( got.exitCode, 0 );
+    test.identical( op.exitCode, 0 ); debugger;
+    if( op.output.length < 1000 )
+    logger.log( op.output );
     return null;
-  } )
+  })
 
   /**/
 
@@ -141,31 +157,37 @@ function eslint( test )
   {
     test.case = 'eslint samples';
     return start( 'sample/**' )
-    .then( ( got ) =>
+    .then( ( op ) =>
     {
-      test.identical( got.exitCode, 0 );
+      test.identical( op.exitCode, 0 );
+      if( op.output.length < 1000 )
+      logger.log( op.output );
       return null;
-    } )
-  } )
+    })
+  })
+
+  /**/
 
   return ready;
 }
+
+eslint.rapidity = -2;
 
 // --
 // declare
 // --
 
-var Self =
+let Self =
 {
 
   name : 'Integration',
-  routineTimeOut : 500000,
-  silencing : 1,
+  routineTimeOut : 1500000,
+  silencing : 0,
 
   tests :
   {
     samples,
-    eslint,
+    // eslint,
   },
 
 }
@@ -176,4 +198,4 @@ Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
 _global_.wTester.test( Self.name );
 
-} )();
+})();

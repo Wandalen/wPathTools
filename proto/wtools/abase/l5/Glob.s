@@ -4,13 +4,12 @@
 'use strict';
 
 /**
- * @file Glob.s.
- */
+ *  */
 
 if( typeof module !== 'undefined' )
 {
 
-  let _ = require( '../../../dwtools/Tools.s' );
+  let _ = require( '../../../wtools/Tools.s' );
   _.include( 'wPathBasic' );
   _.include( 'wStringsExtra' );
 
@@ -78,7 +77,7 @@ function _fromGlob( glob )
   if( i >= 0 )
   {
 
-    while( i >= 0 && glob[ i ] !== self._upStr )
+    while( i >= 0 && glob[ i ] !== self.upToken )
     i -= 1;
 
     if( i === -1 )
@@ -86,7 +85,7 @@ function _fromGlob( glob )
     else
     result = glob.substr( 0, i+1 );
 
-    result = self.detrail( result || self._hereStr );
+    result = self.detrail( result || self.hereToken );
 
   }
   else
@@ -167,7 +166,7 @@ let _globShortSplitToRegexpSource = ( function functor()
     _.assert( arguments.length === 1, 'Expects single argument' );
     _.assert
     (
-      !_.strHas( src, /(^|\/)\.\.(\/|$)/ ) || src === self._downStr,
+      !_.strHas( src, /(^|\/)\.\.(\/|$)/ ) || src === self.downToken,
       'glob should not has splits with ".." combined with something'
     );
 
@@ -387,54 +386,6 @@ globShortFit_body.defaults =
 
 let globShortFit = _.routineFromPreAndBody( globShortFilter_pre, globShortFit_body );
 
-// //
-//
-// function globShortFit_pre( routine, args )
-// {
-//   let result;
-//
-//   _.assert( arguments.length === 2 );
-//   _.assert( args.length === 1 || args.length === 2 );
-//
-//   let o = args[ 0 ];
-//   if( args[ 1 ] !== undefined )
-//   o = { src : args[ 0 ], selector : args[ 1 ] }
-//
-//   o = _.routineOptions( routine, o );
-//
-//   return o;
-// }
-//
-// //
-//
-// function globShortFit_body( o )
-// {
-//   let self = this;
-//   let result;
-//
-//   _.assert( arguments.length === 1 );
-//
-//   if( self.isGlob( o.selector ) )
-//   {
-//     let regexp = self.globShortSplitsToRegexps( o.selector );
-//     result = regexp.test( o.src );
-//   }
-//   else
-//   {
-//     result = o.src === o.selector;
-//   }
-//
-//   return result;
-// }
-//
-// globShortFit_body.defaults =
-// {
-//   src : null,
-//   selector : null,
-// }
-//
-// let globShortFit = _.routineFromPreAndBody( globShortFit_pre, globShortFit_body );
-
 // --
 // long
 // --
@@ -442,11 +393,6 @@ let globShortFit = _.routineFromPreAndBody( globShortFilter_pre, globShortFit_bo
 function _globLongSplitsToRegexps( glob )
 {
   let self = this;
-
-  // let stemPath = self.isRelative( glob ) ? '.' : '/';
-  // debugger;
-  // let result = self._globFullToRegexpSingle( glob, stemPath, stemPath, true );
-  // debugger;
 
   _.assert( arguments.length === 1 );
   _.assert( self.isGlob( glob ) );
@@ -630,7 +576,7 @@ function _globAnalogs1( glob )
 
   /* concat */
 
-  let result = splits.join( self._upStr );
+  let result = splits.join( self.upToken );
 
   /* remove duplicates of dual asterisks */
 
@@ -639,7 +585,7 @@ function _globAnalogs1( glob )
     let res = result[ r ];
     do
     {
-      res = res.replace( _removeExtraDoubleAsterisk, self._upStr );
+      res = res.replace( _removeExtraDoubleAsterisk, self.upToken );
       if( res === result[ r ] )
       break;
       else
@@ -682,7 +628,7 @@ function _globAnalogs2( glob, stemPath, basePath )
   let stemRelativeGlobDir = self.relative( globDir, stemPath );
   let globRelativeGlobDir = self.relative( globDir, glob );
 
-  if( globDirRelativeBase === self._hereStr && stemRelativeBase === self._hereStr )
+  if( globDirRelativeBase === self.hereToken && stemRelativeBase === self.hereToken )
   {
 
     result.push( self.dot( globRelativeBase ) );
@@ -715,11 +661,11 @@ function _globAnalogs2( glob, stemPath, basePath )
     let globSplits = globRelativeGlobDir
 
     let glob3 = globSplits;
-    if( globDirRelativeStem !== self._hereStr )
-    glob3 = globDirRelativeStem + self._upStr + glob3;
-    if( stemRelativeGlobDir === self._hereStr )
+    if( globDirRelativeStem !== self.hereToken )
+    glob3 = globDirRelativeStem + self.upToken + glob3;
+    if( stemRelativeGlobDir === self.hereToken )
     {
-      glob3 = globDirRelativeBase + self._upStr + glob3;
+      glob3 = globDirRelativeBase + self.upToken + glob3;
     }
     else
     {
@@ -731,7 +677,7 @@ function _globAnalogs2( glob, stemPath, basePath )
     {
       let glob4 = globSplits;
       if( !isDotted( globDirRelativeBase ) )
-      glob4 = globDirRelativeBase + self._upStr + glob4;
+      glob4 = globDirRelativeBase + self.upToken + glob4;
       _.arrayAppendOnce( result, self.dot( glob4 ) );
     }
 
@@ -742,7 +688,7 @@ function _globAnalogs2( glob, stemPath, basePath )
   function handleOutside()
   {
 
-    let globSplits = globRelativeGlobDir.split( self._upStr );
+    let globSplits = globRelativeGlobDir.split( self.upToken );
     let globRegexpSourceSplits = globSplits.map( ( e, i ) => self._globShortSplitToRegexpSource( e ) );
 
     if( handleCertain( globSplits, globRegexpSourceSplits ) )
@@ -762,17 +708,17 @@ function _globAnalogs2( glob, stemPath, basePath )
       {
 
         let splits3 = firstAny < globSplits.length ? globSplits.slice( firstAny ) : globSplits.slice( s+1 );
-        if( stemRelativeBase !== self._hereStr )
+        if( stemRelativeBase !== self.hereToken )
         {
           if( isDotted( stemRelativeGlobDir ) )
           _.arrayPrependArray( splits3, self.split( baseRelativeStem ) );
           _.arrayPrependArray( splits3, self.split( stemRelativeBase ) );
-          let glob3 = splits3.join( self._upStr );
+          let glob3 = splits3.join( self.upToken );
           _.arrayAppendOnce( result, self.dot( glob3 ) );
         }
 
         let splits4 = firstAny < globSplits.length ? globSplits.slice( firstAny ) : globSplits.slice( s+1 );
-        let glob4 = splits4.join( self._upStr );
+        let glob4 = splits4.join( self.upToken );
         _.arrayAppendOnce( result, self.dot( glob4 ) );
 
       }
@@ -816,14 +762,14 @@ function _globAnalogs2( glob, stemPath, basePath )
 
   function isDotted( filePath )
   {
-    return filePath === self._hereStr || filePath === self._downStr || _.strBegins( filePath, self._downStr );
+    return filePath === self.hereToken || filePath === self.downToken || _.strBegins( filePath, self.downToken );
   }
 
   /* */
 
   function isUp( filePath )
   {
-    return filePath === self._downStr || _.strBegins( filePath, self._downStr );
+    return filePath === self.downToken || _.strBegins( filePath, self.downToken );
   }
 
   /* */
@@ -856,7 +802,7 @@ function globHas( superGlob, subGlob )
     let superGlob = superGlobs[ sp ];
     let superPath = self.fromGlob( superGlob );
 
-    let superGlobSplits = superGlob.split( self._upStr );
+    let superGlobSplits = superGlob.split( self.upToken );
     let lastSplit = superGlobSplits[ superGlobSplits.length-1 ];
 
     if( lastSplit !== '**' && lastSplit !== '***' )
@@ -907,7 +853,7 @@ function _globRegexpSourceSplitsConcatWithSlashes( globRegexpSourceSplits )
     let isAsterisk = split === '[^\/]*'; /* * */
     let isRoot = split === '/'; /* / */
     let prefix = isPrevRoot ? '(?:)' : '(?:^|/)';
-    prefix = '(?:^|/)'; /* xxx : comment out later */
+    // prefix = '(?:^|/)'; /* xxx : comment out later */
 
     if( isTriAsterisk )
     {
@@ -960,7 +906,7 @@ function _globRegexpSourceSplitsJoinForDirectory( globRegexpSourceSplits )
 //
 
 let _globFullToRegexpSingleCache = Object.create( null ); /* xxx : try */
-function _globFullToRegexpSingle( glob, stemPath, basePath, isPositive )
+function _globFullToRegexpSingle( glob, stemPath, basePath )
 {
   let self = this;
 
@@ -968,7 +914,11 @@ function _globFullToRegexpSingle( glob, stemPath, basePath, isPositive )
   _.assert( _.strIs( stemPath ) && !self.isGlob( stemPath ) );
   _.assert( _.strIs( basePath ) && !self.isGlob( basePath ) );
   // _.assert( !!isPositive || isPositive === undefined ); /* xxx */
-  _.assert( arguments.length === 3 || arguments.length === 4 );
+  // _.assert( arguments.length === 3 || arguments.length === 4 );
+  _.assert( arguments.length === 3 );
+
+  // if( isPositive !== undefined && !isPositive )
+  // debugger;
 
   glob = self.join( stemPath, glob );
 
@@ -1106,25 +1056,6 @@ function pathMapToRegexps( o )
 
   /* */
 
-  // function globEndsWithTotal( filePath )
-  // {
-  //   if( filePath[ filePath.length-1 ] !== '*' )
-  //   return false;
-  //   if( !self.isGlob( filePath ) )
-  //   return true;
-  //   if( filePath === '**' )
-  //   return true
-  //   if( filePath === '/**' )
-  //   return true
-  //   if( filePath === '***' )
-  //   return true
-  //   if( filePath === '/***' )
-  //   return true
-  //   return _.strEnds( filePath, '/***' ) || _.strEnds( filePath, '/**' );
-  // }
-
-  /* */
-
   function globRemoveLastTotal( filePath )
   {
 
@@ -1173,8 +1104,6 @@ function pathMapToRegexps( o )
       fileGlob = self.globNormalize( fileGlob );
       fileGlob = self._globAnalogs1( fileGlob );
       _.assert( _.strIs( fileGlob ) );
-
-      // let endsWithTotal = globEndsWithTotal( fileGlob );
 
       if( !self.isGlob( fileGlob ) )
       fileGlob = self.join( fileGlob, '**' );
@@ -1238,8 +1167,9 @@ function pathMapToRegexps( o )
 
       _.assert( self.isGlob( fileGlob ) );
 
-      let isPositive = !( ( _.boolLike( value ) && !value ) );
-      let regexps = regexpsFor( fileGlob, stemPath, basePath, isPositive );
+      // let isPositive = !( ( _.boolLike( value ) && !value ) );
+      // let regexps = regexpsFor( fileGlob, stemPath, basePath, isPositive );
+      let regexps = regexpsFor( fileGlob, stemPath, basePath );
 
       if( regexps.certainly )
       r.certainlyHash.set( regexps.actual, regexps.certainly )
@@ -1268,38 +1198,40 @@ function pathMapToRegexps( o )
 
   /* */
 
-  function regexpsFor( fileGlob, stemPath, basePath, isPositive )
+  function regexpsFor( fileGlob, stemPath, basePath )
   {
-    let hash = fileGlob + '\0' + stemPath + '\0' + basePath + '\0' + isPositive;
+    let hash = fileGlob + '\0' + stemPath + '\0' + basePath;
     let result = regexps[ hash ];
     if( !result )
-    result = regexps[ hash ] = self._globFullToRegexpSingle( fileGlob, stemPath, basePath, isPositive );
+    result = regexps[ hash ] = self._globFullToRegexpSingle( fileGlob, stemPath, basePath );
     return result;
   }
 
   /* */
 
-  function unglobedBasePathAdd( unglobedBasePath, fileGlob, filePath, basePath )
+  // function unglobedBasePathAdd( unglobedBasePath, fileGlob, filePath, basePath )
+  function unglobedBasePathAdd( op )
   {
-    _.assert( _.strIs( fileGlob ) );
-    _.assert( filePath === undefined || _.strIs( filePath ) );
-    _.assert( _.strIs( basePath ) );
-    _.assert( o.filePath[ fileGlob ] !== undefined, () => 'No file path for file glob ' + g );
+    _.assert( _.strIs( op.fileGlob ) );
+    _.assert( op.filePath === undefined || _.strIs( op.filePath ) );
+    _.assert( _.strIs( op.basePath ) );
+    _.assert( o.filePath[ op.fileGlob ] !== undefined, () => 'No file path for file glob ' + g );
 
-    if( _.boolLike( o.filePath[ fileGlob ] ) )
+    if( _.boolLike( o.filePath[ op.fileGlob ] ) )
     return;
 
-    if( !filePath )
-    filePath = self.fromGlob( fileGlob );
+    if( !op.filePath )
+    op.filePath = self.fromGlob( op.fileGlob );
 
     _.assert
     (
-      unglobedBasePath[ filePath ] === undefined || unglobedBasePath[ filePath ] === basePath,
-      () => 'The same file path ' + _.strQuote( filePath ) + ' has several different base paths:'
-      + '\n - ' + _.strQuote( unglobedBasePath[ filePath ] ),
-      '\n - ' + _.strQuote( basePath )
+      op.unglobedBasePath[ op.filePath ] === undefined || op.unglobedBasePath[ op.filePath ] === op.basePath,
+      () => 'The same file path ' + _.strQuote( op.filePath ) + ' has several different base paths:'
+      + '\n - ' + _.strQuote( op.unglobedBasePath[ op.filePath ] ),
+      '\n - ' + _.strQuote( op.basePath )
     );
-    unglobedBasePath[ filePath ] = basePath;
+
+    op.unglobedBasePath[ op.filePath ] = op.basePath;
   }
 
   /* */
@@ -1355,9 +1287,9 @@ function pathMapToRegexps( o )
       }
 
       if( _.arrayIs( filePath ) )
-      filePath.forEach( ( filePath ) => unglobedBasePathAdd( unglobedBasePath, fileGlob, filePath, basePath ) );
+      filePath.forEach( ( filePath ) => unglobedBasePathAdd({ unglobedBasePath, fileGlob, filePath, basePath }) );
       else
-      unglobedBasePathAdd( unglobedBasePath, fileGlob, filePath, basePath )
+      unglobedBasePathAdd({ unglobedBasePath, fileGlob, filePath, basePath })
     }
 
     return unglobedBasePath;
@@ -1519,7 +1451,6 @@ pathMapToRegexps.defaults =
 {
   filePath : null,
   basePath : null,
-  samePathOnly : 1,
 }
 
 // --
@@ -1571,7 +1502,7 @@ let Routines =
   _globRegexpSourceSplitsJoinForTerminal,
   _globRegexpSourceSplitsJoinForDirectory,
   _globFullToRegexpSingle,
-  _globsFullToRegexps : _vectorize( _globFullToRegexpSingle, 4 ),
+  _globsFullToRegexps : _vectorize( _globFullToRegexpSingle, 3 ),
 
   globsFullToRegexps,
   pathMapToRegexps,

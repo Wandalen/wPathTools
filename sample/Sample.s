@@ -1,7 +1,7 @@
 
 if( typeof module !== 'undefined' )
 require( '..' /* 'wpathtools' */ );
-var _ = wTools;
+let _ = wTools;
 
 var dst = '/dst'
 var src = '/src'
