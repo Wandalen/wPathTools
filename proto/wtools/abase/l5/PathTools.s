@@ -3407,7 +3407,7 @@ function traceToRoot( filePath )
   filePath = self.normalize( filePath );
   // filePath = self.detrail( filePath ); // Dmytro : cycled loop if path is absolute and has form '/..'
   // filePath = self.canonize( filePath );
-  _.assert( !isOut() );
+  _.assert( !filePath.startsWith( '..' ) )
   /*
     should preserve trailing of the longest path
     /a/b/ -> [ '/', '/a', '/a/b/' ]
@@ -3415,6 +3415,7 @@ function traceToRoot( filePath )
 
   if( self.isAbsolute( filePath ) )
   {
+    _.assert( !isOut() );
     while( filePath !== self.rootToken )
     {
       result.unshift( filePath );
@@ -3443,22 +3444,16 @@ function traceToRoot( filePath )
   {
     if( filePath.includes( '..' ) )
     {
-      if( filePath.startsWith( '..' ) )
-      return true;
+      let up = filePath.match( /\.\./g );
+      let down = filePath.match( /\//g );
 
-      if( self.isAbsolute( filePath ) )
-      {
-        let up = filePath.match( /\.\./g );
-        let down = filePath.match( /\//g );
+      let upTimes = up ? up.length : 0;
+      let downTimes = down ? down.length - upTimes : 0;
 
-        let upTimes = up ? up.length : 0;
-        let downTimes = down ? down.length - upTimes : 0;
+      if( filePath.endsWith( '/' ) )
+      downTimes--;
 
-        if( filePath.endsWith( '/' ) )
-        downTimes--;
-
-        return upTimes > downTimes;
-      }
+      return upTimes > downTimes;
     }
 
     return false;
