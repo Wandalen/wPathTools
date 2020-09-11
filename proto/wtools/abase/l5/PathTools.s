@@ -3441,21 +3441,24 @@ function traceToRoot( filePath )
 
   function isOut()
   {
-    if( filePath.startsWith( '..' ) )
-    return true;
-
-    if( self.isAbsolute( filePath ) )
+    if( filePath.includes( '..' ) )
     {
-      let up = filePath.match( /\.\./g );
-      let down = filePath.match( /\//g );
+      if( filePath.startsWith( '..' ) )
+      return true;
 
-      let upTimes = up ? up.length : 0;
-      let downTimes = down ? down.length - upTimes : 0;
+      if( self.isAbsolute( filePath ) )
+      {
+        let up = filePath.match( /\.\./g );
+        let down = filePath.match( /\//g );
 
-      if( filePath.endsWith( '/' ) )
-      downTimes--;
+        let upTimes = up ? up.length : 0;
+        let downTimes = down ? down.length - upTimes : 0;
 
-      return upTimes > downTimes;
+        if( filePath.endsWith( '/' ) )
+        downTimes--;
+
+        return upTimes > downTimes;
+      }
     }
 
     return false;
