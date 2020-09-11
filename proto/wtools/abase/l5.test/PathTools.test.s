@@ -44444,8 +44444,11 @@ function traceToRoot( test )
 
   test.case = 'upper that the root';
   test.shouldThrowErrorSync( () => _.path.traceToRoot( '/temp/a/../../..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/temp/a/../../../' ) );
   test.shouldThrowErrorSync( () => _.path.traceToRoot( '/../..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/../../' ) );
   test.shouldThrowErrorSync( () => _.path.traceToRoot( '/..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/../' ) );
   test.shouldThrowErrorSync( () => _.path.traceToRoot( '../aa/a' ) );
   test.shouldThrowErrorSync( () => _.path.traceToRoot( '..' ) );
 

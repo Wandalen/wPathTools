@@ -3446,10 +3446,16 @@ function traceToRoot( filePath )
 
     if( self.isAbsolute( filePath ) )
     {
-      let arr = filePath.split( '/..' );
-      let len1 = arr.length - 1;
-      let len2 = arr.join( '' ).split( '/' ).length - 1;
-      return len1 > len2;
+      let up = filePath.match( /\.\./g );
+      let down = filePath.match( /\//g );
+
+      let upTimes = up ? up.length : 0;
+      let downTimes = down ? down.length - upTimes : 0;
+
+      if( filePath.endsWith( '/' ) )
+      downTimes--;
+
+      return upTimes > downTimes;
     }
 
     return false;
