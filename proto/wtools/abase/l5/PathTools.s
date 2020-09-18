@@ -3402,36 +3402,42 @@ function traceToRoot( filePath )
   let self = this;
   let result = [];
 
-  _.assert( arguments.length === 1 );
-
   filePath = self.normalize( filePath );
   // filePath = self.detrail( filePath ); // Dmytro : cycled loop if path is absolute and has form '/..'
   // filePath = self.canonize( filePath );
+
+  _.assert( arguments.length === 1 );
+  _.assert( self.isAbsolute( filePath ) );
 
   /*
     should preserve trailing of the longest path
     /a/b/ -> [ '/', '/a', '/a/b/' ]
   */
 
-  if( self.isAbsolute( filePath ) )
-  {
+  // if( self.isAbsolute( filePath ) )
+  // {
     while( filePath !== self.rootToken )
     {
+      _.assert
+      (
+           filePath !== self.rootToken + self.downToken
+        && !_.strBegins( filePath, self.rootToken + self.downToken + self.upToken )
+      );
       result.unshift( filePath );
-      filePath = self.detrail( self.dir( filePath ) );
+      filePath = self.detrail( self.dir( filePath ) ); /* qqq : not optimal! */
     }
-  }
-  else
-  {
-    filePath = self.undot( filePath );
-    if( !self.isDotted( filePath ) )
-    do
-    {
-      result.unshift( filePath );
-      filePath = self.detrail( self.dir( filePath ) );
-    }
-    while( !self.isDotted( filePath ) );
-  }
+  // }
+  // else
+  // {
+  //   filePath = self.undot( filePath );
+  //   if( !self.isDotted( filePath ) )
+  //   do
+  //   {
+  //     result.unshift( filePath );
+  //     filePath = self.detrail( self.dir( filePath ) ); /* qqq : not optimal! */
+  //   }
+  //   while( !self.isDotted( filePath ) );
+  // }
 
   result.unshift( filePath );
 
