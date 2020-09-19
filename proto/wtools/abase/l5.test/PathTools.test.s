@@ -44366,10 +44366,33 @@ function mapSrcFromDst( test )
 
 function traceToRoot( test )
 {
+
+  /* */
+
   test.case = 'root';
   var src = '/';
   var got = _.path.traceToRoot( src );
   test.identical( got, [ '/' ] );
+
+  test.case = 'not down';
+  var src = '/...';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/', '/...' ] );
+
+  test.case = 'not double down';
+  var src = '/.../...';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/', '/...', '/.../...' ] );
+
+  test.case = 'not down trailed';
+  var src = '/.../';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/', '/.../' ] );
+
+  test.case = 'not double down trailed';
+  var src = '/.../.../';
+  var got = _.path.traceToRoot( src );
+  test.identical( got, [ '/', '/...', '/.../.../' ] );
 
   /* */
 
@@ -44417,21 +44440,52 @@ function traceToRoot( test )
 
   /* */
 
-  test.case = 'one dir, dotted';
-  var src = './tmp/..';
-  var got = _.path.traceToRoot( src );
-  test.identical( got, [ '.' ] );
+  // test.case = 'one dir, dotted';
+  // var src = './tmp/..';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [ '.' ] );
+  //
+  // test.case = 'one dir, dotted, slash';
+  // var src = './tmp/../';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [ './' ] );
+  //
+  // test.case = 'six dirs, dotted';
+  // var src = './tmp/../tmp/../tmp/tmp';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [ '.', 'tmp', 'tmp/tmp' ] );
+  //
+  // test.case = 'six dirs, dotted, slash';
+  // var src = './tmp/../tmp/../tmp/tmp/';
+  // var got = _.path.traceToRoot( src );
+  // test.identical( got, [ '.', 'tmp', 'tmp/tmp/' ] );
 
-  test.case = 'one dir, dotted, slash';
-  var src = './tmp/../';
-  var got = _.path.traceToRoot( src );
-  test.identical( got, [ './' ] );
+  /* */
 
-  test.case = 'six dirs, dotted';
-  var src = './tmp/../tmp/../tmp/tmp';
-  var got = _.path.traceToRoot( src );
-  test.identical( got, [ '.', 'tmp', 'tmp/tmp' ] );
+  if( !Config.debug )
+  return;
 
+  test.case = 'throwing';
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/temp/a/../../..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/temp/a/../../../' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/../..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/../../' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '/../' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '../aa/a' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( '..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( './tmp/..' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( 'tmp' ) );
+  test.shouldThrowErrorSync( () => _.path.traceToRoot( 'tmp/tmp' ) );
+
+  // test.shouldThrowErrorSync( () => _.path.traceToRoot( '/...' ) );
+  // test.shouldThrowErrorSync( () => _.path.traceToRoot( '/.../...' ) );
+  // test.shouldThrowErrorSync( () => _.path.traceToRoot( '/.../' ) );
+  // test.shouldThrowErrorSync( () => _.path.traceToRoot( '/.../.../' ) );
+
+  /* */
+
+<<<<<<< HEAD
   test.case = 'six dirs, dotted, slash';
   var src = './tmp/../tmp/../tmp/tmp/';
   var got = _.path.traceToRoot( src );
@@ -44452,12 +44506,15 @@ function traceToRoot( test )
   test.shouldThrowErrorSync( () => _.path.traceToRoot( '../aa/a' ) );
   test.shouldThrowErrorSync( () => _.path.traceToRoot( '..' ) );
 
+=======
+>>>>>>> 1ca3b3c395ef26a6493672dc121faf68c8e17b93
 }
 
 //
 
 function group( test )
 {
+
   test.case = 'nothing common';
   var o =
   {
