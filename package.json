@@ -1,6 +1,6 @@
 {
   "name" : "wpathtools",
-  "version" : "0.5.123",
+  "version" : "0.5.124",
   "engine" : "node >= 10.0.0",
   "description" : "Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
   "license" : "MIT",
