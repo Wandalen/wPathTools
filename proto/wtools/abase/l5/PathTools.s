@@ -2854,7 +2854,7 @@ _mapExtend.defaults =
 function mapExtend( dstPathMap, srcPathMap, dstPath )
 {
   let self = this;
-  _.assertInRange( arguments, [ 1, 4 ] );
+  _.cinterval.assertInInterval( arguments, [ 1, 3 ] );
   return self._mapExtend
   ( {
     dstPathMap,
@@ -2870,7 +2870,7 @@ function mapExtend( dstPathMap, srcPathMap, dstPath )
 function mapSupplement( dstPathMap, srcPathMap, dstPath )
 {
   let self = this;
-  _.assertInRange( arguments, [ 1, 4 ] );
+  _.cinterval.assertInInterval( arguments, [ 1, 3 ] );
   return self._mapExtend
   ( {
     dstPathMap,
@@ -2886,7 +2886,7 @@ function mapSupplement( dstPathMap, srcPathMap, dstPath )
 function mapAppend( dstPathMap, srcPathMap, dstPath )
 {
   let self = this;
-  _.assertInRange( arguments, [ 1, 4 ] );
+  _.cinterval.assertInInterval( arguments, [ 1, 3 ] );
   return self._mapExtend
   ( {
     dstPathMap,
