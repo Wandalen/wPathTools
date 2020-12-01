@@ -3416,6 +3416,8 @@ function traceToRoot( filePath )
 
   // if( self.isAbsolute( filePath ) )
   // {
+  result.push( filePath );
+  filePath = self.detrail( filePath );
   while( filePath !== self.rootToken )
   {
     _.assert
@@ -3423,8 +3425,9 @@ function traceToRoot( filePath )
       filePath !== self.rootToken + self.downToken
       && !_.strBegins( filePath, self.rootToken + self.downToken + self.upToken )
     );
-    result.unshift( filePath );
-    filePath = self.detrail( self.dir( filePath ) ); /* qqq : not optimal! */
+    filePath = self.dir( filePath );
+    result.push( filePath );
+    // filePath = self.detrail( dir ); /* qqq : not optimal! | aaa : Moved outside of the loop. */
   }
   // }
   // else
@@ -3439,30 +3442,9 @@ function traceToRoot( filePath )
   //   while( !self.isDotted( filePath ) );
   // }
 
-  result.unshift( filePath );
+  // result.push( filePath );
 
-  return result;
-
-  /* - */
-
-  // function isOut()
-  // {
-  //   if( filePath.includes( '..' ) )
-  //   {
-  //     let up = filePath.match( /\.\./g );
-  //     let down = filePath.match( /\//g );
-
-  //     let upTimes = up ? up.length : 0;
-  //     let downTimes = down ? down.length - upTimes : 0;
-
-  //     if( filePath.endsWith( '/' ) )
-  //     downTimes--;
-
-  //     return upTimes > downTimes;
-  //   }
-
-  //   return false;
-  // }
+  return result.reverse();
 }
 
 //
