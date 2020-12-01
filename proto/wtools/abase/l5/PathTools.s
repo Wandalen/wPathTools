@@ -4,7 +4,7 @@
 'use strict';
 
 /**
- * Collection of routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.
+ * Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.
   @module Tools/base/Path
 */
 
@@ -12,7 +12,7 @@
  *  */
 
 /**
- * @summary Collection of routines to operate paths reliably and consistently.
+ * @summary Collection of cross-platform routines to operate paths reliably and consistently.
  * @namespace wTools.path
  * @module Tools/PathTools
  */
@@ -938,7 +938,7 @@ function filterDstPairsInplace( filePath, onEach )
 
 //
 
-function filterPairs_pre( routine, args )
+function filterPairs_head( routine, args )
 {
   _.assert( arguments.length === 2 );
 
@@ -1358,7 +1358,7 @@ filterPairs_body.defaults =
 
 //
 
-var filterPairs_ = _.routineFromPreAndBody( filterPairs_pre, filterPairs_body );
+var filterPairs_ = _.routineUnite( filterPairs_head, filterPairs_body );
 filterPairs_.defaults =
 {
   dst : null,
@@ -1369,7 +1369,7 @@ filterPairs_.defaults =
 
 //
 
-var filterSrcPairs_ = _.routineFromPreAndBody( filterPairs_pre, filterPairs_body );
+var filterSrcPairs_ = _.routineUnite( filterPairs_head, filterPairs_body );
 filterSrcPairs_.defaults =
 {
   dst : null,
@@ -1380,7 +1380,7 @@ filterSrcPairs_.defaults =
 
 //
 
-var filterDstPairs_ = _.routineFromPreAndBody( filterPairs_pre, filterPairs_body );
+var filterDstPairs_ = _.routineUnite( filterPairs_head, filterPairs_body );
 filterDstPairs_.defaults =
 {
   dst : null,
@@ -1967,7 +1967,7 @@ function filterDst( filePath, onEach )
 
 //
 
-function filter_pre( routine, args )
+function filter_head( routine, args )
 {
   _.assert( arguments.length === 2 );
 
@@ -2273,7 +2273,7 @@ filter_body.defaults =
 
 //
 
-let filter_ = _.routineFromPreAndBody( filter_pre, filter_body );
+let filter_ = _.routineUnite( filter_head, filter_body );
 filter_.defaults =
 {
   dst : null,
@@ -2284,7 +2284,7 @@ filter_.defaults =
 
 //
 
-let filterSrc_ = _.routineFromPreAndBody( filter_pre, filter_body );
+let filterSrc_ = _.routineUnite( filter_head, filter_body );
 filterSrc_.defaults =
 {
   dst : null,
@@ -2295,7 +2295,7 @@ filterSrc_.defaults =
 
 //
 
-let filterDst_ = _.routineFromPreAndBody( filter_pre, filter_body );
+let filterDst_ = _.routineUnite( filter_head, filter_body );
 filterDst_.defaults =
 {
   dst : null,
@@ -2854,7 +2854,7 @@ _mapExtend.defaults =
 function mapExtend( dstPathMap, srcPathMap, dstPath )
 {
   let self = this;
-  _.assertInRange( arguments, [ 1, 4 ] );
+  _.cinterval.assertInInterval( arguments, [ 1, 3 ] );
   return self._mapExtend
   ( {
     dstPathMap,
@@ -2870,7 +2870,7 @@ function mapExtend( dstPathMap, srcPathMap, dstPath )
 function mapSupplement( dstPathMap, srcPathMap, dstPath )
 {
   let self = this;
-  _.assertInRange( arguments, [ 1, 4 ] );
+  _.cinterval.assertInInterval( arguments, [ 1, 3 ] );
   return self._mapExtend
   ( {
     dstPathMap,
@@ -2886,7 +2886,7 @@ function mapSupplement( dstPathMap, srcPathMap, dstPath )
 function mapAppend( dstPathMap, srcPathMap, dstPath )
 {
   let self = this;
-  _.assertInRange( arguments, [ 1, 4 ] );
+  _.cinterval.assertInInterval( arguments, [ 1, 3 ] );
   return self._mapExtend
   ( {
     dstPathMap,

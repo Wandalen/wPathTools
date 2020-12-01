@@ -288,7 +288,7 @@ function globShortSplitToRegexp( glob )
 
 //
 
-function globShortFilter_pre( routine, args )
+function globShortFilter_head( routine, args )
 {
   let result;
 
@@ -349,15 +349,15 @@ globShortFilter_body.defaults =
   onEvaluate : null,
 }
 
-let globShortFilter = _.routineFromPreAndBody( globShortFilter_pre, globShortFilter_body );
+let globShortFilter = _.routineUnite( globShortFilter_head, globShortFilter_body );
 
-let globShortFilterVals = _.routineFromPreAndBody( globShortFilter_pre, globShortFilter_body );
+let globShortFilterVals = _.routineUnite( globShortFilter_head, globShortFilter_body );
 globShortFilterVals.defaults.onEvaluate = function byVal( e, k, src )
 {
   return e;
 }
 
-let globShortFilterKeys = _.routineFromPreAndBody( globShortFilter_pre, globShortFilter_body );
+let globShortFilterKeys = _.routineUnite( globShortFilter_head, globShortFilter_body );
 globShortFilterKeys.defaults.onEvaluate = function byKey( e, k, src )
 {
   return _.arrayIs( src ) ? e : k;
@@ -384,7 +384,7 @@ globShortFit_body.defaults =
   onEvaluate : null,
 }
 
-let globShortFit = _.routineFromPreAndBody( globShortFilter_pre, globShortFit_body );
+let globShortFit = _.routineUnite( globShortFilter_head, globShortFit_body );
 
 // --
 // long
@@ -417,7 +417,7 @@ function _globLongSplitsToRegexps( glob )
 
 //
 
-function globLongFilter_pre( routine, args )
+function globLongFilter_head( routine, args )
 {
   let result;
 
@@ -480,15 +480,15 @@ globLongFilter_body.defaults =
   onEvaluate : null,
 }
 
-let globLongFilter = _.routineFromPreAndBody( globLongFilter_pre, globLongFilter_body );
+let globLongFilter = _.routineUnite( globLongFilter_head, globLongFilter_body );
 
-let globLongFilterVals = _.routineFromPreAndBody( globLongFilter_pre, globLongFilter_body );
+let globLongFilterVals = _.routineUnite( globLongFilter_head, globLongFilter_body );
 globLongFilterVals.defaults.onEvaluate = function byVal( e, k, src )
 {
   return e;
 }
 
-let globLongFilterKeys = _.routineFromPreAndBody( globLongFilter_pre, globLongFilter_body );
+let globLongFilterKeys = _.routineUnite( globLongFilter_head, globLongFilter_body );
 globLongFilterKeys.defaults.onEvaluate = function byKey( e, k, src )
 {
   return _.arrayIs( src ) ? e : k;
@@ -515,7 +515,7 @@ globLongFit_body.defaults =
   onEvaluate : null,
 }
 
-let globLongFit = _.routineFromPreAndBody( globLongFilter_pre, globLongFit_body );
+let globLongFit = _.routineUnite( globLongFilter_head, globLongFit_body );
 
 // --
 // full filter

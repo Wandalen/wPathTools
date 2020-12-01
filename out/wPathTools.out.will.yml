@@ -3,11 +3,11 @@ root:
   - wPathTools.out
 consistency:
   wPathTools.out.will.yml: &ref_0
-    hash: c4f5d5da0369db66550564e57317bfc8
-    size: 38977
+    hash: 9a0f3efde0636db9351d936081fc1926
+    size: 39008
   ../.ex.will.yml: &ref_1
-    hash: 77dd5afe8dc7222a997b54c08de9b34c
-    size: 1959
+    hash: 4c461e8fe2bccfa6c4c5bcdfc40df7e8
+    size: 1974
   ../.im.will.yml: &ref_2
     hash: 8c28047cf5e5bd2f9a20bd391737c3f9
     size: 5194
@@ -17,9 +17,9 @@ module:
       name: wPathTools
       org: noorg
       description: >-
-        Collection of routines to operate paths reliably and consistently.
-        Implements routines for manipulating paths maps and globing. Extends
-        module ModuleForTesting2.
+        Collection of cross-platform routines to operate paths reliably and
+        consistently. Implements routines for manipulating paths maps and
+        globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
       interpreters:
@@ -828,9 +828,9 @@ module:
       name: wPathTools
       org: noorg
       description: >-
-        Collection of routines to operate paths reliably and consistently.
-        Implements routines for manipulating paths maps and globing. Extends
-        module ModuleForTesting2.
+        Collection of cross-platform routines to operate paths reliably and
+        consistently. Implements routines for manipulating paths maps and
+        globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
       interpreters:
@@ -1525,8 +1525,8 @@ module:
           - 'build::npm'
     consistency:
       ../.ex.will.yml:
-        hash: 77dd5afe8dc7222a997b54c08de9b34c
-        size: 1959
+        hash: 4c461e8fe2bccfa6c4c5bcdfc40df7e8
+        size: 1974
       ../.im.will.yml:
         hash: 8c28047cf5e5bd2f9a20bd391737c3f9
         size: 5194
