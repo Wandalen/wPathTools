@@ -325,7 +325,7 @@ function globShortFilter_body( o )
   if( self.isGlob( o.selector ) )
   {
     let regexp = self.globShortSplitsToRegexps( o.selector );
-    result = _.filter( o.src, ( e, k ) =>
+    result = _.filter_( null, o.src, ( e, k ) =>
     {
       let val = o.onEvaluate( e, k, o.src );
       return regexp.test( val ) ? e : undefined;
@@ -333,7 +333,7 @@ function globShortFilter_body( o )
   }
   else
   {
-    result = _.filter( o.src, ( e, k ) =>
+    result = _.filter_( null, o.src, ( e, k ) =>
     {
       return o.onEvaluate( e, k, o.src ) === o.selector ? e : undefined;
     } );
@@ -452,7 +452,7 @@ function globLongFilter_body( o )
   {
     let selectorIsAbsolute = self.isAbsolute( o.selector );
     let regexp = self._globLongSplitsToRegexps( o.selector );
-    result = _.filter( o.src, ( e, k ) =>
+    result = _.filter_( null, o.src, ( e, k ) =>
     {
       let val = o.onEvaluate( e, k, o.src );
       // if( selectorIsAbsolute && !self.isAbsolute( val ) )
@@ -464,7 +464,7 @@ function globLongFilter_body( o )
   }
   else
   {
-    result = _.filter( o.src, ( e, k ) =>
+    result = _.filter_( null, o.src, ( e, k ) =>
     {
       return o.onEvaluate( e, k, o.src ) === o.selector ? e : undefined;
     } );
