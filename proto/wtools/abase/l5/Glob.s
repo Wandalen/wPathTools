@@ -319,8 +319,8 @@ function globShortFilter_body( o )
 
   _.assert( arguments.length === 1 );
 
-  if( _global_.debugger )
-  debugger;
+  // if( _global_.debugger )
+  // debugger;
 
   if( self.isGlob( o.selector ) )
   {
@@ -406,10 +406,8 @@ function _globLongSplitsToRegexps( glob )
   if( splits[ 0 ] === '' )
   splits[ 0 ] = '/';
   let sources = splits.map( ( e, i ) => self._globShortSplitToRegexpSource( e ) );
-  debugger;
   result = self._globRegexpSourceSplitsJoinForTerminal( sources );
 
-  debugger;
   result = new RegExp( '^(?:' + result + ')$' );
 
   return result;
@@ -457,7 +455,7 @@ function globLongFilter_body( o )
       let val = o.onEvaluate( e, k, o.src );
       // if( selectorIsAbsolute && !self.isAbsolute( val ) )
       // return undefined;
-      debugger;
+      // debugger;
       val = self.canonize( val );
       return regexp.test( val ) ? e : undefined;
     } );
