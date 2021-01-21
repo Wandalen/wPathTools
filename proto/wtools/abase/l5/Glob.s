@@ -569,7 +569,8 @@ function _globAnalogs1( glob )
 
       split[ e ] = element;
     }
-    _.longButInplace( splits, [ s, s+1 ], split );
+    _.longBut_( splits, splits, [ s, s ], split );
+    // _.longButInplace( splits, [ s, s+1 ], split );
   }
 
   /* concat */
