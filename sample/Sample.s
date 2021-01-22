@@ -1,6 +1,6 @@
 
 if( typeof module !== 'undefined' )
-require( '..' /* 'wpathtools' */ );
+require( 'wpathtools' );
 let _ = wTools;
 
 var dst = '/dst'

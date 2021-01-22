@@ -23,7 +23,7 @@
   {
     "url" : "https://github.com/Wandalen/wPathTools/issues"
   },
-  "dependencies" : { "wTools" : "", "wpathbasic" : "", "warraysorted" : "" },
-  "devDependencies" : { "wFiles" : "", "wTesting" : "", "eslint" : "7.1.0" },
+  "dependencies" : { "wTools" : "", "wpathbasic" : "", "wstringsextra" : "", "warraysorted" : "" },
+  "devDependencies" : { "wFiles" : "", "wTesting" : "", "eslint" : "7.1.0", "wpathtools" : "file:." },
   "keywords" : [ "wTools", "wPath", "path", "url", "uri", "path", "file" ]
 }
