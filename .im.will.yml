@@ -7,6 +7,9 @@ submodule :
   wModuleForTesting2 :
     path : npm:///wpathbasic
     enabled : 0 # submodule
+  wStringsExtra :
+    path : npm:///wstringsextra
+    enabled : 0 # submodule
   wArraySorted :
     path : npm:///warraysorted
     enabled : 0 # submodule
