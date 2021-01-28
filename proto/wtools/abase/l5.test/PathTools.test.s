@@ -37,7 +37,7 @@ function filterPairs( test )
 
   test.case = 'double';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected =
   {
@@ -49,7 +49,7 @@ function filterPairs( test )
 
   test.case = 'srcOnly1';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/path';
   test.identical( src, src2 );
@@ -57,7 +57,7 @@ function filterPairs( test )
 
   test.case = 'srcOnly2';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = { '/path' : obj };
   test.identical( src, src2 );
@@ -65,14 +65,14 @@ function filterPairs( test )
 
   test.case = 'srcOnly3';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = { '/path' : obj };
   test.identical( src, src2 );
   test.identical( got, expected );
 
   var src = { '/path' : [ obj, obj ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = { '/path' : obj };
   test.identical( src, src2 );
@@ -80,7 +80,7 @@ function filterPairs( test )
 
   test.case = 'dstOnly';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = { '' : obj };
   test.identical( src, src2 );
@@ -88,7 +88,7 @@ function filterPairs( test )
 
   test.case = 'dstDouble';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = { '' : obj };
   test.identical( src, src2 );
@@ -96,7 +96,7 @@ function filterPairs( test )
 
   test.case = 'nothing1';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -104,7 +104,7 @@ function filterPairs( test )
 
   test.case = 'nothing2';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -112,7 +112,7 @@ function filterPairs( test )
 
   test.case = 'nothing3';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -120,7 +120,7 @@ function filterPairs( test )
 
   test.case = 'nothing4';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -134,7 +134,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -142,7 +142,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -150,7 +150,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b' ];
   test.identical( src, src2 );
@@ -158,7 +158,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -166,7 +166,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b' ];
   test.identical( src, src2 );
@@ -174,7 +174,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b', '/cd/cd', '/cd' ];
   test.identical( src, src2 );
@@ -182,7 +182,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b', '/c/d/c/d', '/c/d' ];
   test.identical( src, src2 );
@@ -190,7 +190,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -198,7 +198,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = { '/src/src' : 'dstdst', '/src' : 'dst' };
   test.identical( src, src2 );
@@ -206,7 +206,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = [ '/src/src', '/src' ];
   test.identical( src, src2 );
@@ -214,7 +214,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = { '/src/src' : 'dstdst', '/src' : 'dst' };
   test.identical( src, src2 );
@@ -222,7 +222,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = { '/src/src' : [ 'dst1dst1', 'dst2dst2' ], '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -230,7 +230,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = { '' : [ 'dstdst', 'dst' ] };
   test.identical( src, src2 );
@@ -238,7 +238,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -246,7 +246,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = { '' : [ 'dstdst', 'dst' ] };
   test.identical( src, src2 );
@@ -254,7 +254,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = { '' : [ 'dst1dst1', 'dst1', 'dst2dst2', 'dst2' ] };
   test.identical( src, src2 );
@@ -262,7 +262,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected = [ '/src/src', '/src' ];
   test.identical( src, src2 );
@@ -276,7 +276,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -284,7 +284,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -292,7 +292,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -300,7 +300,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -308,7 +308,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -316,7 +316,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -324,7 +324,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -332,7 +332,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -340,7 +340,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -348,7 +348,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -356,7 +356,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -364,7 +364,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -372,7 +372,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -380,7 +380,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -388,7 +388,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -396,7 +396,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -404,7 +404,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -418,7 +418,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -426,7 +426,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -434,7 +434,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -442,7 +442,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -450,7 +450,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -458,7 +458,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -466,7 +466,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -474,7 +474,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -482,7 +482,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -490,7 +490,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -498,7 +498,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -506,7 +506,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -514,7 +514,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -522,7 +522,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -530,7 +530,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -538,7 +538,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -546,7 +546,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -560,7 +560,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -568,7 +568,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -576,7 +576,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -584,7 +584,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -592,7 +592,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -600,7 +600,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -608,7 +608,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -616,7 +616,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -624,7 +624,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -632,7 +632,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -640,7 +640,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -648,7 +648,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -656,7 +656,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -664,7 +664,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -672,7 +672,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -680,7 +680,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -688,7 +688,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -702,7 +702,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -710,7 +710,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -718,7 +718,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -726,7 +726,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -734,7 +734,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -742,7 +742,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -750,7 +750,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -758,7 +758,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -766,7 +766,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -774,7 +774,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -782,7 +782,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -790,7 +790,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -798,7 +798,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -806,7 +806,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -814,7 +814,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -822,7 +822,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -830,7 +830,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -844,7 +844,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -852,7 +852,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -860,7 +860,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -868,7 +868,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -876,7 +876,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -884,7 +884,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -892,7 +892,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -900,7 +900,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -908,7 +908,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -916,7 +916,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -924,7 +924,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -932,7 +932,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -940,7 +940,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -948,7 +948,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -956,7 +956,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -964,7 +964,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -972,7 +972,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -1232,7 +1232,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1240,7 +1240,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1248,7 +1248,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1256,7 +1256,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1264,7 +1264,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1272,7 +1272,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1280,7 +1280,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1288,7 +1288,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1296,7 +1296,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1304,7 +1304,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1312,7 +1312,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1320,7 +1320,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1328,7 +1328,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1336,7 +1336,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1344,7 +1344,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1352,7 +1352,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1360,7 +1360,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -1374,7 +1374,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1382,7 +1382,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1390,7 +1390,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1398,7 +1398,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1406,7 +1406,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1414,7 +1414,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1422,7 +1422,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1430,7 +1430,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1438,7 +1438,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1446,7 +1446,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1454,7 +1454,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1462,7 +1462,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1470,7 +1470,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1478,7 +1478,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1486,7 +1486,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1494,7 +1494,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1502,7 +1502,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -1516,7 +1516,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1524,7 +1524,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1532,7 +1532,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1540,7 +1540,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1548,7 +1548,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1556,7 +1556,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1564,7 +1564,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1572,7 +1572,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1580,7 +1580,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1588,7 +1588,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1596,7 +1596,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1604,7 +1604,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1612,7 +1612,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1620,7 +1620,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1628,7 +1628,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1636,7 +1636,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1644,7 +1644,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -1658,7 +1658,7 @@ function filterPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1666,7 +1666,7 @@ function filterPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1674,7 +1674,7 @@ function filterPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1682,7 +1682,7 @@ function filterPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1690,7 +1690,7 @@ function filterPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1698,7 +1698,7 @@ function filterPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1706,7 +1706,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1714,7 +1714,7 @@ function filterPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1722,7 +1722,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1730,7 +1730,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1738,7 +1738,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1746,7 +1746,7 @@ function filterPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1754,7 +1754,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1762,7 +1762,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1770,7 +1770,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1778,7 +1778,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1786,7 +1786,7 @@ function filterPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1812,7 +1812,7 @@ function filterPairs( test )
   };
 
   test.case = 'double';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, double );
   var expected =
   {
@@ -1837,14 +1837,14 @@ function filterPairs( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly1 );
   var expected = [ '/true', '/false', '/string1', '/string2', '/null', 'null', '/array', '/emptyArray' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly2 );
   var expected =
   {
@@ -1861,7 +1861,7 @@ function filterPairs( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly3';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, srcOnly3 );
   var expected =
   {
@@ -1878,7 +1878,7 @@ function filterPairs( test )
   test.identical( got, expected );
 
   test.case = 'dstOnly';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstOnly );
   var expected =
   {
@@ -1888,7 +1888,7 @@ function filterPairs( test )
   test.identical( got, expected );
 
   test.case = 'dstDouble';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, dstDouble );
   var expected =
   {
@@ -1898,28 +1898,28 @@ function filterPairs( test )
   test.identical( got, expected );
 
   test.case = 'nothing1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing3'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing4'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -1931,7 +1931,7 @@ function filterPairs( test )
 
   test.case = 'duplicates';
   var src = { '' : [ '/b', null, null, '', '', '/b' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, duplicates );
   var expected = { '' : '/b' };
   test.identical( src, src2 );
@@ -1939,7 +1939,7 @@ function filterPairs( test )
 
   test.case = 'duplicates, onEach return array';
   var src = [ '/b', null, null, '', '', '/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, ( it ) => [ it.src, '/file', '/dst', '', null, '', null, undefined ] );
   var expected = [ '/b', '/file', '/dst' ];
   test.identical( src, src2 );
@@ -1947,7 +1947,7 @@ function filterPairs( test )
 
   test.case = 'duplicates, onEach return array';
   var src = { 'dir' : [ '/b', null, null, '', '', '/b' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, ( it ) => [ it.src, '/file', '/dst', '', null, '', null, undefined ] );
   var expected = { 'dir' : '/b', '/file' : '/b', '/dst' : '/b' };
   test.identical( src, src2 );
@@ -1955,7 +1955,7 @@ function filterPairs( test )
 
   test.case = 'duplicates';
   var src = { '/dir1' : '/dir2', '/a' : '/b' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b' };
   test.identical( src, src2 );
@@ -1963,7 +1963,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in map';
   var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '' : '/file', '/null' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '' : '/file', '/null' : '' };
   test.identical( src, src2 );
@@ -1971,7 +1971,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in map';
   var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( src, src2 );
@@ -1979,7 +1979,7 @@ function filterPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/dir1', '/a', null, '', '', null ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, duplicates2 );
   var expected = [ '1', '/dir1', '/dir11', '/a', '/a1' ];
   test.identical( src, src2 );
@@ -1989,7 +1989,7 @@ function filterPairs( test )
 
   test.case = 'boolean values';
   var src = [ '/dir1', true, null, '', '', null ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, duplicates2 );
   var expected = [ '1', '/dir1', '/dir11' ];
   test.identical( src, src2 );
@@ -1997,7 +1997,7 @@ function filterPairs( test )
 
   test.case = 'boolean values';
   var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, duplicates );
   var expected = { '/dir' : true, '/a' : '', '/b' : '' };
   test.identical( src, src2 );
@@ -2005,7 +2005,7 @@ function filterPairs( test )
 
   test.case = 'boolean in callback, bool and null values in src';
   var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, bool );
   var expected = { '/dir' : true, '/a' : true, '/b' : true, '' : true };
   test.identical( src, src2 );
@@ -2013,7 +2013,7 @@ function filterPairs( test )
 
   test.case = 'boolean in callback, str value in src';
   var src = { '/dir' : false, '/a' : '/dir', '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, bool );
   var expected = { '/dir' : true, '/a' : true, '/b' : true, '' : true };
   test.identical( src, src2 );
@@ -2021,7 +2021,7 @@ function filterPairs( test )
 
   test.case = 'boolean in callback, bool and null values in src';
   var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, bool2 );
   var expected = { '/dir' : false, '/a' : false, '/b' : false, '' : false };
   test.identical( src, src2 );
@@ -2029,7 +2029,7 @@ function filterPairs( test )
 
   test.case = 'boolean in callback, str value in src';
   var src = { '/dir' : false, '/a' : '/dir', '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, bool2 );
   var expected = { '/dir' : false, '/a' : false, '/b' : false, '' : false };
   test.identical( src, src2 );
@@ -2037,7 +2037,7 @@ function filterPairs( test )
 
   test.case = 'boolean in callback, str value in src';
   var src = { '/dir' : true, '/a' : false, '/b' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs( src, uncorrectMap );
   var expected = { '/dir' : '/dst', '/a' : false, '/b' : false };
   test.identical( src, src2 );
@@ -2211,7 +2211,7 @@ function filterDstPairs( test )
 
   test.case = 'double';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected =
   {
@@ -2223,7 +2223,7 @@ function filterDstPairs( test )
 
   test.case = 'srcOnly1';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '/path';
   test.identical( src, src2 );
@@ -2231,7 +2231,7 @@ function filterDstPairs( test )
 
   test.case = 'srcOnly2';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = { '/path' : obj };
   test.identical( src, src2 );
@@ -2239,14 +2239,14 @@ function filterDstPairs( test )
 
   test.case = 'srcOnly3';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = { '/path' : obj };
   test.identical( src, src2 );
   test.identical( got, expected );
 
   var src = { '/path' : [ obj, obj ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = { '/path' : obj };
   test.identical( src, src2 );
@@ -2254,7 +2254,7 @@ function filterDstPairs( test )
 
   test.case = 'dstOnly';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = { '' : obj };
   test.identical( src, src2 );
@@ -2262,7 +2262,7 @@ function filterDstPairs( test )
 
   test.case = 'dstDouble';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = { '' : obj };
   test.identical( src, src2 );
@@ -2270,7 +2270,7 @@ function filterDstPairs( test )
 
   test.case = 'nothing1';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2278,7 +2278,7 @@ function filterDstPairs( test )
 
   test.case = 'nothing2';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2286,7 +2286,7 @@ function filterDstPairs( test )
 
   test.case = 'nothing3';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2294,7 +2294,7 @@ function filterDstPairs( test )
 
   test.case = 'nothing4';
   var src = { '/path' : obj };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -2308,7 +2308,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -2316,7 +2316,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -2324,7 +2324,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b' ];
   test.identical( src, src2 );
@@ -2332,7 +2332,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -2340,7 +2340,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b' ];
   test.identical( src, src2 );
@@ -2348,7 +2348,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b', '/cd/cd', '/cd' ];
   test.identical( src, src2 );
@@ -2356,7 +2356,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = [ '/a/b/a/b', '/a/b', '/c/d/c/d', '/c/d' ];
   test.identical( src, src2 );
@@ -2364,7 +2364,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -2372,7 +2372,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = { '/src/src' : 'dstdst', '/src' : 'dst' };
   test.identical( src, src2 );
@@ -2380,7 +2380,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = [ '/src/src', '/src' ];
   test.identical( src, src2 );
@@ -2388,7 +2388,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = { '/src/src' : 'dstdst', '/src' : 'dst' };
   test.identical( src, src2 );
@@ -2396,7 +2396,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = { '/src/src' : [ 'dst1dst1', 'dst2dst2' ], '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -2404,7 +2404,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = { '' : [ 'dstdst', 'dst' ] };
   test.identical( src, src2 );
@@ -2412,7 +2412,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -2420,7 +2420,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = { '' : [ 'dstdst', 'dst' ] };
   test.identical( src, src2 );
@@ -2428,7 +2428,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = { '' : [ 'dst1dst1', 'dst1', 'dst2dst2', 'dst2' ] };
   test.identical( src, src2 );
@@ -2436,7 +2436,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected = [ '/src/src', '/src' ];
   test.identical( src, src2 );
@@ -2450,7 +2450,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2458,7 +2458,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2466,7 +2466,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2474,7 +2474,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2482,7 +2482,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2490,7 +2490,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2498,7 +2498,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2506,7 +2506,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2514,7 +2514,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2522,7 +2522,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2530,7 +2530,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2538,7 +2538,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2546,7 +2546,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2554,7 +2554,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2562,7 +2562,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2570,7 +2570,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -2578,7 +2578,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2592,7 +2592,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2600,7 +2600,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2608,7 +2608,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2616,7 +2616,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2624,7 +2624,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2632,7 +2632,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2640,7 +2640,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2648,7 +2648,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2656,7 +2656,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -2664,7 +2664,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2672,7 +2672,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -2680,7 +2680,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -2688,7 +2688,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2696,7 +2696,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2704,7 +2704,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2712,7 +2712,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -2720,7 +2720,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2734,7 +2734,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2742,7 +2742,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2750,7 +2750,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2758,7 +2758,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2766,7 +2766,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2774,7 +2774,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2782,7 +2782,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2790,7 +2790,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2798,7 +2798,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -2806,7 +2806,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2814,7 +2814,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -2822,7 +2822,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -2830,7 +2830,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2838,7 +2838,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2846,7 +2846,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2854,7 +2854,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '';
   test.identical( src, src2 );
@@ -2862,7 +2862,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -2876,7 +2876,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -2884,7 +2884,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -2892,7 +2892,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -2900,7 +2900,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -2908,7 +2908,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -2916,7 +2916,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -2924,7 +2924,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -2932,7 +2932,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -2940,7 +2940,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -2948,7 +2948,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -2956,7 +2956,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -2964,7 +2964,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -2972,7 +2972,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -2980,7 +2980,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -2988,7 +2988,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -2996,7 +2996,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -3004,7 +3004,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected = '';
   test.identical( src, src2 );
@@ -3018,7 +3018,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -3026,7 +3026,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -3034,7 +3034,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -3042,7 +3042,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -3050,7 +3050,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -3058,7 +3058,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -3066,7 +3066,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -3074,7 +3074,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -3082,7 +3082,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -3090,7 +3090,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -3098,7 +3098,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -3106,7 +3106,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -3114,7 +3114,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -3122,7 +3122,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -3130,7 +3130,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -3138,7 +3138,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -3146,7 +3146,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected = '';
   test.identical( src, src2 );
@@ -3406,7 +3406,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3414,7 +3414,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3422,7 +3422,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3430,7 +3430,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3438,7 +3438,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3446,7 +3446,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3454,7 +3454,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3462,7 +3462,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3470,7 +3470,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3478,7 +3478,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3486,7 +3486,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3494,7 +3494,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3502,7 +3502,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3510,7 +3510,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3518,7 +3518,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3526,7 +3526,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3534,7 +3534,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -3548,7 +3548,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3556,7 +3556,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3564,7 +3564,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3572,7 +3572,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3580,7 +3580,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3588,7 +3588,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3596,7 +3596,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3604,7 +3604,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3612,7 +3612,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3620,7 +3620,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3628,7 +3628,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3636,7 +3636,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3644,7 +3644,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3652,7 +3652,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3660,7 +3660,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3668,7 +3668,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3676,7 +3676,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -3690,7 +3690,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3698,7 +3698,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3706,7 +3706,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3714,7 +3714,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3722,7 +3722,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3730,7 +3730,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3738,7 +3738,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3746,7 +3746,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3754,7 +3754,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3762,7 +3762,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3770,7 +3770,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3778,7 +3778,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3786,7 +3786,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3794,7 +3794,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3802,7 +3802,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3810,7 +3810,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3818,7 +3818,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -3832,7 +3832,7 @@ function filterDstPairs( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3840,7 +3840,7 @@ function filterDstPairs( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3848,7 +3848,7 @@ function filterDstPairs( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3856,7 +3856,7 @@ function filterDstPairs( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3864,7 +3864,7 @@ function filterDstPairs( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3872,7 +3872,7 @@ function filterDstPairs( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3880,7 +3880,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3888,7 +3888,7 @@ function filterDstPairs( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3896,7 +3896,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3904,7 +3904,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3912,7 +3912,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3920,7 +3920,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3928,7 +3928,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3936,7 +3936,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3944,7 +3944,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3952,7 +3952,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3960,7 +3960,7 @@ function filterDstPairs( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -3986,7 +3986,7 @@ function filterDstPairs( test )
   };
 
   test.case = 'double';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, double );
   var expected =
   {
@@ -4011,14 +4011,14 @@ function filterDstPairs( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly1 );
   var expected = [ '/true', '/false', '/string1', '/string2', '/null', 'null', '/array', '/emptyArray' ];
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly2 );
   var expected =
   {
@@ -4035,7 +4035,7 @@ function filterDstPairs( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly3';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, srcOnly3 );
   var expected =
   {
@@ -4052,7 +4052,7 @@ function filterDstPairs( test )
   test.identical( got, expected );
 
   test.case = 'dstOnly';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstOnly );
   var expected =
   {
@@ -4062,7 +4062,7 @@ function filterDstPairs( test )
   test.identical( got, expected );
 
   test.case = 'dstDouble';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, dstDouble );
   var expected =
   {
@@ -4072,28 +4072,28 @@ function filterDstPairs( test )
   test.identical( got, expected );
 
   test.case = 'nothing1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing3'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing4'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -4105,7 +4105,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates';
   var src = { '' : [ '/b', null, null, '', '', '/b' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, duplicates );
   var expected = { '' : '/b' };
   test.identical( src, src2 );
@@ -4113,7 +4113,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates, onEach return array';
   var src = [ '/b', null, null, '', '', '/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, ( it ) => [ it.src, '/file', '/dst', '', null, '', null, undefined ] );
   var expected = { '/file' : '/b', '/dst' : '/b' };
   test.identical( src, src2 );
@@ -4121,7 +4121,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates, onEach return array';
   var src = { 'dir' : [ '/b', null, null, '', '', '/b' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, ( it ) => [ it.src, '/file', '/dst', '', null, '', null, undefined ] );
   var expected = { 'dir' : '/b', '/file' : '/b', '/dst' : '/b' };
   test.identical( src, src2 );
@@ -4129,7 +4129,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates';
   var src = { '/dir1' : '/dir2', '/a' : '/b' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b' };
   test.identical( src, src2 );
@@ -4137,7 +4137,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in map';
   var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '' : '/file', '/null' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '' : '/file', '/null' : '' };
   test.identical( src, src2 );
@@ -4145,7 +4145,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in map';
   var src = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, duplicates );
   var expected = { '/dir1' : '/dir2', '/a' : '/b', '/empty' : '', '/null' : '' };
   test.identical( src, src2 );
@@ -4153,7 +4153,7 @@ function filterDstPairs( test )
 
   test.case = 'duplicates in array';
   var src = [ '/dir1', '/a', null, '', '', null ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, duplicates2 );
   var expected = { '1' : [ '/dir1', '/a' ] };
   test.identical( src, src2 );
@@ -4163,7 +4163,7 @@ function filterDstPairs( test )
 
   test.case = 'boolean values';
   var src = [ '/dir1', true, null, '', '', null ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, duplicates2 );
   var expected = { '1' : '/dir1' };
   test.identical( src, src2 );
@@ -4171,7 +4171,7 @@ function filterDstPairs( test )
 
   test.case = 'boolean values';
   var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, duplicates );
   var expected = { '/dir' : true, '/a' : '', '/b' : '' };
   test.identical( src, src2 );
@@ -4179,7 +4179,7 @@ function filterDstPairs( test )
 
   test.case = 'boolean in callback, bool and null values in src';
   var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, bool );
   var expected = { '/dir' : true, '/a' : true, '/b' : true, '' : true };
   test.identical( src, src2 );
@@ -4187,7 +4187,7 @@ function filterDstPairs( test )
 
   test.case = 'boolean in callback, str value in src';
   var src = { '/dir' : false, '/a' : '/dir', '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, bool );
   var expected = { '/dir' : true, '/a' : true, '/b' : true, '' : true };
   test.identical( src, src2 );
@@ -4195,7 +4195,7 @@ function filterDstPairs( test )
 
   test.case = 'boolean in callback, bool and null values in src';
   var src = { '/dir' : true, '/a' : null, '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, bool2 );
   var expected = { '/dir' : false, '/a' : false, '/b' : false, '' : false };
   test.identical( src, src2 );
@@ -4203,7 +4203,7 @@ function filterDstPairs( test )
 
   test.case = 'boolean in callback, str value in src';
   var src = { '/dir' : false, '/a' : '/dir', '/b' : '', '' : null };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, bool2 );
   var expected = { '/dir' : false, '/a' : false, '/b' : false, '' : false };
   test.identical( src, src2 );
@@ -4211,7 +4211,7 @@ function filterDstPairs( test )
 
   test.case = 'boolean in callback, str value in src';
   var src = { '/dir' : true, '/a' : false, '/b' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs( src, uncorrectMap );
   var expected = { '/dir' : '/dst', '/a' : false, '/b' : false };
   test.identical( src, src2 );
@@ -4766,7 +4766,7 @@ function filterPairsInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairsInplace( src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -6733,7 +6733,7 @@ function filterDstPairsInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairsInplace( src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -8492,7 +8492,7 @@ function filterPairs_( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs_( src, double );
   var expected = { '/src/src' : '', '/src' : '' };
   test.identical( got, expected );
@@ -9949,7 +9949,7 @@ function filterPairs_( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, double );
   var expected =
   {
@@ -9974,7 +9974,7 @@ function filterPairs_( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, srcOnly1 );
   var expected =
   {
@@ -9991,7 +9991,7 @@ function filterPairs_( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, srcOnly2 );
   var expected =
   {
@@ -10008,7 +10008,7 @@ function filterPairs_( test )
   test.true( got === src );
 
   test.case = 'srcOnly3';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, srcOnly3 );
   var expected =
   {
@@ -10025,7 +10025,7 @@ function filterPairs_( test )
   test.true( got === src );
 
   test.case = 'dstOnly';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, dstOnly );
   var expected =
   {
@@ -10035,7 +10035,7 @@ function filterPairs_( test )
   test.true( got === src );
 
   test.case = 'dstDouble';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, dstDouble );
   var expected =
   {
@@ -10045,28 +10045,28 @@ function filterPairs_( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing4';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterPairs_( src, nothing4 );
   var expected = {};
   test.identical( got, expected );
@@ -10492,7 +10492,7 @@ function filterDstPairs_( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs_( src, double );
   var expected = { '/src/src' : '', '/src' : '' };
   test.identical( got, expected );
@@ -11942,7 +11942,7 @@ function filterDstPairs_( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, double );
   var expected =
   {
@@ -11967,7 +11967,7 @@ function filterDstPairs_( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, srcOnly1 );
   var expected =
   {
@@ -11984,7 +11984,7 @@ function filterDstPairs_( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, srcOnly2 );
   var expected =
   {
@@ -12001,7 +12001,7 @@ function filterDstPairs_( test )
   test.true( got === src );
 
   test.case = 'srcOnly3';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, srcOnly3 );
   var expected =
   {
@@ -12018,7 +12018,7 @@ function filterDstPairs_( test )
   test.true( got === src );
 
   test.case = 'dstOnly';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, dstOnly );
   var expected =
   {
@@ -12028,7 +12028,7 @@ function filterDstPairs_( test )
   test.true( got === src );
 
   test.case = 'dstDouble';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, dstDouble );
   var expected =
   {
@@ -12038,28 +12038,28 @@ function filterDstPairs_( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing4';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstPairs_( src, nothing4 );
   var expected = {};
   test.identical( got, expected );
@@ -12718,7 +12718,7 @@ function filterPairsInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterPairs_( src, src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -14686,7 +14686,7 @@ function filterDstPairsInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstPairs_( src, src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -21378,7 +21378,7 @@ function filterInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -21386,7 +21386,7 @@ function filterInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -21395,7 +21395,7 @@ function filterInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -21403,7 +21403,7 @@ function filterInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = [];
   test.identical( src, src2 );
@@ -21433,7 +21433,7 @@ function filterInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = {};
   test.identical( src, src2 );
@@ -21511,7 +21511,7 @@ function filterInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -21519,7 +21519,7 @@ function filterInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -21528,7 +21528,7 @@ function filterInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -21537,7 +21537,7 @@ function filterInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = [];
   test.identical( src, src2 );
@@ -21546,7 +21546,7 @@ function filterInplace( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = [ '/a/b' ];
   test.identical( src, src2 );
@@ -21555,7 +21555,7 @@ function filterInplace( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -21571,7 +21571,7 @@ function filterInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = {};
   test.identical( src, src2 );
@@ -21649,7 +21649,7 @@ function filterInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -21657,7 +21657,7 @@ function filterInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -21666,7 +21666,7 @@ function filterInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -21675,7 +21675,7 @@ function filterInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = [];
   test.identical( src, src2 );
@@ -21684,7 +21684,7 @@ function filterInplace( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = [ '/a/b' ];
   test.identical( src, src2 );
@@ -21693,7 +21693,7 @@ function filterInplace( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -21709,7 +21709,7 @@ function filterInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -21787,7 +21787,7 @@ function filterInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -21795,7 +21795,7 @@ function filterInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -21804,7 +21804,7 @@ function filterInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -21812,7 +21812,7 @@ function filterInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = [];
   test.identical( src, src2 );
@@ -21918,7 +21918,7 @@ function filterInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -21926,7 +21926,7 @@ function filterInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -21935,7 +21935,7 @@ function filterInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -21943,7 +21943,7 @@ function filterInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -22049,7 +22049,7 @@ function filterInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -22057,7 +22057,7 @@ function filterInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -22066,7 +22066,7 @@ function filterInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -22074,7 +22074,7 @@ function filterInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing4 );
   var expected = [];
   test.identical( src, src2 );
@@ -22129,7 +22129,7 @@ function filterInplace( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, double );
   var expected =
   {
@@ -22146,7 +22146,7 @@ function filterInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected =
   {
@@ -22163,7 +22163,7 @@ function filterInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected =
   {
@@ -22180,14 +22180,14 @@ function filterInplace( test )
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3'
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
@@ -22482,7 +22482,7 @@ function filterDstInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -22490,7 +22490,7 @@ function filterDstInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -22499,7 +22499,7 @@ function filterDstInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -22507,7 +22507,7 @@ function filterDstInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = [];
   test.identical( src, src2 );
@@ -22537,7 +22537,7 @@ function filterDstInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = {};
   test.identical( src, src2 );
@@ -22615,7 +22615,7 @@ function filterDstInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -22623,7 +22623,7 @@ function filterDstInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -22632,7 +22632,7 @@ function filterDstInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -22641,7 +22641,7 @@ function filterDstInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = [];
   test.identical( src, src2 );
@@ -22671,7 +22671,7 @@ function filterDstInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = {};
   test.identical( src, src2 );
@@ -22749,7 +22749,7 @@ function filterDstInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -22757,7 +22757,7 @@ function filterDstInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -22766,7 +22766,7 @@ function filterDstInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -22775,7 +22775,7 @@ function filterDstInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = [];
   test.identical( src, src2 );
@@ -22805,7 +22805,7 @@ function filterDstInplace( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -22883,7 +22883,7 @@ function filterDstInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -22891,7 +22891,7 @@ function filterDstInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -22900,7 +22900,7 @@ function filterDstInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -22908,7 +22908,7 @@ function filterDstInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = [];
   test.identical( src, src2 );
@@ -23014,7 +23014,7 @@ function filterDstInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -23022,7 +23022,7 @@ function filterDstInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -23031,7 +23031,7 @@ function filterDstInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -23039,7 +23039,7 @@ function filterDstInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -23145,7 +23145,7 @@ function filterDstInplace( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -23153,7 +23153,7 @@ function filterDstInplace( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -23162,7 +23162,7 @@ function filterDstInplace( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -23170,7 +23170,7 @@ function filterDstInplace( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing4 );
   var expected = [];
   test.identical( src, src2 );
@@ -23225,7 +23225,7 @@ function filterDstInplace( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, double );
   var expected =
   {
@@ -23242,7 +23242,7 @@ function filterDstInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected =
   {
@@ -23259,7 +23259,7 @@ function filterDstInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected =
   {
@@ -23276,14 +23276,14 @@ function filterDstInplace( test )
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3'
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
@@ -23578,7 +23578,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -23586,7 +23586,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -23595,7 +23595,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -23603,7 +23603,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = [];
   test.identical( src, src2 );
@@ -23633,7 +23633,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, double );
   var expected = {};
   test.identical( src, src2 );
@@ -23711,7 +23711,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -23719,7 +23719,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -23728,7 +23728,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -23737,7 +23737,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = [];
   test.identical( src, src2 );
@@ -23746,7 +23746,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = [ '/a/b' ];
   test.identical( src, src2 );
@@ -23755,7 +23755,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -23771,7 +23771,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected = {};
   test.identical( src, src2 );
@@ -23849,7 +23849,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -23857,7 +23857,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -23866,7 +23866,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -23875,7 +23875,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = [];
   test.identical( src, src2 );
@@ -23884,7 +23884,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = [ '/a/b' ];
   test.identical( src, src2 );
@@ -23893,7 +23893,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -23909,7 +23909,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -23987,7 +23987,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -23995,7 +23995,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -24004,7 +24004,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -24012,7 +24012,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = [];
   test.identical( src, src2 );
@@ -24118,7 +24118,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -24126,7 +24126,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -24135,7 +24135,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -24143,7 +24143,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -24249,7 +24249,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -24257,7 +24257,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -24266,7 +24266,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -24274,7 +24274,7 @@ function filterInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -24329,7 +24329,7 @@ function filterInplaceExtendedCallbacks( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, double );
   var expected =
   {
@@ -24346,7 +24346,7 @@ function filterInplaceExtendedCallbacks( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, srcOnly1 );
   var expected =
   {
@@ -24363,7 +24363,7 @@ function filterInplaceExtendedCallbacks( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, srcOnly2 );
   var expected =
   {
@@ -24380,14 +24380,14 @@ function filterInplaceExtendedCallbacks( test )
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3'
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterInplace( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
@@ -24727,7 +24727,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -24735,7 +24735,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -24744,7 +24744,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -24752,7 +24752,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = [];
   test.identical( src, src2 );
@@ -24782,7 +24782,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, double );
   var expected = {};
   test.identical( src, src2 );
@@ -24860,7 +24860,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -24882,7 +24882,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = [];
   test.identical( src, src2 );
@@ -24912,7 +24912,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected = {};
   test.identical( src, src2 );
@@ -24990,7 +24990,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -24998,7 +24998,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -25014,7 +25014,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = [];
   test.identical( src, src2 );
@@ -25044,7 +25044,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -25122,7 +25122,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -25130,7 +25130,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -25139,7 +25139,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -25147,7 +25147,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = [];
   test.identical( src, src2 );
@@ -25253,7 +25253,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -25261,7 +25261,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -25270,7 +25270,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -25278,7 +25278,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -25384,7 +25384,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -25392,7 +25392,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -25401,7 +25401,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -25409,7 +25409,7 @@ function filterDstInplaceExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -25464,7 +25464,7 @@ function filterDstInplaceExtendedCallbacks( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, double );
   var expected =
   {
@@ -25481,7 +25481,7 @@ function filterDstInplaceExtendedCallbacks( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, srcOnly1 );
   var expected =
   {
@@ -25498,7 +25498,7 @@ function filterDstInplaceExtendedCallbacks( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, srcOnly2 );
   var expected =
   {
@@ -25515,14 +25515,14 @@ function filterDstInplaceExtendedCallbacks( test )
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3'
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDstInplace( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
@@ -25854,7 +25854,7 @@ function filter( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -25862,7 +25862,7 @@ function filter( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -25870,7 +25870,7 @@ function filter( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -25878,7 +25878,7 @@ function filter( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -25886,7 +25886,7 @@ function filter( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -25894,7 +25894,7 @@ function filter( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = [ '/a/b/a/b', '/cd/cd' ];
   test.identical( src, src2 );
@@ -25902,7 +25902,7 @@ function filter( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = [ '/a/b/a/b', '/c/d/c/d' ];
   test.identical( src, src2 );
@@ -25910,7 +25910,7 @@ function filter( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -25918,7 +25918,7 @@ function filter( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -25926,7 +25926,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -25934,7 +25934,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -25942,7 +25942,7 @@ function filter( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '/src/src' : [ 'dst1dst1', 'dst2dst2' ] };
   test.identical( src, src2 );
@@ -25950,7 +25950,7 @@ function filter( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '' : 'dstdst' };
   test.identical( src, src2 );
@@ -25958,7 +25958,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -25966,7 +25966,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '' : 'dstdst' };
   test.identical( src, src2 );
@@ -25974,7 +25974,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '' : [ 'dst1dst1', 'dst2dst2' ] };
   test.identical( src, src2 );
@@ -25982,7 +25982,7 @@ function filter( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -25996,7 +25996,7 @@ function filter( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = null;
   test.identical( src, src2 );
@@ -26004,7 +26004,7 @@ function filter( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = null;
   test.identical( src, src2 );
@@ -26012,7 +26012,7 @@ function filter( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -26020,7 +26020,7 @@ function filter( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26028,7 +26028,7 @@ function filter( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -26036,7 +26036,7 @@ function filter( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -26044,7 +26044,7 @@ function filter( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -26052,7 +26052,7 @@ function filter( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26060,7 +26060,7 @@ function filter( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -26068,7 +26068,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26076,7 +26076,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -26084,7 +26084,7 @@ function filter( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -26092,7 +26092,7 @@ function filter( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26100,7 +26100,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26108,7 +26108,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26116,7 +26116,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26124,7 +26124,7 @@ function filter( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -26138,7 +26138,7 @@ function filter( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = null;
   test.identical( src, src2 );
@@ -26146,7 +26146,7 @@ function filter( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = null;
   test.identical( src, src2 );
@@ -26154,7 +26154,7 @@ function filter( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -26162,7 +26162,7 @@ function filter( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26170,7 +26170,7 @@ function filter( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -26178,7 +26178,7 @@ function filter( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -26186,7 +26186,7 @@ function filter( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -26194,7 +26194,7 @@ function filter( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26202,7 +26202,7 @@ function filter( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -26210,7 +26210,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26218,7 +26218,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -26226,7 +26226,7 @@ function filter( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -26234,7 +26234,7 @@ function filter( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26242,7 +26242,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26250,7 +26250,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26258,7 +26258,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26266,7 +26266,7 @@ function filter( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26280,7 +26280,7 @@ function filter( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26288,7 +26288,7 @@ function filter( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26296,7 +26296,7 @@ function filter( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26304,7 +26304,7 @@ function filter( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26312,7 +26312,7 @@ function filter( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26320,7 +26320,7 @@ function filter( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26328,7 +26328,7 @@ function filter( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26336,7 +26336,7 @@ function filter( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26344,7 +26344,7 @@ function filter( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26352,7 +26352,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26360,7 +26360,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26368,7 +26368,7 @@ function filter( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26376,7 +26376,7 @@ function filter( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26384,7 +26384,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26392,7 +26392,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26400,7 +26400,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26408,7 +26408,7 @@ function filter( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -26422,7 +26422,7 @@ function filter( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26430,7 +26430,7 @@ function filter( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26438,7 +26438,7 @@ function filter( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26446,7 +26446,7 @@ function filter( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26454,7 +26454,7 @@ function filter( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26462,7 +26462,7 @@ function filter( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26470,7 +26470,7 @@ function filter( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26478,7 +26478,7 @@ function filter( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26486,7 +26486,7 @@ function filter( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26494,7 +26494,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26502,7 +26502,7 @@ function filter( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26510,7 +26510,7 @@ function filter( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26518,7 +26518,7 @@ function filter( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26526,7 +26526,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26534,7 +26534,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26542,7 +26542,7 @@ function filter( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26550,7 +26550,7 @@ function filter( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26564,7 +26564,7 @@ function filter( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26572,7 +26572,7 @@ function filter( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26580,7 +26580,7 @@ function filter( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26588,7 +26588,7 @@ function filter( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26596,7 +26596,7 @@ function filter( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26604,7 +26604,7 @@ function filter( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26612,7 +26612,7 @@ function filter( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26620,7 +26620,7 @@ function filter( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -26646,7 +26646,7 @@ function filter( test )
   };
 
   test.case = 'double';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected =
   {
@@ -26663,7 +26663,7 @@ function filter( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected =
   {
@@ -26676,7 +26676,7 @@ function filter( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected =
   {
@@ -26689,14 +26689,14 @@ function filter( test )
   test.identical( got, expected );
 
   test.case = 'nothing2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing3'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -26979,7 +26979,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -26987,7 +26987,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -26995,7 +26995,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -27003,7 +27003,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -27011,7 +27011,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -27019,7 +27019,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = [ '/a/b/a/b', '/cd/cd' ];
   test.identical( src, src2 );
@@ -27027,7 +27027,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = [ '/a/b/a/b', '/c/d/c/d' ];
   test.identical( src, src2 );
@@ -27035,7 +27035,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -27043,7 +27043,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -27051,7 +27051,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -27059,7 +27059,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -27067,7 +27067,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '/src/src' : [ 'dst1dst1', 'dst2dst2' ] };
   test.identical( src, src2 );
@@ -27075,7 +27075,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -27083,7 +27083,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -27091,7 +27091,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -27099,7 +27099,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -27107,7 +27107,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -27151,7 +27151,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -27159,7 +27159,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -27167,7 +27167,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -27175,7 +27175,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -27219,7 +27219,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -27227,7 +27227,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -27247,7 +27247,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27255,7 +27255,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -27263,7 +27263,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27271,7 +27271,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -27279,7 +27279,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -27287,7 +27287,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -27295,7 +27295,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27303,7 +27303,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -27311,7 +27311,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -27319,7 +27319,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -27327,7 +27327,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -27335,7 +27335,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27343,7 +27343,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27351,7 +27351,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27359,7 +27359,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27367,7 +27367,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -27381,7 +27381,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27389,7 +27389,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27397,7 +27397,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27405,7 +27405,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27413,7 +27413,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27421,7 +27421,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27429,7 +27429,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27437,7 +27437,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27445,7 +27445,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27453,7 +27453,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27461,7 +27461,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27469,7 +27469,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27477,7 +27477,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27485,7 +27485,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27493,7 +27493,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27501,7 +27501,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27509,7 +27509,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -27523,7 +27523,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27531,7 +27531,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27539,7 +27539,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27547,7 +27547,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27555,7 +27555,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27563,7 +27563,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27571,7 +27571,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27579,7 +27579,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27587,7 +27587,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27595,7 +27595,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27603,7 +27603,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27611,7 +27611,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27619,7 +27619,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27627,7 +27627,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27635,7 +27635,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27643,7 +27643,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27651,7 +27651,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -27665,7 +27665,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27673,7 +27673,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27681,7 +27681,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27689,7 +27689,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27697,7 +27697,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27705,7 +27705,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27713,7 +27713,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27721,7 +27721,7 @@ function filterExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -27747,7 +27747,7 @@ function filterExtendedCallbacks( test )
   };
 
   test.case = 'double';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, double );
   var expected =
   {
@@ -27764,7 +27764,7 @@ function filterExtendedCallbacks( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly1 );
   var expected =
   {
@@ -27781,7 +27781,7 @@ function filterExtendedCallbacks( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, srcOnly2 );
   var expected =
   {
@@ -27798,14 +27798,14 @@ function filterExtendedCallbacks( test )
   test.identical( got, expected );
 
   test.case = 'nothing2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing3'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28123,7 +28123,7 @@ function filterDst( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -28131,7 +28131,7 @@ function filterDst( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -28139,7 +28139,7 @@ function filterDst( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -28147,7 +28147,7 @@ function filterDst( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -28155,7 +28155,7 @@ function filterDst( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -28163,7 +28163,7 @@ function filterDst( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = [ '/a/b/a/b', '/cd/cd' ];
   test.identical( src, src2 );
@@ -28171,7 +28171,7 @@ function filterDst( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = [ '/a/b/a/b', '/c/d/c/d' ];
   test.identical( src, src2 );
@@ -28179,7 +28179,7 @@ function filterDst( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -28187,7 +28187,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -28195,7 +28195,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -28203,7 +28203,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -28211,7 +28211,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '/src/src' : [ 'dst1dst1', 'dst2dst2' ] };
   test.identical( src, src2 );
@@ -28219,7 +28219,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '' : 'dstdst' };
   test.identical( src, src2 );
@@ -28227,7 +28227,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -28235,7 +28235,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '' : 'dstdst' };
   test.identical( src, src2 );
@@ -28243,7 +28243,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '' : [ 'dst1dst1', 'dst2dst2' ] };
   test.identical( src, src2 );
@@ -28251,7 +28251,7 @@ function filterDst( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -28265,7 +28265,7 @@ function filterDst( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = null;
   test.identical( src, src2 );
@@ -28273,7 +28273,7 @@ function filterDst( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = null;
   test.identical( src, src2 );
@@ -28281,7 +28281,7 @@ function filterDst( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -28289,7 +28289,7 @@ function filterDst( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28297,7 +28297,7 @@ function filterDst( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -28305,7 +28305,7 @@ function filterDst( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -28313,7 +28313,7 @@ function filterDst( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -28321,7 +28321,7 @@ function filterDst( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28329,7 +28329,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -28337,7 +28337,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28345,7 +28345,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -28353,7 +28353,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -28361,7 +28361,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28369,7 +28369,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28377,7 +28377,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28385,7 +28385,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28393,7 +28393,7 @@ function filterDst( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -28407,7 +28407,7 @@ function filterDst( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = null;
   test.identical( src, src2 );
@@ -28415,7 +28415,7 @@ function filterDst( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = null;
   test.identical( src, src2 );
@@ -28423,7 +28423,7 @@ function filterDst( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -28431,7 +28431,7 @@ function filterDst( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28439,7 +28439,7 @@ function filterDst( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -28447,7 +28447,7 @@ function filterDst( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -28455,7 +28455,7 @@ function filterDst( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -28463,7 +28463,7 @@ function filterDst( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28471,7 +28471,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -28479,7 +28479,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28487,7 +28487,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = { '/src' : 'dst' };
   test.identical( src, src2 );
@@ -28495,7 +28495,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = { '/src' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -28503,7 +28503,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28511,7 +28511,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28519,7 +28519,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28527,7 +28527,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28535,7 +28535,7 @@ function filterDst( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28549,7 +28549,7 @@ function filterDst( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28557,7 +28557,7 @@ function filterDst( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28565,7 +28565,7 @@ function filterDst( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28573,7 +28573,7 @@ function filterDst( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28581,7 +28581,7 @@ function filterDst( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28589,7 +28589,7 @@ function filterDst( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28597,7 +28597,7 @@ function filterDst( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28605,7 +28605,7 @@ function filterDst( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28613,7 +28613,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28621,7 +28621,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28629,7 +28629,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28637,7 +28637,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28645,7 +28645,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28653,7 +28653,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28661,7 +28661,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28669,7 +28669,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28677,7 +28677,7 @@ function filterDst( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -28691,7 +28691,7 @@ function filterDst( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28699,7 +28699,7 @@ function filterDst( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28707,7 +28707,7 @@ function filterDst( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28715,7 +28715,7 @@ function filterDst( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28723,7 +28723,7 @@ function filterDst( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28731,7 +28731,7 @@ function filterDst( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28739,7 +28739,7 @@ function filterDst( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28747,7 +28747,7 @@ function filterDst( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28755,7 +28755,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28763,7 +28763,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28771,7 +28771,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28779,7 +28779,7 @@ function filterDst( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28787,7 +28787,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28795,7 +28795,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28803,7 +28803,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28811,7 +28811,7 @@ function filterDst( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28819,7 +28819,7 @@ function filterDst( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -28833,7 +28833,7 @@ function filterDst( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28841,7 +28841,7 @@ function filterDst( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28849,7 +28849,7 @@ function filterDst( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28857,7 +28857,7 @@ function filterDst( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28865,7 +28865,7 @@ function filterDst( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28873,7 +28873,7 @@ function filterDst( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28881,7 +28881,7 @@ function filterDst( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28889,7 +28889,7 @@ function filterDst( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -28915,7 +28915,7 @@ function filterDst( test )
   };
 
   test.case = 'double';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected =
   {
@@ -28932,7 +28932,7 @@ function filterDst( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected =
   {
@@ -28945,7 +28945,7 @@ function filterDst( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected =
   {
@@ -28958,14 +28958,14 @@ function filterDst( test )
   test.identical( got, expected );
 
   test.case = 'nothing2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing3'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29248,7 +29248,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -29256,7 +29256,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -29264,7 +29264,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -29272,7 +29272,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -29280,7 +29280,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -29288,7 +29288,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -29296,7 +29296,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = [ '/a/b', '/c/d' ];
   test.identical( src, src2 );
@@ -29304,7 +29304,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -29312,7 +29312,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -29320,7 +29320,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -29328,7 +29328,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '/src/src' : 'dstdst' };
   test.identical( src, src2 );
@@ -29336,7 +29336,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '/src/src' : [ 'dst1dst1', 'dst2dst2' ] };
   test.identical( src, src2 );
@@ -29344,7 +29344,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -29352,7 +29352,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -29360,7 +29360,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '' : 'dst' };
   test.identical( src, src2 );
@@ -29368,7 +29368,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = { '' : [ 'dst1', 'dst2' ] };
   test.identical( src, src2 );
@@ -29376,7 +29376,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected = '/src/src';
   test.identical( src, src2 );
@@ -29420,7 +29420,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -29428,7 +29428,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -29436,7 +29436,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -29444,7 +29444,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -29488,7 +29488,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -29496,7 +29496,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -29516,7 +29516,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29524,7 +29524,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29532,7 +29532,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29540,7 +29540,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29548,7 +29548,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29556,7 +29556,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29564,7 +29564,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29572,7 +29572,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -29580,7 +29580,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -29588,7 +29588,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -29596,7 +29596,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -29604,7 +29604,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29612,7 +29612,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29620,7 +29620,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29628,7 +29628,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29636,7 +29636,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected = '/src';
   test.identical( src, src2 );
@@ -29650,7 +29650,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29658,7 +29658,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29666,7 +29666,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29674,7 +29674,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29682,7 +29682,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29690,7 +29690,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29698,7 +29698,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29706,7 +29706,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29714,7 +29714,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29722,7 +29722,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29730,7 +29730,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29738,7 +29738,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29746,7 +29746,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29754,7 +29754,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29762,7 +29762,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29770,7 +29770,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29778,7 +29778,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -29792,7 +29792,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29800,7 +29800,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29808,7 +29808,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29816,7 +29816,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29824,7 +29824,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29832,7 +29832,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29840,7 +29840,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29848,7 +29848,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29856,7 +29856,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst and src';
   var src = { '/src' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29864,7 +29864,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single empty array and src';
   var src = { '/src' : [] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29872,7 +29872,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in single element array and src';
   var src = { '/src' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29880,7 +29880,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with dst in multiple element array and src';
   var src = { '/src' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29888,7 +29888,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst';
   var src = { '' : 'dst' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29896,7 +29896,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in empty array';
   var src = { '' : [ '' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29904,7 +29904,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in single element array';
   var src = { '' : [ 'dst' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29912,7 +29912,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only dst in multiple element array';
   var src = { '' : [ 'dst1', 'dst2' ] };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29920,7 +29920,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element map with only src';
   var src = { '/src' : '' };
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -29934,7 +29934,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -29942,7 +29942,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -29950,7 +29950,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -29958,7 +29958,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -29966,7 +29966,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -29974,7 +29974,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -29982,7 +29982,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'duplicates in array';
   var src = [ '/a/b', '/a/b', '/c/d', '/c/d' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -29990,7 +29990,7 @@ function filterDstExtendedCallbacks( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing4 );
   var expected = '';
   test.identical( src, src2 );
@@ -30016,7 +30016,7 @@ function filterDstExtendedCallbacks( test )
   };
 
   test.case = 'double';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, double );
   var expected =
   {
@@ -30033,7 +30033,7 @@ function filterDstExtendedCallbacks( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly1 );
   var expected =
   {
@@ -30050,7 +30050,7 @@ function filterDstExtendedCallbacks( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, srcOnly2 );
   var expected =
   {
@@ -30067,14 +30067,14 @@ function filterDstExtendedCallbacks( test )
   test.identical( got, expected );
 
   test.case = 'nothing2';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
   test.identical( got, expected );
 
   test.case = 'nothing3'
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst( src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -30993,7 +30993,7 @@ function filter_( test )
   /* */
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, double );
   var expected =
   {
@@ -31010,7 +31010,7 @@ function filter_( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, srcOnly1 );
   var expected =
   {
@@ -31027,7 +31027,7 @@ function filter_( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, srcOnly2 );
   var expected =
   {
@@ -31044,14 +31044,14 @@ function filter_( test )
   test.identical( got, expected );
 
   test.case = 'nothing1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, nothing1 );
   var expected = {};
   test.true( got === src );
   test.identical( got, expected );
 
   test.case = 'nothing2'
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, nothing2 );
   var expected = {};
   test.true( got === src );
@@ -31946,7 +31946,7 @@ function filterDst_( test )
   /* */
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, double );
   var expected =
   {
@@ -31963,7 +31963,7 @@ function filterDst_( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, srcOnly1 );
   var expected =
   {
@@ -31980,7 +31980,7 @@ function filterDst_( test )
   test.identical( got, expected );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, srcOnly2 );
   var expected =
   {
@@ -31997,14 +31997,14 @@ function filterDst_( test )
   test.identical( got, expected );
 
   test.case = 'nothing1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, nothing1 );
   var expected = {};
   test.true( got === src );
   test.identical( got, expected );
 
   test.case = 'nothing2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, nothing2 );
   var expected = {};
   test.true( got === src );
@@ -32174,7 +32174,7 @@ function filterInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -32182,7 +32182,7 @@ function filterInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -32191,7 +32191,7 @@ function filterInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -32199,7 +32199,7 @@ function filterInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, double );
   var expected = [];
   test.identical( src, src2 );
@@ -32229,7 +32229,7 @@ function filterInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, double );
   var expected = {};
   test.identical( src, src2 );
@@ -32307,7 +32307,7 @@ function filterInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -32315,7 +32315,7 @@ function filterInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -32324,7 +32324,7 @@ function filterInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -32333,7 +32333,7 @@ function filterInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected = [];
   test.identical( src, src2 );
@@ -32342,7 +32342,7 @@ function filterInplace_( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected = [ '/a/b' ];
   test.identical( src, src2 );
@@ -32351,7 +32351,7 @@ function filterInplace_( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -32367,7 +32367,7 @@ function filterInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected = {};
   test.identical( src, src2 );
@@ -32445,7 +32445,7 @@ function filterInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -32453,7 +32453,7 @@ function filterInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -32462,7 +32462,7 @@ function filterInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected = '/a/b';
   test.identical( src, src2 );
@@ -32471,7 +32471,7 @@ function filterInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected = [];
   test.identical( src, src2 );
@@ -32480,7 +32480,7 @@ function filterInplace_( test )
 
   test.case = 'single element array';
   var src = [ '/a/b' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected = [ '/a/b' ];
   test.identical( src, src2 );
@@ -32489,7 +32489,7 @@ function filterInplace_( test )
 
   test.case = 'several elements array';
   var src = [ '/a/b', '/cd' ];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected = [ '/a/b', '/cd' ];
   test.identical( src, src2 );
@@ -32505,7 +32505,7 @@ function filterInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -32583,7 +32583,7 @@ function filterInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -32591,7 +32591,7 @@ function filterInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -32600,7 +32600,7 @@ function filterInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -32608,7 +32608,7 @@ function filterInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing1 );
   var expected = [];
   test.identical( src, src2 );
@@ -32714,7 +32714,7 @@ function filterInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -32722,7 +32722,7 @@ function filterInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -32731,7 +32731,7 @@ function filterInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -32739,7 +32739,7 @@ function filterInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing2 );
   var expected = [];
   test.identical( src, src2 );
@@ -32845,7 +32845,7 @@ function filterInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -32853,7 +32853,7 @@ function filterInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -32862,7 +32862,7 @@ function filterInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -32870,7 +32870,7 @@ function filterInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filter_( src, src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -32925,7 +32925,7 @@ function filterInplace_( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, src, double );
   var expected =
   {
@@ -32942,7 +32942,7 @@ function filterInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, src, srcOnly1 );
   var expected =
   {
@@ -32959,7 +32959,7 @@ function filterInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, src, srcOnly2 );
   var expected =
   {
@@ -32976,14 +32976,14 @@ function filterInplace_( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2'
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( src, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
@@ -33151,7 +33151,7 @@ function filterDstInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -33159,7 +33159,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, double );
   var expected = '';
   test.identical( src, src2 );
@@ -33168,7 +33168,7 @@ function filterDstInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, double );
   var expected = '/a/b/a/b';
   test.identical( src, src2 );
@@ -33176,7 +33176,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, double );
   var expected = [];
   test.identical( src, src2 );
@@ -33206,7 +33206,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, double );
   var expected = {};
   test.identical( src, src2 );
@@ -33284,7 +33284,7 @@ function filterDstInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -33292,7 +33292,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -33301,7 +33301,7 @@ function filterDstInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly1 );
   var expected = '';
   test.identical( src, src2 );
@@ -33310,7 +33310,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly1 );
   var expected = [];
   test.identical( src, src2 );
@@ -33340,7 +33340,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly1 );
   var expected = {};
   test.identical( src, src2 );
@@ -33418,7 +33418,7 @@ function filterDstInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -33426,7 +33426,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -33435,7 +33435,7 @@ function filterDstInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly2 );
   var expected = '';
   test.identical( src, src2 );
@@ -33444,7 +33444,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly2 );
   var expected = [];
   test.identical( src, src2 );
@@ -33474,7 +33474,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty map';
   var src = {};
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, srcOnly2 );
   var expected = {};
   test.identical( src, src2 );
@@ -33552,7 +33552,7 @@ function filterDstInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -33560,7 +33560,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -33569,7 +33569,7 @@ function filterDstInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing1 );
   var expected = '';
   test.identical( src, src2 );
@@ -33577,7 +33577,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing1 );
   var expected = [];
   test.identical( src, src2 );
@@ -33683,7 +33683,7 @@ function filterDstInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -33691,7 +33691,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -33700,7 +33700,7 @@ function filterDstInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing2 );
   var expected = '';
   test.identical( src, src2 );
@@ -33708,7 +33708,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing2 );
   var expected = [];
   test.identical( src, src2 );
@@ -33814,7 +33814,7 @@ function filterDstInplace_( test )
 
   test.case = 'null';
   var src = null;
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -33822,7 +33822,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty';
   var src = '';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -33831,7 +33831,7 @@ function filterDstInplace_( test )
 
   test.case = 'string';
   var src = '/a/b';
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing3 );
   var expected = '';
   test.identical( src, src2 );
@@ -33839,7 +33839,7 @@ function filterDstInplace_( test )
 
   test.case = 'empty array';
   var src = [];
-  var src2 = _.entityMake( src );
+  var src2 = _.entity.make( src );
   var got = _.path.filterDst_( src, src, nothing3 );
   var expected = [];
   test.identical( src, src2 );
@@ -33894,7 +33894,7 @@ function filterDstInplace_( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, src, double );
   var expected =
   {
@@ -33911,7 +33911,7 @@ function filterDstInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, src, srcOnly1 );
   var expected =
   {
@@ -33928,7 +33928,7 @@ function filterDstInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, src, srcOnly2 );
   var expected =
   {
@@ -33945,14 +33945,14 @@ function filterDstInplace_( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2'
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( src, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
@@ -34924,7 +34924,7 @@ function filterWithDst_( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( dst, src, double );
   var expected =
   {
@@ -34942,7 +34942,7 @@ function filterWithDst_( test )
 
   test.case = 'srcOnly1';
   var dst = {};
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( dst, src, srcOnly1 );
   var expected =
   {
@@ -34960,7 +34960,7 @@ function filterWithDst_( test )
 
   test.case = 'srcOnly2';
   var dst = {};
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( dst, src, srcOnly2 );
   var expected =
   {
@@ -34978,7 +34978,7 @@ function filterWithDst_( test )
 
   test.case = 'nothing1';
   var dst = [];
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( dst, src, nothing1 );
   var expected = [];
   test.identical( got, expected );
@@ -34986,7 +34986,7 @@ function filterWithDst_( test )
 
   test.case = 'nothing2'
   var dst = {};
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filter_( dst, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
@@ -35958,7 +35958,7 @@ function filterDstWithDst_( test )
   };
 
   test.case = 'double';
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( dst, src, double );
   var expected =
   {
@@ -35976,7 +35976,7 @@ function filterDstWithDst_( test )
 
   test.case = 'srcOnly1';
   var dst = {};
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( dst, src, srcOnly1 );
   var expected =
   {
@@ -35994,7 +35994,7 @@ function filterDstWithDst_( test )
 
   test.case = 'srcOnly2';
   var dst = {};
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( dst, src, srcOnly2 );
   var expected =
   {
@@ -36012,7 +36012,7 @@ function filterDstWithDst_( test )
 
   test.case = 'nothing1';
   var dst = [];
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( dst, src, nothing1 );
   var expected = [];
   test.identical( got, expected );
@@ -36020,7 +36020,7 @@ function filterDstWithDst_( test )
 
   test.case = 'nothing2'
   var dst = {};
-  var src = _.entityMake( srcMap );
+  var src = _.entity.make( srcMap );
   var got = _.path.filterDst_( dst, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
@@ -45572,7 +45572,7 @@ function mapOptimize( test )
     'module1' : '.',
     'module2' : '.',
   };
-  var expectedBase = _.entityMake( basePath );
+  var expectedBase = _.entity.make( basePath );
   var got = path.mapOptimize( filePath, basePath );
   test.identical( got, expected );
   test.identical( basePath, expectedBase );
@@ -45605,7 +45605,7 @@ function mapOptimize( test )
     'module1' : '.',
     'module2' : '.',
   };
-  var expectedBase = _.entityMake( basePath );
+  var expectedBase = _.entity.make( basePath );
   var got = path.mapOptimize( filePath, basePath );
   test.identical( got, expected );
   test.identical( basePath, expectedBase );
@@ -45638,7 +45638,7 @@ function mapOptimize( test )
     'module1' : '.',
     'module2' : '.',
   };
-  var expectedBase = _.entityMake( basePath );
+  var expectedBase = _.entity.make( basePath );
   var got = path.mapOptimize( filePath, basePath );
   test.identical( got, expected );
   test.identical( basePath, expectedBase );
