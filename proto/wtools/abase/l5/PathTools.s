@@ -99,7 +99,7 @@ function _filterPairs( o )
       let dst = o.filePath[ src ];
       if( _.arrayIs( dst ) )
       {
-        if( !dst.length )
+        if( dst.length === 0 )
         {
           it.src = src;
           it.dst = '';
@@ -706,7 +706,7 @@ function _filterPairsInplace( o )
 
       if( _.arrayIs( dst ) )
       {
-        if( !dst.length )
+        if( dst.length === 0 )
         {
           it.src = src;
           it.dst = '';
@@ -1049,7 +1049,7 @@ function filterPairs_body( o )
 
       if( _.arrayIs( dst1 ) )
       {
-        if( !dst1.length )
+        if( dst1.length === 0 )
         {
           it.src = src;
           it.dst = '';
@@ -1274,7 +1274,16 @@ function filterPairs_body( o )
 
       result = self.simplify_( result, result );
     }
-    else if( o.dst !== true )
+    else if( o.dst === true )
+    {
+      if( result.length === 1 )
+      return result[ 0 ];
+      else if( result.length === 0 )
+      return '';
+
+      result = self.simplify_( null, result );
+    }
+    else
     {
       if( _.arrayIs( o.dst ) )
       {
@@ -1330,15 +1339,7 @@ function filterPairs_body( o )
         result = o.dst;
       }
       result = self.simplify_( result, result );
-    }
-    else
-    {
-      if( result.length === 1 )
-      return result[ 0 ];
-      else if( result.length === 0 )
-        return '';
 
-      result = self.simplify_( null, result );
     }
 
     if( _.mapIs( result ) && result[ '' ] === '' )
@@ -3213,7 +3214,13 @@ function simplify_( dst, src )
   }
   else if( _.mapIs( src ) )
   {
-    if( dst !== false )
+    if( dst === false )
+    {
+      for( let k in src )
+      src[ k ] = self.simplify( src[ k ] );
+      result = src;
+    }
+    else
     {
       result = Object.create( null );
 
@@ -3238,12 +3245,6 @@ function simplify_( dst, src )
       }
       else
       result = '';
-    }
-    else
-    {
-      for( let k in src )
-        src[ k ] = self.simplify( src[ k ] );
-      result = src;
     }
   }
   else
@@ -3652,10 +3653,10 @@ function mapOptimize( filePath, basePath )
 
         if( basePath )
         {
-          if( basePath[ path1 ] !== basePath[ path2 ] )
-          continue;
-          else
+          if( basePath[ path1 ] === basePath[ path2 ] )
           delete basePath[ path2 ];
+          else
+          continue;
         }
 
         array.splice( i2, 1 );
