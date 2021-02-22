@@ -2750,7 +2750,7 @@ function _mapExtend( o )
         used = dstPathMapExtend( dstPathMap, srcPathMap2, dstPath ) || used;
       }
     }
-    else _.assert( 0, () => 'Expects srcPathMap, got ' + _.strType( srcPathMap ) );
+    else _.assert( 0, () => 'Expects srcPathMap, got ' + _.entity.strType( srcPathMap ) );
 
     return used;
   }
@@ -2992,7 +2992,7 @@ function mapsPair( dstFilePath, srcFilePath )
     _.assert
     (
       _.mapsAreIdentical( srcFilePath, dstFilePath ),
-      () => 'File maps are inconsistent\n' + _.toStr( srcFilePath ) + '\n' + _.toStr( dstFilePath )
+      () => 'File maps are inconsistent\n' + _.entity.exportString( srcFilePath ) + '\n' + _.entity.exportString( dstFilePath )
     );
   }
 
@@ -3011,7 +3011,7 @@ function mapsPair( dstFilePath, srcFilePath )
         srcFilteredPath1.length === 0 || srcFilteredPath2.length === 0
         || self.isEmpty( srcFilteredPath1 ) || self.isEmpty( srcFilteredPath2 )
         || _.arraySetIdentical( srcFilteredPath1, srcFilteredPath2 ),
-        () => 'Source paths are inconsistent ' + _.toStr( srcFilteredPath1 ) + ' ' + _.toStr( srcFilteredPath2 )
+        () => 'Source paths are inconsistent ' + _.entity.exportString( srcFilteredPath1 ) + ' ' + _.entity.exportString( srcFilteredPath2 )
       );
     }
   }

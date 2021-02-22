@@ -66,7 +66,7 @@ function _fromGlob( glob )
   let self = this;
   let result;
 
-  _.assert( _.strIs( glob ), () => 'Expects string {-glob-}, but got ' + _.strType( glob ) );
+  _.assert( _.strIs( glob ), () => 'Expects string {-glob-}, but got ' + _.entity.strType( glob ) );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( glob === '' || glob === null )
