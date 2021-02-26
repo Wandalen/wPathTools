@@ -45663,6 +45663,86 @@ function mapOptimize( test )
   test.shouldThrowErrorSync( () => path.mapOptimize( '/path', 'wrong' ) );
 }
 
+//
+
+function identical( test )
+{
+
+  test.case = 'primitive, identical';
+  var src1 = 'abc';
+  var src2 = 'abc';
+  test.identical( _.path.map.identical( src1, src2 ), true );
+  test.identical( _.path.map.identical( src2, src1 ), true );
+
+  test.case = 'primitive, not identical';
+  var src1 = 'abc';
+  var src2 = 'abcd';
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'map, identical';
+  var src1 = { a : 'x' };
+  var src2 = { a : 'x' };
+  test.identical( _.path.map.identical( src1, src2 ), true );
+  test.identical( _.path.map.identical( src2, src1 ), true );
+
+  test.case = 'map, not identical, same keys';
+  var src1 = { a : 'x' };
+  var src2 = { a : 'y' };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'map, not identical, extra key';
+  var src1 = { a : 'x' };
+  var src2 = { a : 'x', b : 'y' };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'array, identical';
+  var src1 = [ 'a', 'b' ];
+  var src2 = [ 'a', 'b' ];
+  test.identical( _.path.map.identical( src1, src2 ), true );
+  test.identical( _.path.map.identical( src2, src1 ), true );
+
+  test.case = 'array, not identical, same length';
+  var src1 = [ 'a', 'b' ];
+  var src2 = [ 'b', 'a' ];
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'array, not identical, extra key';
+  var src1 = [ 'a', 'b' ];
+  var src2 = [ 'a', 'b', 'c' ];
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'map.array, identical';
+  var src1 = { a : 'x', b : [ 'a', 'b' ] };
+  var src2 = { a : 'x', b : [ 'a', 'b' ] };
+  test.identical( _.path.map.identical( src1, src2 ), true );
+  test.identical( _.path.map.identical( src2, src1 ), true );
+
+  test.case = 'map.array, not identical, same map, same length';
+  var src1 = { a : 'x', b : [ 'a', 'b' ] };
+  var src2 = { a : 'x', b : [ 'b', 'a' ] };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'map.array, not identical, same map, extra element in array';
+  var src1 = { a : 'x', b : [ 'a', 'b' ] };
+  var src2 = { a : 'x', b : [ 'a', 'b', 'c' ] };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'map.array, not identical, diff map';
+  var src1 = { a : 'x', b : [ 'a', 'b' ] };
+  var src2 = { a : 'x', b : [ 'a', 'b' ], c : 'x' };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  /* qqq : extend please */
+}
+
 // --
 // declare
 // --
@@ -45699,7 +45779,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
 
     filterInplace,
     filterDstInplace,
-    filterInplaceExtendedCallbacks, /* qqq : ? | Dmytro : renamed */
+    filterInplaceExtendedCallbacks,
     filterDstInplaceExtendedCallbacks,
 
     filter,
@@ -45741,6 +45821,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
     mapGroupByDst,
     // setOptimize,
     mapOptimize,
+    identical,
 
   },
 

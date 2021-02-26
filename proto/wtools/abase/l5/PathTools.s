@@ -30,7 +30,8 @@ if( typeof module !== 'undefined' )
 
 let _global = _global_;
 let _ = _global_.wTools;
-let Self = _.path = _.path || Object.create( null );
+_.path = _.path || Object.create( null );
+_.path.map = _.path.map || Object.create( null );
 
 // --
 // path map
@@ -3668,19 +3669,52 @@ function mapOptimize( filePath, basePath )
 
 }
 
-// --
-// fields
-// --
+//
 
-let Fields =
+function identical( src1, src2 )
 {
+  /* qqq : write performance test and optimize it */
+
+  if( _.mapIs( src1 ) )
+  return mapIdentical( src1, src2 );
+  else if( _.arrayIs( src1 ) )
+  return _.longIdentical( src1, src2 );
+  else
+  return src1 === src2;
+
+  function mapIdentical( src1, src2 )
+  {
+    if( !_.mapIs( src2 ) )
+    return false;
+    let keys1 = Object.keys( src1 );
+    let keys2 = Object.keys( src2 );
+    if( keys1.length !== keys2.length )
+    return false;
+    for( let i = 0, l = keys1.length ; i < l ; i++ )
+    {
+      let k = keys1[ i ];
+      if( _.arrayIs( src1[ k ] ) )
+      {
+        debugger;
+        if( !_.longIdentical( src1[ k ], src2[ k ] ) )
+        return false;
+      }
+      else
+      {
+        if( src1[ k ] !== src2[ k ] )
+        return false
+      }
+    }
+    return true;
+  }
+
 }
 
 // --
 // routines
 // --
 
-let Routines =
+let PathExtension =
 {
 
   // path map
@@ -3785,18 +3819,24 @@ let Routines =
 
 }
 
-_.mapSupplement( Self, Fields );
-_.mapSupplement( Self, Routines );
+let PathMapExtension =
+{
+  /* qqq : duplicate relevant routines here */
+
+  identical, /* qqq : implement very optimal version */
+
+}
+
+_.mapSupplement( _.path, PathExtension );
+_.mapSupplement( _.path.map, PathMapExtension );
 
 // --
 // export
 // --
 
 if( typeof module !== 'undefined' )
-module[ 'exports' ] = Self;
-
-if( typeof module !== 'undefined' )
 {
+  module[ 'exports' ] = _;
   require( './Glob.s' );
 }
 
