@@ -3719,53 +3719,53 @@ let PathExtension =
 
   // path map
 
-  _filterPairs,
-  filterPairs,
-  filterSrcPairs,
-  filterDstPairs,
+  _filterPairs, /* !!! */
+  filterPairs, /* !!! */
+  filterSrcPairs, /* !!! */
+  filterDstPairs, /* !!! */
 
-  _filterPairsInplace,
-  filterPairsInplace,
-  filterSrcPairsInplace,
-  filterDstPairsInplace,
+  _filterPairsInplace, /* !!! */
+  filterPairsInplace, /* !!! */
+  filterSrcPairsInplace, /* !!! */
+  filterDstPairsInplace, /* !!! */
 
-  _filterInplace,
-  filterInplace,
-  filterSrcInplace,
-  filterDstInplace,
+  _filterInplace, /* !!! */
+  filterInplace, /* !!! */
+  filterSrcInplace, /* !!! */
+  filterDstInplace, /* !!! */
 
-  _filter,
-  filter,
-  filterSrc,
-  filterDst,
+  _filter, /* !!! */
+  filter, /* !!! */
+  filterSrc, /* !!! */
+  filterDst, /* !!! */
 
-  all,
-  any,
-  none,
+  all, /* !!! */
+  any, /* !!! */
+  none, /* !!! */
 
-  isEmpty,
-  _mapExtend,
-  mapExtend,
-  mapSupplement,
-  mapAppend,
-  mapPrepend,
-  mapsPair,
+  isEmpty, /* !!! */
+  _mapExtend, /* !!! */
+  mapExtend, /* !!! */
+  mapSupplement, /* !!! */
+  mapAppend, /* !!! */
+  mapPrepend, /* !!! */
+  mapsPair, /* !!! */
 
-  simplify,
-  simplifyDst,
-  simplifyInplace,
+  simplify, /* !!! */
+  simplifyDst, /* !!! */
+  simplifyInplace, /* !!! */
 
-  mapDstFromSrc,
-  mapDstFromDst,
-  mapSrcFromSrc,
-  mapSrcFromDst,
+  mapDstFromSrc, /* !!! */
+  mapDstFromDst, /* !!! */
+  mapSrcFromSrc, /* !!! */
+  mapSrcFromDst, /* !!! */
 
   // etc
 
   traceToRoot,
   group,
-  mapGroupByDst,
-  mapOptimize,
+  mapGroupByDst, /* !!! */
+  mapOptimize, /* !!! */
 
   // to replace
 
@@ -3822,6 +3822,49 @@ let PathExtension =
 let PathMapExtension =
 {
   /* qqq : duplicate relevant routines here */
+  _filterPairs,
+  filterPairs,
+  filterSrcPairs,
+  filterDstPairs,
+
+  _filterPairsInplace,
+  filterPairsInplace,
+  filterSrcPairsInplace,
+  filterDstPairsInplace,
+
+  _filterInplace,
+  filterInplace,
+  filterSrcInplace,
+  filterDstInplace,
+
+  _filter,
+  filter,
+  filterSrc,
+  filterDst,
+
+  all,
+  any,
+  none,
+
+  isEmpty,
+  _extend : _mapExtend, /* !!! */
+  extend : mapExtend, /* !!! */
+  supplement : mapSupplement, /* !!! */
+  append : mapAppend, /* !!! */
+  prepend : mapPrepend, /* !!! */
+  pair : mapsPair, /* !!! */
+
+  simplify,
+  simplifyDst,
+  simplifyInplace,
+
+  dstFromSrc : mapDstFromSrc, /* !!! */
+  dstFromDst : mapDstFromDst, /* !!! */
+  srcFromSrc : mapSrcFromSrc, /* !!! */
+  srcFromDst : smapSrcFromDst, /* !!! */
+
+  groupByDst : mapGroupByDst,
+  optimize : mapOptimize,
 
   identical, /* qqq : implement very optimal version */
 
