@@ -3825,6 +3825,9 @@ let PathMapExtension =
 
   identical, /* qqq : implement very optimal version */
 
+
+  /* qqq : implement equivalent */
+
 }
 
 _.mapSupplement( _.path, PathExtension );
