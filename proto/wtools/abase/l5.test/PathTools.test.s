@@ -16,7 +16,7 @@ let _global = _global_;
 let _ = _global_.wTools;
 var o =
 {
-  fileProvider : _.fileProvider,
+  fileProvider :   _.fileProvider,
   filter : null
 };
 
@@ -45716,6 +45716,30 @@ function identical( test )
   test.identical( _.path.map.identical( src1, src2 ), false );
   test.identical( _.path.map.identical( src2, src1 ), false );
 
+  test.case = 'array.array, the same';
+  var src1 = [ 'a', [ 'b' ] ];
+  var src2 = [ 'a', [ 'b' ] ];
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'array.array, not identical, same length';
+  var src1 = [ 'a', [ 'b' ] ];
+  var src2 = [ 'b', [ 'a' ] ];
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'array.map, the same';
+  var src1 = [ 'a', { 'b' : 'c' } ];
+  var src2 = [ 'a', { 'b' : 'c' } ];
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'array.map, not identical, same length';
+  var src1 = [ 'a', { 'b' : 'c' } ];
+  var src2 = [ 'b', { 'c' : 'b' } ];
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
   test.case = 'map.array, identical';
   var src1 = { a : 'x', b : [ 'a', 'b' ] };
   var src2 = { a : 'x', b : [ 'a', 'b' ] };
@@ -45740,7 +45764,43 @@ function identical( test )
   test.identical( _.path.map.identical( src1, src2 ), false );
   test.identical( _.path.map.identical( src2, src1 ), false );
 
-  /* qqq : extend please */
+  test.case = 'map.map, the same';
+  var src1 = { a : 'x', b : { 'a' : 'b' } };
+  var src2 = { a : 'x', b : { 'a' : 'b' } };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'map.map, not identical, same map, extra element in array';
+  var src1 = { a : 'x', b : { 'a' : 'b' } };
+  var src2 = { a : 'x', b : { 'a' : 'b', 'c' : 'd' } };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'map.map, not identical, diff map';
+  var src1 = { a : 'x', b : { a : 'b' } };
+  var src2 = { 'a' : 'x', 'b' : { 'a' : 'b' }, 'c' : 'd' };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  /* qqq : extend please | aaa : Done. */
+
+  test.case = 'primitive, array';
+  var src1 = 'abc';
+  var src2 = [ 'abc' ];
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'primitive, map';
+  var src1 = 'abc';
+  var src2 = { a : 'abc' };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
+
+  test.case = 'array, map';
+  var src1 = [ 'abc' ];
+  var src2 = { a : 'abc' };
+  test.identical( _.path.map.identical( src1, src2 ), false );
+  test.identical( _.path.map.identical( src2, src1 ), false );
 }
 
 // --

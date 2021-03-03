@@ -3861,7 +3861,7 @@ let PathMapExtension =
   dstFromSrc : mapDstFromSrc,
   dstFromDst : mapDstFromDst,
   srcFromSrc : mapSrcFromSrc,
-  srcFromDst : smapSrcFromDst,
+  srcFromDst : mapSrcFromDst,
 
   groupByDst : mapGroupByDst,
   optimize : mapOptimize,
