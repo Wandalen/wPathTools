@@ -16,7 +16,7 @@ let _global = _global_;
 let _ = _global_.wTools;
 var o =
 {
-  fileProvider :   _.fileProvider,
+  fileProvider : _.fileProvider,
   filter : null
 };
 
