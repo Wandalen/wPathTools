@@ -3847,21 +3847,21 @@ let PathMapExtension =
   none,
 
   isEmpty,
-  _extend : _mapExtend, /* !!! */
-  extend : mapExtend, /* !!! */
-  supplement : mapSupplement, /* !!! */
-  append : mapAppend, /* !!! */
-  prepend : mapPrepend, /* !!! */
-  pair : mapsPair, /* !!! */
+  _extend : _mapExtend,
+  extend : mapExtend,
+  supplement : mapSupplement,
+  append : mapAppend,
+  prepend : mapPrepend,
+  pair : mapsPair,
 
   simplify,
   simplifyDst,
   simplifyInplace,
 
-  dstFromSrc : mapDstFromSrc, /* !!! */
-  dstFromDst : mapDstFromDst, /* !!! */
-  srcFromSrc : mapSrcFromSrc, /* !!! */
-  srcFromDst : smapSrcFromDst, /* !!! */
+  dstFromSrc : mapDstFromSrc,
+  dstFromDst : mapDstFromDst,
+  srcFromSrc : mapSrcFromSrc,
+  srcFromDst : smapSrcFromDst,
 
   groupByDst : mapGroupByDst,
   optimize : mapOptimize,
