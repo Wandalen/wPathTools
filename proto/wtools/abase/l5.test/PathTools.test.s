@@ -45668,7 +45668,7 @@ function mapOptimize( test )
 function identical( test )
 {
 
-  test.case = 'primitive str, identical';
+  test.case = 'primitive, identical';
   var src1 = 'abc';
   var src2 = 'abc';
   test.identical( _.path.map.identical( src1, src2 ), true );
