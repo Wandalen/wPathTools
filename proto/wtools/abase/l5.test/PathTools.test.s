@@ -45830,8 +45830,6 @@ function identical( test )
   test.identical( _.path.map.identical( src1, src2 ), false );
   test.identical( _.path.map.identical( src2, src1 ), false );
 
-  /* qqq : extend please | aaa : Done. */
-
   test.case = 'primitive, array';
   var src1 = 'abc';
   var src2 = [ 'abc' ];
@@ -45861,6 +45859,8 @@ function identical( test )
   var src2 = { '0' : 'abc' };
   test.identical( _.path.map.identical( src1, src2 ), false );
   test.identical( _.path.map.identical( src2, src1 ), false );
+
+  /* qqq : extend please | aaa : Done. */
 }
 
 // --
