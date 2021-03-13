@@ -349,15 +349,15 @@ globShortFilter_body.defaults =
   onEvaluate : null,
 }
 
-let globShortFilter = _.routineUnite( globShortFilter_head, globShortFilter_body );
+let globShortFilter = _.routine.uniteCloning_( globShortFilter_head, globShortFilter_body );
 
-let globShortFilterVals = _.routineUnite( globShortFilter_head, globShortFilter_body );
+let globShortFilterVals = _.routine.uniteCloning_( globShortFilter_head, globShortFilter_body );
 globShortFilterVals.defaults.onEvaluate = function byVal( e, k, src )
 {
   return e;
 }
 
-let globShortFilterKeys = _.routineUnite( globShortFilter_head, globShortFilter_body );
+let globShortFilterKeys = _.routine.uniteCloning_( globShortFilter_head, globShortFilter_body );
 globShortFilterKeys.defaults.onEvaluate = function byKey( e, k, src )
 {
   return _.arrayIs( src ) ? e : k;
@@ -384,7 +384,7 @@ globShortFit_body.defaults =
   onEvaluate : null,
 }
 
-let globShortFit = _.routineUnite( globShortFilter_head, globShortFit_body );
+let globShortFit = _.routine.uniteCloning_( globShortFilter_head, globShortFit_body );
 
 // --
 // long
@@ -478,15 +478,15 @@ globLongFilter_body.defaults =
   onEvaluate : null,
 }
 
-let globLongFilter = _.routineUnite( globLongFilter_head, globLongFilter_body );
+let globLongFilter = _.routine.uniteCloning_( globLongFilter_head, globLongFilter_body );
 
-let globLongFilterVals = _.routineUnite( globLongFilter_head, globLongFilter_body );
+let globLongFilterVals = _.routine.uniteCloning_( globLongFilter_head, globLongFilter_body );
 globLongFilterVals.defaults.onEvaluate = function byVal( e, k, src )
 {
   return e;
 }
 
-let globLongFilterKeys = _.routineUnite( globLongFilter_head, globLongFilter_body );
+let globLongFilterKeys = _.routine.uniteCloning_( globLongFilter_head, globLongFilter_body );
 globLongFilterKeys.defaults.onEvaluate = function byKey( e, k, src )
 {
   return _.arrayIs( src ) ? e : k;
@@ -513,7 +513,7 @@ globLongFit_body.defaults =
   onEvaluate : null,
 }
 
-let globLongFit = _.routineUnite( globLongFilter_head, globLongFit_body );
+let globLongFit = _.routine.uniteCloning_( globLongFilter_head, globLongFit_body );
 
 // --
 // full filter

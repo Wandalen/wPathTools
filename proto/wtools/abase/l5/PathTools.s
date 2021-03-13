@@ -1360,7 +1360,7 @@ filterPairs_body.defaults =
 
 //
 
-var filterPairs_ = _.routineUnite( filterPairs_head, filterPairs_body );
+var filterPairs_ = _.routine.uniteCloning_( filterPairs_head, filterPairs_body );
 filterPairs_.defaults =
 {
   dst : null,
@@ -1371,7 +1371,7 @@ filterPairs_.defaults =
 
 //
 
-var filterSrcPairs_ = _.routineUnite( filterPairs_head, filterPairs_body );
+var filterSrcPairs_ = _.routine.uniteCloning_( filterPairs_head, filterPairs_body );
 filterSrcPairs_.defaults =
 {
   dst : null,
@@ -1382,7 +1382,7 @@ filterSrcPairs_.defaults =
 
 //
 
-var filterDstPairs_ = _.routineUnite( filterPairs_head, filterPairs_body );
+var filterDstPairs_ = _.routine.uniteCloning_( filterPairs_head, filterPairs_body );
 filterDstPairs_.defaults =
 {
   dst : null,
@@ -2275,7 +2275,7 @@ filter_body.defaults =
 
 //
 
-let filter_ = _.routineUnite( filter_head, filter_body );
+let filter_ = _.routine.uniteCloning_( filter_head, filter_body );
 filter_.defaults =
 {
   dst : null,
@@ -2286,7 +2286,7 @@ filter_.defaults =
 
 //
 
-let filterSrc_ = _.routineUnite( filter_head, filter_body );
+let filterSrc_ = _.routine.uniteCloning_( filter_head, filter_body );
 filterSrc_.defaults =
 {
   dst : null,
@@ -2297,7 +2297,7 @@ filterSrc_.defaults =
 
 //
 
-let filterDst_ = _.routineUnite( filter_head, filter_body );
+let filterDst_ = _.routine.uniteCloning_( filter_head, filter_body );
 filterDst_.defaults =
 {
   dst : null,
