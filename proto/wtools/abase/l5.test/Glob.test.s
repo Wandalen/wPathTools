@@ -873,8 +873,6 @@ function pathMapToRegexps( test )
 
   /* */
 
-  debugger;
-
 }
 
 // --

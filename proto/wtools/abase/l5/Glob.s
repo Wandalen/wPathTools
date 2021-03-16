@@ -215,7 +215,6 @@ let _globShortSplitToRegexpSource = ( function functor()
 
   function handleCurlyBrackets( src, it )
   {
-    debugger;
     throw _.err( 'Glob with curly brackets is not allowed ', src );
   }
 
@@ -556,7 +555,6 @@ function _globAnalogs1( glob )
 
       if( !element )
       {
-        debugger;
         _.assert( 0, 'not expected' );
         split.splice( e, 1 );
         continue;
