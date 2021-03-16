@@ -3695,7 +3695,6 @@ function identical( src1, src2 )
       let k = keys1[ i ];
       if( _.arrayIs( src1[ k ] ) )
       {
-        debugger;
         if( !_.longIdentical( src1[ k ], src2[ k ] ) )
         return false;
       }
