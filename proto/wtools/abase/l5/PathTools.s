@@ -28,8 +28,8 @@ if( typeof module !== 'undefined' )
 
 //
 
-let _global = _global_;
-let _ = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
 _.path = _.path || Object.create( null );
 _.path.map = _.path.map || Object.create( null );
 

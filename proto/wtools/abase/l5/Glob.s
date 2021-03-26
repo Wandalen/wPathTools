@@ -17,9 +17,9 @@ if( typeof module !== 'undefined' )
 
 //
 
-let _global = _global_;
-let _ = _global_.wTools;
-let Self = _.path = _.path || Object.create( null );
+const _global = _global_;
+const _ = _global_.wTools;
+const Self = _.path = _.path || Object.create( null );
 
 // --
 // functor

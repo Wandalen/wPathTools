@@ -12,8 +12,8 @@ if( typeof module !== 'undefined' )
 
 }
 
-let _global = _global_;
-let _ = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
 var o =
 {
   fileProvider : _.fileProvider,
@@ -45747,7 +45747,7 @@ function identical( test )
 // declare
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools.l5.path.tools',
@@ -45827,7 +45827,7 @@ qqq : similar test routines ( for example filterPairs and filterPairsInplace )
 
 }
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
