@@ -12,7 +12,7 @@
     { "name" : "Dmytro Kryvoruchko", "email" : "dm.vict.kr@gmail.com" }
   ],
   "main" : "proto/wtools/abase/l5/PathTools.s",
-  "files" : [ "proto/wtools/abase/l5", "proto/wtools/Tools.s" ],
+  "files" : [ "proto/wtools/abase/l5", "proto/wtools/Tools.s", "proto/node_modules" ],
   "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "gendoc" : "wdoc proto" },
   "repository" :
   {
@@ -30,12 +30,6 @@
     "wstringsextra" : "",
     "warraysorted" : ""
   },
-  "devDependencies" :
-  {
-    "wFiles" : "",
-    "wTesting" : "",
-    "eslint" : "7.1.0",
-    "wpathtools" : "file:."
-  },
+  "devDependencies" : { "wFiles" : "", "wTesting" : "", "eslint" : "7.1.0" },
   "keywords" : [ "wTools", "wPath", "path", "url", "uri", "path", "file" ]
 }
