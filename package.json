@@ -1,6 +1,6 @@
 {
   "name": "wpathtools",
-  "version": "0.5.172",
+  "version": "0.5.173",
   "engine": "node >= 10.0.0",
   "description": "Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
   "license": "MIT",
@@ -22,7 +22,8 @@
   "main": "proto/wtools/abase/l5/PathTools.s",
   "files": [
     "proto/wtools/abase/l5",
-    "proto/wtools/Tools.s"
+    "proto/wtools/Tools.s",
+    "proto/node_modules"
   ],
   "scripts": {
     "test": "wtest .run 'proto/**' rapidity:-3",
@@ -44,8 +45,7 @@
   "devDependencies": {
     "eslint": "7.1.0",
     "wFiles": "delta",
-    "wTesting": "delta",
-    "wpathtools": "file:."
+    "wTesting": "delta"
   },
   "keywords": [
     "wTools",
