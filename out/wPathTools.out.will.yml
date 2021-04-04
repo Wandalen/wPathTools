@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wPathTools.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wPathTools.out.will.yml: &ref_0
+    hash: aaef5a9a6b6ee4d511ba32c5e4889f80
+    size: 39580
+  ../.ex.will.yml: &ref_1
     hash: 4c461e8fe2bccfa6c4c5bcdfc40df7e8
     size: 1974
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: c47d1b14f5a10e9215cc812cf1704b63
     size: 5210
 module:
@@ -19,11 +22,11 @@ module:
         globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - wPath
         - path
@@ -32,12 +35,12 @@ module:
         - file
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
         - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
       npm.name: wpathtools
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -722,6 +725,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -810,8 +831,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wPathTools.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wPathTools
@@ -822,13 +844,27 @@ module:
         globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - wPath
+        - path
+        - url
+        - uri
+        - file
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
+        - Volodymyr M. <volodymyr.migdal@gmail.com>
+        - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
       npm.name: wpathtools
-      npm.scripts: *ref_5
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
     path:
       module.willfiles:
         criterion:
@@ -1514,3 +1550,6 @@ module:
       ../.im.will.yml:
         hash: c47d1b14f5a10e9215cc812cf1704b63
         size: 5210
+      wPathTools.out.will.yml:
+        hash: aaef5a9a6b6ee4d511ba32c5e4889f80
+        size: 39580
