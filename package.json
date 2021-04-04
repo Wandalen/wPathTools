@@ -1,59 +1,35 @@
 {
-  "name": "wpathtools",
-  "version": "0.5.174",
-  "engine": "node >= 10.0.0",
-  "description": "Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
-  "license": "MIT",
-  "author": "Kostiantyn Wandalen <wanalen@01.school>",
-  "contributors": [
-    {
-      "name": "Kostiantyn Wandalen",
-      "email": "wanalen@01.school"
-    },
-    {
-      "name": "Volodymyr M.",
-      "email": "volodymyr.migdal@gmail.com"
-    },
-    {
-      "name": "Dmytro Kryvoruchko",
-      "email": "dm.vict.kr@gmail.com"
-    }
+  "name" : "wpathtools",
+  "version" : "0.5.175",
+  "engine" : "node >= 10.0.0",
+  "description" : "Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
+  "license" : "MIT",
+  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
+  "contributors" :
+  [
+    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
+    { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" },
+    { "name" : "Dmytro Kryvoruchko", "email" : "dm.vict.kr@gmail.com" }
   ],
-  "main": "proto/wtools/abase/l5/PathTools.s",
-  "files": [
-    "proto/wtools/abase/l5",
-    "proto/wtools/Tools.s",
-    "proto/node_modules"
-  ],
-  "scripts": {
-    "test": "wtest .run 'proto/**' rapidity:-3",
-    "gendoc": "wdoc proto"
+  "main" : "proto/node_modules/wpathtools",
+  "files" : [ "proto/wtools/abase/l5", "proto/wtools/Tools.s", "proto/node_modules" ],
+  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "gendoc" : "wdoc proto" },
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/Wandalen/wPathTools.git"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Wandalen/wPathTools.git"
+  "bugs" :
+  {
+    "url" : "https://github.com/Wandalen/wPathTools/issues"
   },
-  "bugs": {
-    "url": "https://github.com/Wandalen/wPathTools/issues"
+  "dependencies" :
+  {
+    "wTools" : "delta",
+    "wpathbasic" : "delta",
+    "wstringsextra" : "delta",
+    "warraysorted" : "delta"
   },
-  "dependencies": {
-    "wTools": "delta",
-    "wpathbasic": "delta",
-    "wstringsextra": "delta",
-    "warraysorted": "delta"
-  },
-  "devDependencies": {
-    "eslint": "7.1.0",
-    "wFiles": "delta",
-    "wTesting": "delta"
-  },
-  "keywords": [
-    "wTools",
-    "wPath",
-    "path",
-    "url",
-    "uri",
-    "path",
-    "file"
-  ]
+  "devDependencies" : { "eslint" : "7.1.0", "wFiles" : "delta", "wTesting" : "delta" },
+  "keywords" : [ "wTools", "wPath", "path", "url", "uri", "path", "file" ]
 }

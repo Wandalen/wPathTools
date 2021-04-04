@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - wPathTools.out
 consistency:
-  wPathTools.out.will.yml: &ref_0
-    hash: d305102623d9c9e8ee450d6d0afe6e86
-    size: 38968
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: 4c461e8fe2bccfa6c4c5bcdfc40df7e8
     size: 1974
-  ../.im.will.yml: &ref_2
-    hash: ad319f533a7b8faa5fdce1fba3220336
-    size: 5272
+  ../.im.will.yml: &ref_1
+    hash: c47d1b14f5a10e9215cc812cf1704b63
+    size: 5210
 module:
   wPathTools.out:
     about:
@@ -22,11 +19,11 @@ module:
         globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - wPath
         - path
@@ -35,12 +32,12 @@ module:
         - file
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
         - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
       npm.name: wpathtools
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -71,7 +68,7 @@ module:
       download:
         criterion:
           predefined: 1
-        path: ../
+        path: ..
       repository:
         path: 'git+https:///github.com/Wandalen/wPathTools.git'
       origins:
@@ -152,6 +149,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - ../proto/wtools/abase/l5/PathTools.s
+          - ../proto/node_modules/wpathtools
       exported.dir.proto.export:
         criterion:
           generated: 1
@@ -721,24 +722,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -827,9 +810,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wPathTools.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wPathTools
@@ -840,27 +822,13 @@ module:
         globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - wPath
-        - path
-        - url
-        - uri
-        - file
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
-        - Volodymyr M. <volodymyr.migdal@gmail.com>
-        - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
+      contributors: *ref_4
       npm.name: wpathtools
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -889,7 +857,7 @@ module:
       download:
         criterion:
           predefined: 1
-        path: ./
+        path: .
       repository:
         path: 'git+https:///github.com/Wandalen/wPathTools.git'
       origins:
@@ -970,6 +938,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - proto/wtools/abase/l5/PathTools.s
+          - proto/node_modules/wpathtools
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -1540,6 +1512,5 @@ module:
         hash: 4c461e8fe2bccfa6c4c5bcdfc40df7e8
         size: 1974
       ../.im.will.yml:
-        hash: ad319f533a7b8faa5fdce1fba3220336
-        size: 5272
-      wPathTools.out.will.yml: *ref_0
+        hash: c47d1b14f5a10e9215cc812cf1704b63
+        size: 5210
