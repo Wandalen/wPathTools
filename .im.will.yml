@@ -86,8 +86,8 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - /pro/module/wPathTools/proto/wtools/abase/l5/PathTools.s
-    - /pro/module/wPathTools/proto/node_modules/wpathtools
+    - proto/wtools/abase/l5/PathTools.s
+    - proto/node_modules/wpathtools
 reflector:
   reflect.proto:
     inherit: predefined.*
