@@ -47,7 +47,7 @@ function _filterPairs( o )
   it.src = '';
   it.dst = '';
 
-  _.routineOptions( _filterPairs, o );
+  _.routine.options_( _filterPairs, o );
   _.assert( arguments.length === 1 );
   _.routineIs( o.onEach );
 
@@ -286,16 +286,16 @@ function _filterPairs( o )
       if( !hasDst )
       return '';
       else if( !o.isSrc && !_.mapIs( o.filePath ) )
-        return _.mapVals( result )[ 0 ];
+        return _.props.vals( result )[ 0 ];
       return result;
     }
     else if( !hasDst )
     {
-      r = _.mapKeys( result );
+      r = _.props.keys( result );
     }
     else if( !o.isSrc && !_.mapIs( o.filePath ) )
     {
-      let keys = _.mapKeys( result );
+      let keys = _.props.keys( result );
       if( keys.length === 1 && keys[ 0 ] === '' )
       return result[ '' ];
       return result;
@@ -330,11 +330,11 @@ function filterPairs( filePath, onEach )
   _.assert( arguments.length === 2 )
 
   return this._filterPairs
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -345,11 +345,11 @@ function filterSrcPairs( filePath, onEach )
   _.assert( arguments.length === 2 )
 
   return this._filterPairs
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -360,11 +360,11 @@ function filterDstPairs( filePath, onEach )
   _.assert( arguments.length === 2 )
 
   return this._filterPairs
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : false,
-  } );
+  });
 }
 
 // function filterPairs( filePath, onEach )
@@ -572,7 +572,7 @@ function filterDstPairs( filePath, onEach )
 //     }
 //     else if( !hasDst )
 //     {
-//       r = _.mapKeys( result );
+//       r = _.props.keys( result );
 //     }
 //     else
 //     return result;
@@ -603,7 +603,7 @@ function _filterPairsInplace( o )
   it.src = '';
   it.dst = '';
 
-  _.routineOptions( _filterPairsInplace, arguments );
+  _.routine.options_( _filterPairsInplace, arguments );
   _.assert( arguments.length === 1 );
   _.routineIs( o.onEach );
 
@@ -624,10 +624,10 @@ function _filterPairsInplace( o )
 
     o.filePath = result;
 
-    let keys = _.mapKeys( o.filePath );
+    let keys = _.props.keys( o.filePath );
     if( o.isSrc )
     {
-      let vals = _.mapVals( o.filePath );
+      let vals = _.props.vals( o.filePath );
       if( vals.length === 1 && ( vals[ 0 ] === '' || vals[ 0 ] === null ) )
       return keys[ 0 ];
       else if( vals.length === 0 )
@@ -659,7 +659,7 @@ function _filterPairsInplace( o )
           elementsWrite( result, it, r );
         }
       }
-      _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.mapKeys( result ) ) );
+      _.arrayAppendArrayOnce( o.filePath, normalizeArray( _.props.keys( result ) ) );
     }
     else
     {
@@ -674,7 +674,7 @@ function _filterPairsInplace( o )
         }
       }
 
-      let keys = _.mapKeys( result );
+      let keys = _.props.keys( result );
       if( keys.length === 1 && keys[ 0 ] === '' )
       {
         o.filePath.splice( 0, o.filePath.length );
@@ -902,11 +902,11 @@ function filterPairsInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filterPairsInplace
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -916,11 +916,11 @@ function filterSrcPairsInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filterPairsInplace
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -930,11 +930,11 @@ function filterDstPairsInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filterPairsInplace
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : false,
-  } );
+  });
 }
 
 //
@@ -975,7 +975,7 @@ function filterPairs_head( routine, args )
       _.assert( 0 );
   }
 
-  _.routineOptions( routine, o );
+  _.routine.options_( routine, o );
   _.routineIs( o.onEach, '{-onEach-} should be a routine' );
 
   return o;
@@ -1225,10 +1225,10 @@ function filterPairs_body( o )
       if( !hasDst )
       result = '';
       else if( !o.isSrc && !_.mapIs( o.filePath ) )
-        result = _.mapVals( result )[ 0 ];
+        result = _.props.vals( result )[ 0 ];
     }
     else if( !hasDst && o.isSrc )
-      result = _.mapKeys( result );
+      result = _.props.keys( result );
 
     if( o.dst === false )
     {
@@ -1243,7 +1243,7 @@ function filterPairs_body( o )
         else if( _.mapIs( result ) )
         {
           if( o.isSrc )
-          result = _.arrayAppendArrayOnce( o.filePath, _.mapKeys( result ) );
+          result = _.arrayAppendArrayOnce( o.filePath, _.props.keys( result ) );
         }
         else
         {
@@ -1293,9 +1293,9 @@ function filterPairs_body( o )
         else if( _.mapIs( result ) )
         {
           if( o.isSrc )
-          result = _.arrayAppendArrayOnce( o.dst, _.mapKeys( result ) );
+          result = _.arrayAppendArrayOnce( o.dst, _.props.keys( result ) );
           else
-          result = _.arrayAppendArraysOnce( o.dst, _.mapVals( result ) );
+          result = _.arrayAppendArraysOnce( o.dst, _.props.vals( result ) );
         }
         else
           result = _.arrayAppendOnce( o.dst, result );
@@ -1360,7 +1360,7 @@ filterPairs_body.defaults =
 
 //
 
-var filterPairs_ = _.routine.uniteCloning_( filterPairs_head, filterPairs_body );
+var filterPairs_ = _.routine.uniteCloning_replaceByUnite( filterPairs_head, filterPairs_body );
 filterPairs_.defaults =
 {
   dst : null,
@@ -1371,7 +1371,7 @@ filterPairs_.defaults =
 
 //
 
-var filterSrcPairs_ = _.routine.uniteCloning_( filterPairs_head, filterPairs_body );
+var filterSrcPairs_ = _.routine.uniteCloning_replaceByUnite( filterPairs_head, filterPairs_body );
 filterSrcPairs_.defaults =
 {
   dst : null,
@@ -1382,7 +1382,7 @@ filterSrcPairs_.defaults =
 
 //
 
-var filterDstPairs_ = _.routine.uniteCloning_( filterPairs_head, filterPairs_body );
+var filterDstPairs_ = _.routine.uniteCloning_replaceByUnite( filterPairs_head, filterPairs_body );
 filterDstPairs_.defaults =
 {
   dst : null,
@@ -1397,7 +1397,7 @@ function _filterInplace( o )
 {
   let it = Object.create( null );
 
-  _.routineOptions( _filterInplace, o );
+  _.routine.options_( _filterInplace, o );
   _.assert( arguments.length === 1 );
   _.routineIs( o.onEach );
 
@@ -1619,11 +1619,11 @@ function filterInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return _filterInplace
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -1634,11 +1634,11 @@ function filterSrcInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return _filterInplace
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -1649,11 +1649,11 @@ function filterDstInplace( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return _filterInplace
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : false,
-  } );
+  });
 }
 
 //
@@ -1664,7 +1664,7 @@ function _filter( o )
   let it = Object.create( null );
   let result;
 
-  _.routineOptions( _filter, o );
+  _.routine.options_( _filter, o );
   _.assert( arguments.length === 1 );
   _.routineIs( o.onEach );
 
@@ -1831,11 +1831,11 @@ function filter( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filter
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -1846,11 +1846,11 @@ function filterSrc( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filter
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : true,
-  } );
+  });
 }
 
 //
@@ -1861,11 +1861,11 @@ function filterDst( filePath, onEach )
   _.assert( arguments.length === 2 );
 
   return this._filter
-  ( {
+  ({
     filePath,
     onEach,
     isSrc : false,
-  } );
+  });
 }
 
 //
@@ -2007,7 +2007,7 @@ function filter_head( routine, args )
 
   }
 
-  _.routineOptions( routine, o );
+  _.routine.options_( routine, o );
   _.routineIs( o.onEach, '{-onEach-} should be a routine' );
 
   return o;
@@ -2275,7 +2275,7 @@ filter_body.defaults =
 
 //
 
-let filter_ = _.routine.uniteCloning_( filter_head, filter_body );
+let filter_ = _.routine.uniteCloning_replaceByUnite( filter_head, filter_body );
 filter_.defaults =
 {
   dst : null,
@@ -2286,7 +2286,7 @@ filter_.defaults =
 
 //
 
-let filterSrc_ = _.routine.uniteCloning_( filter_head, filter_body );
+let filterSrc_ = _.routine.uniteCloning_replaceByUnite( filter_head, filter_body );
 filterSrc_.defaults =
 {
   dst : null,
@@ -2297,7 +2297,7 @@ filterSrc_.defaults =
 
 //
 
-let filterDst_ = _.routine.uniteCloning_( filter_head, filter_body );
+let filterDst_ = _.routine.uniteCloning_replaceByUnite( filter_head, filter_body );
 filterDst_.defaults =
 {
   dst : null,
@@ -2497,7 +2497,7 @@ function none( filePath, onEach )
 //   }
 //   else if( _.mapIs( src ) )
 //   {
-//     let keys = _.mapKeys( src );
+//     let keys = _.props.keys( src );
 //     if( keys.length === 0 )
 //     return true;
 //     if( keys.length === 1 )
@@ -2532,9 +2532,9 @@ function isEmpty( src )
     return false;
   }
 
-  if( _.mapKeys( src ).length === 0 )
+  if( _.props.keys( src ).length === 0 )
   return true;
-  if( _.mapKeys( src ).length === 1 )
+  if( _.props.keys( src ).length === 1 )
   if( src[ '.' ] === null || src[ '.' ] === '' || src[ '' ] === null || src[ '' ] === '' ) // qqq zzz : refactor to remove dot | Dmytro : uncomment routine above, please
     return true;
 
@@ -2548,7 +2548,7 @@ function _mapExtend( o )
   let self = this;
   let used = false;
 
-  _.routineOptions( _mapExtend, arguments );
+  _.routine.optionsWithoutUndefined( _mapExtend, arguments );
   _.assert( o.dstPathMap === null || _.strIs( o.dstPathMap ) || _.arrayIs( o.dstPathMap ) || _.mapIs( o.dstPathMap ) );
   _.assert( !_.mapIs( o.dstPath ) );
   _.assert( _.longHas( [ 'replace', 'append', 'prepend' ], o.mode ) );
@@ -2659,7 +2659,7 @@ function _mapExtend( o )
       {
         dstPathMap[ p ] = o.dstPath;
         used = true;
-      } );
+      });
     }
     else if( _.mapIs( dstPathMap ) )
     {
@@ -2695,7 +2695,7 @@ function _mapExtend( o )
 
   function dstPathMapRemove( dstPathMap, dstPath )
   {
-    if( dstPath !== '' && _.mapKeys( dstPathMap ).length === 0 )
+    if( dstPath !== '' && _.props.keys( dstPathMap ).length === 0 )
     {
       dstPathMap[ '' ] = dstPath;
     }
@@ -2742,7 +2742,7 @@ function _mapExtend( o )
         dstPathMapExtend( dstPathMap, g, dstPath2 );
       }
     }
-    else if( _.arrayLike( srcPathMap ) )
+    else if( _.argumentsArray.like( srcPathMap ) )
     {
       for( let g = 0 ; g < srcPathMap.length ; g++ )
       {
@@ -2858,13 +2858,13 @@ function mapExtend( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.cinterval.assertIn( arguments, [ 1, 3 ] );
   return self._mapExtend
-  ( {
+  ({
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'replace',
     supplementing : 0,
-  } );
+  });
 }
 
 //
@@ -2874,13 +2874,13 @@ function mapSupplement( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.cinterval.assertIn( arguments, [ 1, 3 ] );
   return self._mapExtend
-  ( {
+  ({
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'replace',
     supplementing : 1,
-  } );
+  });
 }
 
 //
@@ -2890,13 +2890,13 @@ function mapAppend( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.cinterval.assertIn( arguments, [ 1, 3 ] );
   return self._mapExtend
-  ( {
+  ({
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'append',
     supplementing : 1,
-  } );
+  });
 }
 
 //
@@ -2906,13 +2906,13 @@ function mapPrepend( dstPathMap, srcPathMap, dstPath )
   let self = this;
   _.assert( arguments.length === 2 || arguments.length === 3 );
   return self._mapExtend
-  ( {
+  ({
     dstPathMap,
     srcPathMap,
     dstPath,
     mode : 'prepend',
     supplementing : 1,
-  } );
+  });
 }
 
 //
@@ -2992,7 +2992,7 @@ function mapsPair( dstFilePath, srcFilePath )
   {
     _.assert
     (
-      _.mapsAreIdentical( srcFilePath, dstFilePath ),
+      _.map.identical( srcFilePath, dstFilePath ),
       () => 'File maps are inconsistent\n' + _.entity.exportString( srcFilePath ) + '\n' + _.entity.exportString( dstFilePath )
     );
   }
@@ -3058,13 +3058,13 @@ function simplify( src )
     src[ k ] = self.simplify( src[ k ] );
   }
 
-  let keys = _.mapKeys( src );
+  let keys = _.props.keys( src );
   if( keys.length === 0 )
   return '';
   if( keys.length !== 1 && keys.includes( '' ) && src[ '' ] === '' )
   delete src[ '' ];
 
-  let vals = _.mapVals( src );
+  let vals = _.props.vals( src );
   vals = vals.filter( ( e ) => e !== null && e !== '' );
   if( vals.length === 0 )
   {
@@ -3118,7 +3118,7 @@ function simplifyDst( src )
     src[ k ] = self.simplifyDst( src[ k ] );
   }
 
-  let keys = _.mapKeys( src );
+  let keys = _.props.keys( src );
   if( keys.length === 0 )
   return '';
 
@@ -3228,13 +3228,13 @@ function simplify_( dst, src )
       for( let k in src )
         result[ k ] = self.simplify( src[ k ] );
 
-      let keys = _.mapKeys( result );
+      let keys = _.props.keys( result );
       if( keys.length > 0 )
       {
         if( keys.length !== 1 && keys.includes( '' ) && result[ '' ] === '' )
         delete result[ '' ];
 
-        let vals = _.mapVals( result );
+        let vals = _.props.vals( result );
         vals = vals.filter( ( e ) => e !== null && e !== '' );
         if( vals.length === 0 )
         {
@@ -3268,7 +3268,7 @@ function simplify_( dst, src )
         if( _.arrayIs( result ) )
         _.arrayAppendArrayOnce( dst, result );
         else if( _.mapIs( result ) )
-          _.arrayAppendArrayOnce( dst, _.mapKeys( result ) );
+          _.arrayAppendArrayOnce( dst, _.props.keys( result ) );
         else if( result !== '' )
           _.arrayAppendOnce( dst, result );
       }
@@ -3455,7 +3455,7 @@ function group( o )
 {
   let self = this;
 
-  _.routineOptions( group, arguments );
+  _.routine.options_( group, arguments );
   _.assert( _.arrayIs( o.vals ) );
   _.assert( o.result === null || _.mapIs( o.result ) );
 
@@ -3501,7 +3501,7 @@ function group( o )
         if( a < b )
         return -1;
         return +1;
-      } );
+      });
       // _.arrayAppendOnce( res, val );
     }
 
@@ -3678,7 +3678,7 @@ function identical( src1, src2 )
   if( _.mapIs( src1 ) )
   return mapIdentical( src1, src2 );
   else if( _.arrayIs( src1 ) )
-  return _.longIdentical( src1, src2 );
+  return _.long.identical( src1, src2 );
   else
   return src1 === src2;
 
@@ -3695,7 +3695,7 @@ function identical( src1, src2 )
       let k = keys1[ i ];
       if( _.arrayIs( src1[ k ] ) )
       {
-        if( !_.longIdentical( src1[ k ], src2[ k ] ) )
+        if( !_.long.identical( src1[ k ], src2[ k ] ) )
         return false;
       }
       else
@@ -3710,7 +3710,7 @@ function identical( src1, src2 )
 }
 
 // --
-// routines
+// implementation
 // --
 
 let PathExtension =
@@ -3829,8 +3829,8 @@ let PathMapExtension =
 
 }
 
-_.mapSupplement( _.path, PathExtension );
-_.mapSupplement( _.path.map, PathMapExtension );
+_.props.supplement( _.path, PathExtension );
+_.props.supplement( _.path.map, PathMapExtension );
 
 // --
 // export
@@ -3842,4 +3842,4 @@ if( typeof module !== 'undefined' )
   require( './Glob.s' );
 }
 
-} )();
+})();

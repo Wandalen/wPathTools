@@ -5964,7 +5964,7 @@ function filterPairsInplace( test )
   };
 
   test.case = 'double';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, double );
   var expected =
   {
@@ -5990,7 +5990,7 @@ function filterPairsInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, srcOnly1 );
   var expected =
   {
@@ -6007,7 +6007,7 @@ function filterPairsInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, srcOnly2 );
   var expected =
   {
@@ -6024,7 +6024,7 @@ function filterPairsInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, srcOnly3 );
   var expected =
   {
@@ -6041,7 +6041,7 @@ function filterPairsInplace( test )
   test.true( got === src );
 
   test.case = 'dstOnly';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, dstOnly );
   var expected =
   {
@@ -6051,7 +6051,7 @@ function filterPairsInplace( test )
   test.true( got === src );
 
   test.case = 'dstDouble';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   delete src[ '' ];
   var got = _.path.filterPairsInplace( src, dstDouble );
   var expected = { '' : [ '/dir1', '/dir3', '/dir2' ] };
@@ -6059,28 +6059,28 @@ function filterPairsInplace( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing4';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairsInplace( src, nothing4 );
   var expected = {};
   test.identical( got, expected );
@@ -7931,7 +7931,7 @@ function filterDstPairsInplace( test )
   };
 
   test.case = 'double';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, double );
   var expected =
   {
@@ -7957,7 +7957,7 @@ function filterDstPairsInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, srcOnly1 );
   var expected =
   {
@@ -7974,7 +7974,7 @@ function filterDstPairsInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, srcOnly2 );
   var expected =
   {
@@ -7991,7 +7991,7 @@ function filterDstPairsInplace( test )
   test.true( got === src );
 
   test.case = 'srcOnly3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, srcOnly3 );
   var expected =
   {
@@ -8008,7 +8008,7 @@ function filterDstPairsInplace( test )
   test.true( got === src );
 
   test.case = 'returns self';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, returnSelf );
   var expected =
   {
@@ -8026,7 +8026,7 @@ function filterDstPairsInplace( test )
   test.true( got === src );
 
   test.case = 'dstOnly';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, dstOnly );
   var expected =
   {
@@ -8036,7 +8036,7 @@ function filterDstPairsInplace( test )
   test.true( got === src );
 
   test.case = 'dstDouble';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   delete src[ '' ];
   var got = _.path.filterDstPairsInplace( src, dstDouble );
   var expected = { '' : [ '/dir1', '/dir3', '/dir2' ] };
@@ -8044,28 +8044,28 @@ function filterDstPairsInplace( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, nothing3 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing4';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairsInplace( src, nothing4 );
   var expected = {};
   test.identical( got, expected );
@@ -13916,7 +13916,7 @@ function filterPairsInplace_( test )
   };
 
   test.case = 'double';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, double );
   var expected =
   {
@@ -13942,7 +13942,7 @@ function filterPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, srcOnly1 );
   var expected =
   {
@@ -13959,7 +13959,7 @@ function filterPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, srcOnly2 );
   var expected =
   {
@@ -13976,7 +13976,7 @@ function filterPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, srcOnly3 );
   var expected =
   {
@@ -13993,7 +13993,7 @@ function filterPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'dstOnly';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, dstOnly );
   var expected =
   {
@@ -14003,7 +14003,7 @@ function filterPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'dstDouble';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   delete src[ '' ];
   var got = _.path.filterPairs_( src, src, dstDouble );
   var expected = { '' : [ '/dir1', '/dir3', '/dir2' ] };
@@ -14011,28 +14011,28 @@ function filterPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, nothing3 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing4';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( src, src, nothing4 );
   var expected = {};
   test.identical( got, expected );
@@ -15884,7 +15884,7 @@ function filterDstPairsInplace_( test )
   };
 
   test.case = 'double';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, double );
   var expected =
   {
@@ -15910,7 +15910,7 @@ function filterDstPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, srcOnly1 );
   var expected =
   {
@@ -15927,7 +15927,7 @@ function filterDstPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, srcOnly2 );
   var expected =
   {
@@ -15944,7 +15944,7 @@ function filterDstPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'srcOnly3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, srcOnly3 );
   var expected =
   {
@@ -15961,7 +15961,7 @@ function filterDstPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'dstOnly';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, dstOnly );
   var expected =
   {
@@ -15971,7 +15971,7 @@ function filterDstPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'dstDouble';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   delete src[ '' ];
   var got = _.path.filterDstPairs_( src, src, dstDouble );
   var expected = { '' : [ '/dir1', '/dir3', '/dir2' ] };
@@ -15979,28 +15979,28 @@ function filterDstPairsInplace_( test )
   test.true( got === src );
 
   test.case = 'nothing1';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, nothing1 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing2';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing3';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, nothing3 );
   var expected = {};
   test.identical( got, expected );
   test.true( got === src );
 
   test.case = 'nothing4';
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( src, src, nothing4 );
   var expected = {};
   test.identical( got, expected );
@@ -18290,7 +18290,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'double';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, double );
   var expected =
   {
@@ -18318,7 +18318,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'srcOnly1';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, srcOnly1 );
   var expected =
   {
@@ -18337,7 +18337,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'srcOnly2';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, srcOnly2 );
   var expected =
   {
@@ -18356,7 +18356,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'srcOnly3';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, srcOnly3 );
   var expected =
   {
@@ -18375,7 +18375,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'dstOnly';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, dstOnly );
   var expected =
   {
@@ -18387,7 +18387,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'dstDouble';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   delete src[ '' ];
   var got = _.path.filterPairs_( dst, src, dstDouble );
   var expected = { '' : [ '/dir1', '/dir3', '/dir2' ] };
@@ -18397,7 +18397,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'nothing1';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, nothing1 );
   var expected = {};
   test.identical( got, expected );
@@ -18406,7 +18406,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'nothing2';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
@@ -18415,7 +18415,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'nothing3';
   var dst = [];
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, nothing3 );
   var expected = [];
   test.identical( got, expected );
@@ -18424,7 +18424,7 @@ function filterPairsWithDst_( test )
 
   test.case = 'nothing4';
   var dst = [];
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterPairs_( dst, src, nothing4 );
   var expected = [];
   test.identical( got, expected );
@@ -20744,7 +20744,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'double';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, double );
   var expected =
   {
@@ -20772,7 +20772,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'srcOnly1';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, srcOnly1 );
   var expected =
   {
@@ -20791,7 +20791,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'srcOnly2';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, srcOnly2 );
   var expected =
   {
@@ -20810,7 +20810,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'srcOnly3';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, srcOnly3 );
   var expected =
   {
@@ -20829,7 +20829,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'dstOnly';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, dstOnly );
   var expected =
   {
@@ -20841,7 +20841,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'dstDouble';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   delete src[ '' ];
   var got = _.path.filterDstPairs_( dst, src, dstDouble );
   var expected = { '' : [ '/dir1', '/dir3', '/dir2' ] };
@@ -20851,7 +20851,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'nothing1';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, nothing1 );
   var expected = {};
   test.identical( got, expected );
@@ -20860,7 +20860,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'nothing2';
   var dst = {};
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, nothing2 );
   var expected = {};
   test.identical( got, expected );
@@ -20869,7 +20869,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'nothing3';
   var dst = [];
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, nothing3 );
   var expected = [];
   test.identical( got, expected );
@@ -20878,7 +20878,7 @@ function filterDstPairsWithDst_( test )
 
   test.case = 'nothing4';
   var dst = [];
-  var src = _.mapSupplement( {}, srcMap );
+  var src = _.props.supplement( {}, srcMap );
   var got = _.path.filterDstPairs_( dst, src, nothing4 );
   var expected = [];
   test.identical( got, expected );
@@ -36199,7 +36199,7 @@ function isEmpty( test )
 
   test.case = 'wrong type of src';
   test.shouldThrowErrorSync( () => _.path.isEmpty( new Set() ) );
-  test.shouldThrowErrorSync( () => _.path.isEmpty( _.argumentsArrayMake( [] ) ) );
+  test.shouldThrowErrorSync( () => _.path.isEmpty( _.argumentsArray.make( [] ) ) );
   function Constr (){ this.a = ''; return this };
   test.shouldThrowErrorSync( () => _.path.isEmpty( new Constr() ) );
 }
@@ -44154,7 +44154,7 @@ function mapDstFromDst( test )
 
   test.case = 'wrong type of pathMap';
   test.shouldThrowErrorSync( () => _.path.mapDstFromDst( undefined ) );
-  test.shouldThrowErrorSync( () => _.path.mapDstFromDst( _.argumentsArrayMake( [ '/str' ] ) ) );
+  test.shouldThrowErrorSync( () => _.path.mapDstFromDst( _.argumentsArray.make( [ '/str' ] ) ) );
 }
 
 //
@@ -44258,7 +44258,7 @@ function mapSrcFromSrc( test )
 
   test.case = 'wrong type of pathMap';
   test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc( undefined ) );
-  test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc( _.argumentsArrayMake( [ '/str' ] ) ) );
+  test.shouldThrowErrorSync( () => _.path.mapSrcFromSrc( _.argumentsArray.make( [ '/str' ] ) ) );
 }
 
 //

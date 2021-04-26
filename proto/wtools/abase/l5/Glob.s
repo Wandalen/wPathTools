@@ -298,7 +298,7 @@ function globShortFilter_head( routine, args )
   if( args[ 1 ] !== undefined )
   o = { src : args[ 0 ], selector : args[ 1 ] }
 
-  o = _.routineOptions( routine, o );
+  o = _.routine.options_( routine, o );
 
   if( o.onEvaluate === null )
   o.onEvaluate = function byVal( e, k, src )
@@ -348,15 +348,15 @@ globShortFilter_body.defaults =
   onEvaluate : null,
 }
 
-let globShortFilter = _.routine.uniteCloning_( globShortFilter_head, globShortFilter_body );
+let globShortFilter = _.routine.uniteCloning_replaceByUnite( globShortFilter_head, globShortFilter_body );
 
-let globShortFilterVals = _.routine.uniteCloning_( globShortFilter_head, globShortFilter_body );
+let globShortFilterVals = _.routine.uniteCloning_replaceByUnite( globShortFilter_head, globShortFilter_body );
 globShortFilterVals.defaults.onEvaluate = function byVal( e, k, src )
 {
   return e;
 }
 
-let globShortFilterKeys = _.routine.uniteCloning_( globShortFilter_head, globShortFilter_body );
+let globShortFilterKeys = _.routine.uniteCloning_replaceByUnite( globShortFilter_head, globShortFilter_body );
 globShortFilterKeys.defaults.onEvaluate = function byKey( e, k, src )
 {
   return _.arrayIs( src ) ? e : k;
@@ -383,7 +383,7 @@ globShortFit_body.defaults =
   onEvaluate : null,
 }
 
-let globShortFit = _.routine.uniteCloning_( globShortFilter_head, globShortFit_body );
+let globShortFit = _.routine.uniteCloning_replaceByUnite( globShortFilter_head, globShortFit_body );
 
 // --
 // long
@@ -425,7 +425,7 @@ function globLongFilter_head( routine, args )
   if( args[ 1 ] !== undefined )
   o = { src : args[ 0 ], selector : args[ 1 ] }
 
-  o = _.routineOptions( routine, o );
+  o = _.routine.options_( routine, o );
 
   if( o.onEvaluate === null )
   o.onEvaluate = function byVal( e, k, src )
@@ -477,15 +477,15 @@ globLongFilter_body.defaults =
   onEvaluate : null,
 }
 
-let globLongFilter = _.routine.uniteCloning_( globLongFilter_head, globLongFilter_body );
+let globLongFilter = _.routine.uniteCloning_replaceByUnite( globLongFilter_head, globLongFilter_body );
 
-let globLongFilterVals = _.routine.uniteCloning_( globLongFilter_head, globLongFilter_body );
+let globLongFilterVals = _.routine.uniteCloning_replaceByUnite( globLongFilter_head, globLongFilter_body );
 globLongFilterVals.defaults.onEvaluate = function byVal( e, k, src )
 {
   return e;
 }
 
-let globLongFilterKeys = _.routine.uniteCloning_( globLongFilter_head, globLongFilter_body );
+let globLongFilterKeys = _.routine.uniteCloning_replaceByUnite( globLongFilter_head, globLongFilter_body );
 globLongFilterKeys.defaults.onEvaluate = function byKey( e, k, src )
 {
   return _.arrayIs( src ) ? e : k;
@@ -512,7 +512,7 @@ globLongFit_body.defaults =
   onEvaluate : null,
 }
 
-let globLongFit = _.routine.uniteCloning_( globLongFilter_head, globLongFit_body );
+let globLongFit = _.routine.uniteCloning_replaceByUnite( globLongFilter_head, globLongFit_body );
 
 // --
 // full filter
@@ -993,7 +993,7 @@ function pathMapToRegexps( o )
   if( arguments[ 1 ] !== undefined )
   o = { filePath : arguments[ 0 ], basePath : arguments[ 1 ] }
 
-  _.routineOptions( pathMapToRegexps, o );
+  _.routine.options_( pathMapToRegexps, o );
   _.assert( arguments.length === 1 || arguments.length === 2 );
   _.assert( _.mapIs( o.basePath ) );
   _.assert( _.mapIs( o.filePath ) )
@@ -1021,12 +1021,12 @@ function pathMapToRegexps( o )
   /* unglob filePath */
 
   fileUnglob();
-  o.optimizedUnglobedFilePath = _.mapExtend( null, o.unglobedFilePath );
+  o.optimizedUnglobedFilePath = _.props.extend( null, o.unglobedFilePath );
 
   /* unglob basePath */
 
   o.unglobedBasePath = baseUnglob();
-  o.optimizedUnglobedBasePath = _.mapExtend( null, o.unglobedBasePath );
+  o.optimizedUnglobedBasePath = _.props.extend( null, o.unglobedBasePath );
 
   /* group by path */
 
@@ -1459,7 +1459,7 @@ let Fields =
 }
 
 // --
-// routines
+// implementation
 // --
 
 let Routines =
@@ -1506,8 +1506,8 @@ let Routines =
 
 }
 
-_.mapSupplement( Self, Fields );
-_.mapSupplement( Self, Routines );
+_.props.supplement( Self, Fields );
+_.props.supplement( Self, Routines );
 
 // --
 // export
