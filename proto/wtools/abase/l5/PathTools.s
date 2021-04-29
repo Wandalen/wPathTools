@@ -2766,8 +2766,8 @@ function _mapExtend( o )
     if( _.boolLike( src ) )
     src = !!src;
 
-    _.assert( dst === undefined || dst === null || _.arrayIs( dst ) || _.strIs( dst ) || _.boolIs( dst ) || _.objectIs( dst ) );
-    _.assert( src === null || _.arrayIs( src ) || _.strIs( src ) || _.boolIs( src ) || _.objectIs( src ) );
+    _.assert( dst === undefined || dst === null || _.arrayIs( dst ) || _.strIs( dst ) || _.boolIs( dst ) || _.object.isBasic( dst ) );
+    _.assert( src === null || _.arrayIs( src ) || _.strIs( src ) || _.boolIs( src ) || _.object.isBasic( src ) );
 
     if( o.mode === 'replace' )
     {
