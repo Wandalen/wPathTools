@@ -1082,7 +1082,7 @@ function pathMapToRegexps( o )
 
     let basePath = o.unglobedBasePath[ stemPath ];
     let r = Object.create( null );
-    r.certainlyHash = new Map;
+    r.certainlyHash = new HashMap;
     r.transient = [];
     r.actualAny = [];
     r.actualAny2 = [];

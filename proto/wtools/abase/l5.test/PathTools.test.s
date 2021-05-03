@@ -43995,7 +43995,7 @@ function mapDstFromSrc( test )
 
   test.case = 'Map';
   var exp = [ null ];
-  var src = new Map( [ [ 'str', 'str' ] ] );
+  var src = new HashMap( [ [ 'str', 'str' ] ] );
   var got = _.path.mapDstFromSrc( src );
   test.identical( got, exp );
   test.true( got !== src );
@@ -44093,8 +44093,8 @@ function mapDstFromDst( test )
   test.true( got !== src );
 
   test.case = 'Map';
-  var exp = [ new Map( [ [ 'str', 'str' ] ] ) ];
-  var src = new Map( [ [ 'str', 'str' ] ] );
+  var exp = [ new HashMap( [ [ 'str', 'str' ] ] ) ];
+  var src = new HashMap( [ [ 'str', 'str' ] ] );
   var got = _.path.mapDstFromDst( src );
   test.identical( [ ... got[ 0 ].entries() ], [ ... exp[ 0 ].entries() ] );
   test.true( got !== src );
@@ -44197,8 +44197,8 @@ function mapSrcFromSrc( test )
   test.true( got !== src );
 
   test.case = 'Map';
-  var exp = [ new Map( [ [ 'str', 'str' ] ] ) ];
-  var src = new Map( [ [ 'str', 'str' ] ] );
+  var exp = [ new HashMap( [ [ 'str', 'str' ] ] ) ];
+  var src = new HashMap( [ [ 'str', 'str' ] ] );
   var got = _.path.mapSrcFromSrc( src );
   test.identical( [ ... got[ 0 ].entries() ], [ ... exp[ 0 ].entries() ] );
   test.true( got !== src );
@@ -44302,7 +44302,7 @@ function mapSrcFromDst( test )
 
   test.case = 'Map';
   var exp = [ null ];
-  var src = new Map( [ [ 'str', 'str' ] ] );
+  var src = new HashMap( [ [ 'str', 'str' ] ] );
   var got = _.path.mapSrcFromDst( src );
   test.identical( got, exp );
   test.true( got !== src );
