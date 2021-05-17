@@ -2,12 +2,9 @@ format: outwillfile-2.0
 root:
   - wPathTools.out
 consistency:
-  ../.ex.will.yml: &ref_0
-    hash: 4c461e8fe2bccfa6c4c5bcdfc40df7e8
-    size: 1974
-  ../.im.will.yml: &ref_1
-    hash: c34e723166ee6be7c2e30625b6eab8e7
-    size: 5164
+  ../will.yml: &ref_0
+    hash: 523c5c1fcd6d013ebb36b07a5cbd1d07
+    size: 6908
 module:
   wPathTools.out:
     about:
@@ -19,25 +16,25 @@ module:
         globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters: &ref_2
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords: &ref_3
+      license: MIT
+      npm.name: wpathtools
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: &ref_1
         - wTools
         - wPath
         - path
         - url
         - uri
         - file
-      license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors: &ref_2
         - Kostiantyn Wandalen <wanalen@01.school>
         - Volodymyr M. <volodymyr.migdal@gmail.com>
         - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
-      npm.name: wpathtools
-      npm.scripts: &ref_5
+      interpreters: &ref_3
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      npm.scripts: &ref_4
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -52,15 +49,11 @@ module:
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.in:
         criterion:
           predefined: 1
@@ -185,15 +178,15 @@ module:
         path: 'npm:///wTools'
         autoExporting: 0
         enabled: 0
-      wModuleForTesting2:
+      wpathbasic:
         path: 'npm:///wpathbasic'
         autoExporting: 0
         enabled: 0
-      wStringsExtra:
+      wstringsextra:
         path: 'npm:///wstringsextra'
         autoExporting: 0
         enabled: 0
-      wArraySorted:
+      warraysorted:
         path: 'npm:///warraysorted'
         autoExporting: 0
         enabled: 0
@@ -810,8 +803,7 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      ../will.yml: *ref_0
   ../:
     about:
       name: wPathTools
@@ -822,26 +814,22 @@ module:
         globing. Extends module ModuleForTesting2.
       enabled: 1
       version: 0.6.0
-      interpreters: *ref_2
-      keywords: *ref_3
       license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
       npm.name: wpathtools
-      npm.scripts: *ref_5
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: *ref_1
+      contributors: *ref_2
+      interpreters: *ref_3
+      npm.scripts: *ref_4
     path:
       module.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
@@ -947,15 +935,15 @@ module:
         path: 'npm:///wTools'
         autoExporting: 0
         enabled: 0
-      wModuleForTesting2:
+      wpathbasic:
         path: 'npm:///wpathbasic'
         autoExporting: 0
         enabled: 0
-      wStringsExtra:
+      wstringsextra:
         path: 'npm:///wstringsextra'
         autoExporting: 0
         enabled: 0
-      wArraySorted:
+      warraysorted:
         path: 'npm:///warraysorted'
         autoExporting: 0
         enabled: 0
@@ -1508,9 +1496,6 @@ module:
           - 'build::release'
           - 'build::npm'
     consistency:
-      ../.ex.will.yml:
-        hash: 4c461e8fe2bccfa6c4c5bcdfc40df7e8
-        size: 1974
-      ../.im.will.yml:
-        hash: c34e723166ee6be7c2e30625b6eab8e7
-        size: 5164
+      ../will.yml:
+        hash: 523c5c1fcd6d013ebb36b07a5cbd1d07
+        size: 6908
