@@ -1,32 +1,112 @@
-submodule:
-  wTools:
-    path: 'npm:///wTools'
-    enabled: 0
-  wModuleForTesting2:
-    path: 'npm:///wpathbasic'
-    enabled: 0
-  wStringsExtra:
-    path: 'npm:///wstringsextra'
-    enabled: 0
-  wArraySorted:
-    path: 'npm:///warraysorted'
-    enabled: 0
-  wPathTools:
-    path: 'hd://.'
-    enabled: 0
+about:
+  name: wPathTools
+  description: >-
+    Collection of cross-platform routines to operate paths reliably and
+    consistently. Implements routines for manipulating paths maps and globing.
+    Extends module ModuleForTesting2.
+  version: 0.6.0
+  enabled: 1
+  license: MIT
+  npm.name: wpathtools
+  author: Kostiantyn Wandalen <wanalen@01.school>
+  keywords:
+    - wTools
+    - wPath
+    - path
+    - url
+    - uri
+    - file
+  contributors:
+    - Kostiantyn Wandalen <wanalen@01.school>
+    - Volodymyr M. <volodymyr.migdal@gmail.com>
+    - Dmytro Kryvoruchko <dm.vict.kr@gmail.com>
+  interpreters:
+    - njs >= 10.0.0
+    - chrome >= 60.0.0
+    - firefox >= 60.0.0
+  npm.scripts:
+    test: wtest .run proto/**
+    docgen: wdocgen .build proto
+build:
+  proto.export:
     criterion:
-      development: 1
-  wFiles:
-    path: 'npm:///wFiles'
-    enabled: 0
+      content: proto
+      export: 1
+    steps:
+      - 'step::proto.export'
+  doc.export:
     criterion:
-      development: 1
-  wTesting:
-    path: 'npm:///wTesting'
-    enabled: 0
+      content: doc
+      export: 1
+    steps:
+      - 'step::doc.export'
+  npm.export:
     criterion:
-      development: 1
+      content: npm
+      export: 1
+    steps:
+      - 'step::npm.publish'
+  export:
+    criterion:
+      default: 1
+      export: 1
+    steps:
+      - 'build::proto.export'
+  debug:
+    criterion:
+      default: 1
+      debug: debug
+      raw: raw
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - reflect.proto.*=1
+  compiled.debug:
+    criterion:
+      debug: debug
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.no.tests*=1
+      - transpile.proto.only.tests*=1
+  raw.release:
+    criterion:
+      debug: release
+      raw: raw
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.raw
+  release:
+    criterion:
+      debug: release
+      raw: compiled
+      content: prime
+    steps:
+      - 'step::clean.out*=2'
+      - transpile.proto.no.tests*=1
+      - transpile.proto.only.tests*=1
+  npm:
+    criterion:
+      debug: debug
+      raw: raw
+      content: npm
+    steps:
+      - npm.generate.*=1
+  all:
+    steps:
+      - 'build::debug'
+      - 'build::compiled.debug'
+      - 'build::raw.release'
+      - 'build::release'
+      - 'build::npm'
 path:
+  repository: 'git+https:///github.com/Wandalen/wPathTools.git'
+  origins:
+    - 'git+https:///github.com/Wandalen/wPathTools.git'
+    - 'npm:///wpathtools'
+  bugtracker: 'https:///github.com/Wandalen/wPathTools/issues'
   in: .
   out: out
   temp:
@@ -146,6 +226,26 @@ reflector:
       '**.test*': 1
       'path::proto': '{path::out.*=1}/Tests.test.s'
 step:
+  proto.export:
+    inherit: module.export
+    export: 'path::export'
+    tar: 0
+    criterion:
+      content: proto
+  doc.export:
+    inherit: module.export
+    export: 'path::doc'
+    tar: 0
+    criterion:
+      content: doc
+  npm.export:
+    inherit: module.export
+    export: out.npm
+    tar: 0
+    criterion:
+      content: npm
+  npm.publish:
+    shell: npm publish
   npm.generate:
     inherit: npm.generate
     entryPath: 'path::entry.out.*=1'
@@ -196,53 +296,31 @@ step:
     criterion:
       content: prime
       debug: release
-build:
-  debug:
+submodule:
+  wTools:
+    path: 'npm:///wTools'
+    enabled: 0
+  wpathbasic:
+    path: 'npm:///wpathbasic'
+    enabled: 0
+  wstringsextra:
+    path: 'npm:///wstringsextra'
+    enabled: 0
+  warraysorted:
+    path: 'npm:///warraysorted'
+    enabled: 0
+  wPathTools:
+    path: 'hd://.'
+    enabled: 0
     criterion:
-      default: 1
-      debug: debug
-      raw: raw
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - reflect.proto.*=1
-  compiled.debug:
+      development: 1
+  wFiles:
+    path: 'npm:///wFiles'
+    enabled: 0
     criterion:
-      debug: debug
-      raw: compiled
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-  raw.release:
+      development: 1
+  wTesting:
+    path: 'npm:///wTesting'
+    enabled: 0
     criterion:
-      debug: release
-      raw: raw
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.raw
-  release:
-    criterion:
-      debug: release
-      raw: compiled
-      content: prime
-    steps:
-      - 'step::clean.out*=2'
-      - transpile.proto.no.tests*=1
-      - transpile.proto.only.tests*=1
-  npm:
-    criterion:
-      debug: debug
-      raw: raw
-      content: npm
-    steps:
-      - npm.generate.*=1
-  all:
-    steps:
-      - 'build::debug'
-      - 'build::compiled.debug'
-      - 'build::raw.release'
-      - 'build::release'
-      - 'build::npm'
+      development: 1
