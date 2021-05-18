@@ -3334,7 +3334,7 @@ function mapDstFromDst( pathMap )
     if( pathMap === null )
     return [];
     else
-    return _.arrayAsShallowing( pathMap );
+    return _.array.asShallow( pathMap );
   }
 
   let result = [];
@@ -3361,7 +3361,7 @@ function mapSrcFromSrc( pathMap )
     if( pathMap === null )
     return [];
     else
-    return _.arrayAsShallowing( pathMap );
+    return _.array.asShallow( pathMap );
   }
 
   let result = [];

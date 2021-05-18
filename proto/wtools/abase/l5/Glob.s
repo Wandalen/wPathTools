@@ -784,11 +784,11 @@ function globHas( superGlob, subGlob )
 
   let superGlob0 = superGlob;
   let superGlobs = self.globNormalize( superGlob );
-  superGlobs = _.arrayAs( self._globAnalogs1( superGlobs ) );
+  superGlobs = _.array.as( self._globAnalogs1( superGlobs ) );
 
   let subGlob0 = subGlob;
   let subGlobs = self.globNormalize( subGlob );
-  subGlobs = _.arrayAs( self._globAnalogs1( subGlobs ) );
+  subGlobs = _.array.as( self._globAnalogs1( subGlobs ) );
 
   _.assert( _.arrayIs( superGlobs ) );
   _.assert( _.arrayIs( subGlobs ) );
