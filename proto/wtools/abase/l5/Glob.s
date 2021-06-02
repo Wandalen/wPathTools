@@ -611,7 +611,7 @@ function _globAnalogs2( glob, stemPath, basePath )
   _.assert( _.strIs( glob ), 'Expects string {-glob-}' );
   _.assert( _.strIs( stemPath ), 'Expects string' );
   _.assert( _.strIs( basePath ) );
-  _.assert( !self.isRelative( glob ) ^ self.isRelative( stemPath ), 'Expects both relative path either absolute' );
+  _.assert( !self.isRelative( glob ) === !self.isRelative( stemPath ), 'Expects both relative path either absolute' );
   _.assert( self.isGlob( glob ), () => 'Expects glob, but got ' + glob );
 
   let result = [];
@@ -1451,18 +1451,10 @@ pathMapToRegexps.defaults =
 }
 
 // --
-// fields
+// extension
 // --
 
-let Fields =
-{
-}
-
-// --
-// implementation
-// --
-
-let Routines =
+let Extension =
 {
 
   // simple transformer
@@ -1506,8 +1498,7 @@ let Routines =
 
 }
 
-_.props.supplement( Self, Fields );
-_.props.supplement( Self, Routines );
+_.props.supplement( Self, Extension );
 
 // --
 // export
