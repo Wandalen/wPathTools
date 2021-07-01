@@ -1,35 +1,60 @@
 {
-  "name" : "wpathtools",
-  "version" : "0.5.195",
-  "engine" : "node >= 10.0.0",
-  "description" : "Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
-  "license" : "MIT",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "contributors" :
-  [
-    { "name" : "Kostiantyn Wandalen", "email" : "wanalen@01.school" },
-    { "name" : "Volodymyr M.", "email" : "volodymyr.migdal@gmail.com" },
-    { "name" : "Dmytro Kryvoruchko", "email" : "dm.vict.kr@gmail.com" }
+  "name": "wpathtools",
+  "version": "0.5.196",
+  "engine": "node >= 10.0.0",
+  "description": "Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
+  "license": "MIT",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "contributors": [
+    {
+      "name": "Kostiantyn Wandalen",
+      "email": "wanalen@01.school"
+    },
+    {
+      "name": "Volodymyr M.",
+      "email": "volodymyr.migdal@gmail.com"
+    },
+    {
+      "name": "Dmytro Kryvoruchko",
+      "email": "dm.vict.kr@gmail.com"
+    }
   ],
-  "main" : "proto/node_modules/wpathtools",
-  "files" : [ "proto/wtools/abase/l5", "proto/node_modules", "proto/node_modules/Tools", "proto/node_modules/wpathtools" ],
-  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "gendoc" : "wdoc proto" },
-  "repository" :
-  {
-    "type" : "git",
-    "url" : "https://github.com/Wandalen/wPathTools.git"
+  "main": "proto/node_modules/wpathtools",
+  "files": [
+    "proto/wtools/abase/l5",
+    "proto/node_modules",
+    "proto/node_modules/Tools",
+    "proto/node_modules/wpathtools"
+  ],
+  "scripts": {
+    "test": "wtest .run 'proto/**' rapidity:-3",
+    "gendoc": "wdoc proto"
   },
-  "bugs" :
-  {
-    "url" : "https://github.com/Wandalen/wPathTools/issues"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wPathTools.git"
   },
-  "dependencies" :
-  {
-    "wTools" : "gamma",
-    "wpathbasic" : "gamma",
-    "wstringsextra" : "gamma",
-    "warraysorted" : "gamma"
+  "bugs": {
+    "url": "https://github.com/Wandalen/wPathTools/issues"
   },
-  "devDependencies" : { "eslint" : "7.1.0", "wFiles" : "gamma", "wTesting" : "gamma" },
-  "keywords" : [ "wTools", "wPath", "path", "url", "uri", "path", "file" ]
+  "dependencies": {
+    "wTools": "gamma",
+    "wstringsextra": "gamma",
+    "wpathbasic": "gamma",
+    "warraysorted": "gamma"
+  },
+  "devDependencies": {
+    "wTesting": "gamma",
+    "wFiles": "gamma",
+    "eslint": "7.1.0"
+  },
+  "keywords": [
+    "wTools",
+    "wPath",
+    "path",
+    "url",
+    "uri",
+    "path",
+    "file"
+  ]
 }
