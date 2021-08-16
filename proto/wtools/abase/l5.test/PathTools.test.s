@@ -18710,7 +18710,7 @@ function filterPairsWithDst_( test )
   }
 
 }
-filterPairsWithDst_.timeOut = 10000;
+filterPairsWithDst_.timeOut = 20000;
 
 //
 
@@ -21164,7 +21164,7 @@ function filterDstPairsWithDst_( test )
   }
 
 }
-filterDstPairsWithDst_.timeOut = 10000;
+filterDstPairsWithDst_.timeOut = 20000;
 
 //
 
