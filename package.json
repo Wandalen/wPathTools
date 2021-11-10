@@ -1,6 +1,6 @@
 {
   "name": "wpathtools",
-  "version": "0.5.221",
+  "version": "0.5.222",
   "engine": "node >= 10.0.0",
   "description": "Collection of cross-platform routines to operate paths reliably and consistently. Implements routines for manipulating paths maps and globing. Extends module PathBasic.",
   "license": "MIT",
@@ -38,14 +38,14 @@
     "url": "https://github.com/Wandalen/wPathTools/issues"
   },
   "dependencies": {
-    "wTools": "latest",
-    "wstringsextra": "latest",
-    "wpathbasic": "latest",
-    "warraysorted": "latest"
+    "wTools": "alpha",
+    "wstringsextra": "alpha",
+    "wpathbasic": "alpha",
+    "warraysorted": "alpha"
   },
   "devDependencies": {
-    "wTesting": "latest",
-    "wFiles": "latest",
+    "wTesting": "alpha",
+    "wFiles": "alpha",
     "eslint": "7.32.0"
   },
   "keywords": [
